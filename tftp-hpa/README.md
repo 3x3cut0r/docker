@@ -8,8 +8,6 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 
 ### Usage
 
-#### run
-
 ```shell
 docker run -d \
     --name tftp-hpa \
@@ -20,14 +18,14 @@ docker run -d \
 
 #### Environment Variables
 
-* `USER` - Username who owns the in.tftpd process
-* `UID` - User-ID of the USER
-* `GID` - Group-ID of the USER
+* `USER` - Username who owns the in.tftpd process (default=tftp)
+* `UID` - User-ID of the USER (default=9069)
+* `GID` - Group-ID of the USER (default=9069)
 * `TFTP_ROOT` - Path of the tftp-root
 
 #### Volumes
 
-* `/tftpboot` - Default TFTP_ROOT
+* `/tftpboot` - TFTP_ROOT (default)
 
 #### Ports
 
@@ -37,10 +35,6 @@ docker run -d \
 
 * [GitHub](https://github.com/3x3cut0r)
 * [DockerHub](https://hub.docker.com/u/3x3cut0r)
-
-## Authors
-
-* **3x3cut0r** - *Initial work* - [3x3cut0r](https://github.com/3x3cut0r)
 
 ## License
 
