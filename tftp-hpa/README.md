@@ -18,14 +18,14 @@ docker run -d \
 
 #### Environment Variables
 
-* `USER` - Username who owns the in.tftpd process (default=tftp)
-* `UID` - User-ID of the USER (default=9069)
-* `GID` - Group-ID of the USER (default=9069)
-* `TFTP_ROOT` - Path of the tftp-root
+* `USER` `tftp` - Username who owns the in.tftpd process
+* `UID` `9069`- User-ID of the USER
+* `GID` `9069`- Group-ID of the USER
+* `TFTP_ROOT` `"/tftpboot"` - Path of the tftp-root
 
 #### Volumes
 
-* `/tftpboot` - TFTP_ROOT (default)
+* `/tftpboot` - TFTP_ROOT
 
 #### Ports
 
