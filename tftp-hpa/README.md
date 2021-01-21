@@ -1,6 +1,6 @@
 # tftp-hpa (tftpd)
 
-A lightweight and secure tftp-server (tftp-hpa)
+A lightweight tftp-server (tftp-hpa)
 
 GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
 
