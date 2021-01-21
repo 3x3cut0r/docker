@@ -3,16 +3,22 @@ LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 
 RUN apk add --no-cache tftp-hpa
 
-ENV USER=tftp
-ENV UID=69
-ENV GID=69
+ENV USER tftp
+ENV UID 9069
+ENV GID 9069
+ENV TFTP_PATH "/tftpboot"
+
 RUN addgroup -g "$GID" -S "$USER" && \
     adduser --disabled-password --gecos "" --home "/home/$USER" \
-        --ingroup "$USER" --no-create-home --uid "$UID" "$USER"
-USER "$USER"
+        --ingroup "$USER" --no-create-home --uid "$UID" "$USER" && \
+    mkdir $TFTP_PATH && \
+    chown -R $UID:$GID $TFTP_PATH && \
+    chmod -R 775 $TFTP_PATH
+
+WORKDIR $TFTP_PATH
+USER $USER
 
 EXPOSE 69/udp
-VOLUME /tftpboot
+VOLUME $TFTP_PATH
 
-ENTRYPOINT ["in.tftpd"]
-CMD ["-L", "-u", "tftp", "--secure", "/tftpboot"]
+ENTRYPOINT ["sh", "-c", "in.tftpd -L -u $USER --secure $TFTP_PATH"]
