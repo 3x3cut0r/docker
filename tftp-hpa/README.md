@@ -28,6 +28,10 @@ docker run -d \
 
 * `/tftpboot` - Default TFTP_ROOT
 
+#### Ports
+
+* `69/udp` - TFTP Port
+
 ## Find Me
 
 * [GitHub](https://github.com/3x3cut0r)
@@ -35,8 +39,8 @@ docker run -d \
 
 ## Authors
 
-* **Julian Reith** - *Initial work* - [3x3cut0r](https://github.com/3x3cut0r)
+* **3x3cut0r** - *Initial work* - [3x3cut0r](https://github.com/3x3cut0r)
 
 ## License
 
-This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) file for details.
+This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
