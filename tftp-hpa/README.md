@@ -38,6 +38,7 @@ docker run -d \
 
 ## Find Me
 
+* [E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
 * [GitHub](https://github.com/3x3cut0r)
 * [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
