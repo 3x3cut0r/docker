@@ -1,5 +1,6 @@
 FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
+LABEL description="TFTP-HPA Server on Alpine Linux"
 
 RUN apk add --no-cache tftp-hpa
 
