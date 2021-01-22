@@ -11,7 +11,7 @@ ENV TFTP_ROOT "/tftpboot"
 
 RUN addgroup -g "$GID" -S "$USER" && \
     adduser --disabled-password --gecos "" --home "/home/$USER" \
-        --ingroup "$USER" --no-create-home --uid "$UID" "$USER" && \
+            --ingroup "$USER" --no-create-home --uid "$UID" "$USER" && \
     mkdir $TFTP_ROOT && \
     chown -R $UID:$GID $TFTP_ROOT && \
     chmod -R 775 $TFTP_ROOT
