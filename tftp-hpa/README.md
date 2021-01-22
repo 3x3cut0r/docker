@@ -1,5 +1,10 @@
 # tftp-hpa (tftpd)
 
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tftp-hpa)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftp-hpa)
+![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tftp-hpa)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tftp-hpa)
+
 A lightweight tftp-server (tftp-hpa)
 
 GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
