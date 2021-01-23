@@ -13,20 +13,44 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 
 ## Usage
 
+#### run
 ```shell
 docker run -d \
     --name tftp-hpa \
-    -v /path/of/some/file:/tftpboot/file:ro \
+    -v /path/of/some/files:/tftpboot:ro \
     -p 69:69/udp \
     3x3cut0r/tftp-hpa:latest
 ```
 
-#### Environment Variables
+Specify custom arguments:
+(see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
 
-* `USER` `tftp` - Username who owns the in.tftpd process
-* `UID` `9069`- User-ID of the USER
-* `GID` `9069`- Group-ID of the USER
-* `TFTP_ROOT` `"/tftpboot"` - Path of the tftp-root
+Example:
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -v /path/of/some/files:/tftpboot:ro \
+    -p 69:69/udp \
+    3x3cut0r/tftp-hpa:latest \
+    -m /mapfile
+    --ipv4 \
+    --umask 0022 \
+    /tftpboot
+```
+
+#### docker-compose.yaml
+
+```shell
+version: '3'
+
+services:
+  tftp-hpa:
+    image: 3x3cut0r/tftp-hpa
+    volumes:
+      - /path/of/some/files:/tftpboot
+    ports:
+      - 69:69/udp
+```
 
 #### Volumes
 
