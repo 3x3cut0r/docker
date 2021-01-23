@@ -4,22 +4,23 @@ LABEL description="TFTP-HPA Server on Alpine Linux"
 
 RUN apk add --no-cache tftp-hpa
 
-ENV USER tftp
-ENV UID 9069
-ENV GID 9069
-ENV TFTP_ROOT "/tftpboot"
+ARG UID=9069
+ARG GID=9069
 
-RUN addgroup -g "$GID" -S "$USER" && \
-    adduser --disabled-password --gecos "" --home "/home/$USER" \
-            --ingroup "$USER" --no-create-home --uid "$UID" "$USER" && \
-    mkdir $TFTP_ROOT && \
-    chown -R $UID:$GID $TFTP_ROOT && \
-    chmod -R 775 $TFTP_ROOT
+RUN addgroup -g "$GID" -S "tftp" && \
+    adduser --disabled-password --gecos "" --shell "/sbin/nologin" \
+            --home "/home/tftp" --no-create-home --ingroup "tftp" \
+            --uid "$UID" "tftp"
 
-WORKDIR $TFTP_ROOT
-USER $USER
+RUN mkdir /tftpboot && \
+    chown -R $UID:$GID /tftpboot && \
+    chmod -R 0666 /tftpboot
+
+WORKDIR /tftpboot
 
 EXPOSE 69/udp
-VOLUME $TFTP_ROOT
+VOLUME /tftpboot
 
-ENTRYPOINT ["sh", "-c", "in.tftpd -L -u $USER --secure $TFTP_ROOT"]
+COPY mapfile /mapfile
+ENTRYPOINT ["in.tftpd", "-L", "-u", "tftp", "--secure"]
+CMD ["--verbose", "-m", "/mapfile", "/tftpboot"]
