@@ -10,6 +10,7 @@ RUN set -eux; \
         ca-certificates \
         dpkg \
         gnupg \
+        vim \
     ; \
     \
     dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
