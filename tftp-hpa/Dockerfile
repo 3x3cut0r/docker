@@ -1,6 +1,6 @@
 FROM 3x3cut0r/alpine:3.13.0
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="TFTP-HPA Server on Alpine Linux"
+LABEL description="tftp-hpa server on alpine linux"
 
 # add tftp-hpa
 RUN apk add --no-cache tftp-hpa
