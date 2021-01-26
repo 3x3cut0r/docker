@@ -1,6 +1,6 @@
 FROM alpine:3.13.0
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="TFTP-HPA Server on Alpine Linux"
+LABEL description="official alpine linux with gosu installed"
 
 # add gosu
 ENV GOSU_VERSION 1.12
