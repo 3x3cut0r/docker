@@ -8,7 +8,7 @@ cd "${TFTPROOT}"
 # set permissions for MAPFILE
 chown "${UID}":"${GID}" "${MAPFILE}"
 chmod 0400 "${MAPFILE}"
-# if started with no args, exec in.tftpd
+# if started without args, exec in.tftpd
 if [ "$#" = "0" ]; then
     param=""
     if [ "$ADDRESS" != "" ]; then param="${param} --address $ADDRESS"; fi
