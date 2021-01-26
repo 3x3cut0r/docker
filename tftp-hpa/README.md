@@ -111,7 +111,7 @@ services:
 * `RETRANSMIT` - Determine the default timeout, in microseconds, before the first packet is retransmitted - Default: 1000000 (1 second)
 * `SECURE` - Change root directory on startup - **Default: 1**
 * `TFTPROOT` - TFTP-Root-Directory - **Default: /srv/tftp**
-* `TIMEOUT` - When run from inetd this specifies how long, in seconds, to wait for a second connection before terminating the server - Default: 900
+* `TIMEOUT` - This specifies how long, in seconds, to wait for a second connection before terminating the server - Default: 900
 * `UMASK` - Sets the umask for newly created files
 * `USER` - Specify the username which tftpd will run as - **Default: tftp**
 * `VERBOSE` - Increase the logging verbosity of tftpd - **Default: 1**
