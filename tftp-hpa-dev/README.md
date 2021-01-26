@@ -94,7 +94,7 @@ services:
 ```
 
 ### Environment Variables
-**see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
+**for more information, see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
 
 * `ADDRESS` - Address and Port to listen to - Default: "" (all local addresses)
 * `BLOCKSIZE` - Specifies the maximum permitted block size
