@@ -40,7 +40,6 @@ ENV ADDRESS="" \
 
 # add mapfile
 COPY mapfile $MAPFILE
-VOLUME $MAPFILE
 
 EXPOSE 69/udp
 VOLUME $TFTPROOT
