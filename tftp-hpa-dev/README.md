@@ -15,7 +15,7 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 
 ### docker run
 
-**Example 1 - run without arguments (environment variables will be used !!!):**  
+**Example 1 - run without arguments (environment variables will be used):**  
 **This is the recommended way to use this container !!!**
 ```shell
 docker run -d \
