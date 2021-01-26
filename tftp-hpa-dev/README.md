@@ -15,7 +15,7 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 
 ### docker run
 
-**Example 1 - run without arguments (environment variables will be used !!!):**
+**Example 1 - run without arguments (environment variables will be used !!!):**  
 **(this is the recommended way to use this container !!!)**
 ```shell
 docker run -d \
@@ -25,7 +25,7 @@ docker run -d \
     3x3cut0r/tftp-hpa:latest
 ```
 
-**Example 2 - run with specified environment variables:**
+**Example 2 - run with specified environment variables:**  
 ```shell
 docker run -d \
     --name tftp-hpa \
@@ -35,7 +35,7 @@ docker run -d \
     3x3cut0r/tftp-hpa:latest
 ```
 
-**Example 3 - run with arguments (environment variables will be ignored):**
+**Example 3 - run with arguments (environment variables will be ignored):**  
 ```shell
 docker run -d \
     --name tftp-hpa \
@@ -45,7 +45,7 @@ docker run -d \
     -L -u tftp -c --secure --verbose /srv/tftp
 ```
 
-**Example 4 - run with arguments with optional 'in.tftpd' as first argument:**
+**Example 4 - run with arguments with optional 'in.tftpd' as first argument:**  
 ```shell
 docker run -d \
     --name tftp-hpa \
@@ -55,7 +55,7 @@ docker run -d \
     in.tftp -L -u tftp -c --secure --verbose /srv/tftp
 ```
 
-**Example 5 - run with arguments and custom path for TFTPROOT:**
+**Example 5 - run with arguments and custom path for TFTPROOT:**  
 you need to specify TFTPROOT if you want to use a custom tftp-root-dir
 ```shell
 docker run -d \
@@ -67,7 +67,7 @@ docker run -d \
     -L -u tftp -c --secure --verbose /tftpboot
 ```
 
-**Example 6 - run without arguments and custom MAPFILE:**
+**Example 6 - run without arguments and custom MAPFILE:**  
 you need to VOLUME your MAPFILE if you want to use a custom MAPFILE
 ```shell
 docker run -d \
