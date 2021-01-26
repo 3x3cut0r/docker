@@ -10,7 +10,6 @@ RUN set -eux; \
         ca-certificates \
         dpkg \
         gnupg \
-        vim \
     ; \
     \
     dpkgArch="$(dpkg --print-architecture | awk -F- '{ print $NF }')"; \
@@ -31,5 +30,3 @@ RUN set -eux; \
 # verify that the binary works
     gosu --version; \
     gosu nobody true
-
-WORKDIR /
