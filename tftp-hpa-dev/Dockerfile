@@ -5,28 +5,49 @@ LABEL description="TFTP-HPA Server on Alpine Linux"
 # add app
 RUN apk add --no-cache tftp-hpa
 
-ENV UID=9069
-ENV GID=9069
+# set UID/GID for tftp
+ENV UID=9069 \
+    GID=9069
 
-RUN addgroup -g "$GID" -S "tftp" && \
-    adduser --disabled-password --gecos "" --shell "/sbin/nologin" \
-            --home "/home/tftp" --no-create-home --ingroup "tftp" \
-            --uid "$UID" "tftp"
+# add user tftp
+RUN addgroup -g $GID -S tftp && \
+    adduser --disabled-password --gecos "" --shell /sbin/nologin \
+            --home /home/tftp --no-create-home --ingroup tftp \
+            --uid $UID tftp
 
-RUN mkdir /tftpboot && \
-    chown -R $UID:$GID /tftpboot && \
-    chmod -R 0744 /tftpboot
+# app environment parameters
+# (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
+ENV ADDRESS="" \
+    BLOCKSIZE="" \
+    CREATE=0 \
+    FOREGROUND=1 \
+    IPV4=0 \
+    IPV6=0 \
+    LISTEN=0 \
+    MAPFILE=/srv/mapfile \
+    PERMISSIVE=0 \
+    PIDFILE="" \
+    PORTRANGE="" \
+    REFUSE="" \
+    RETRANSMIT="" \
+    SECURE=1 \
+    TFTPROOT=/srv/tftp \
+    TIMEOUT=900 \
+    UMASK="" \
+    USER=tftp \
+    VERBOSE=1 \
+    VERBOSITY=""
 
-WORKDIR /tftpboot
-
-ENV USE_MAPFILE 1
+COPY mapfile $MAPFILE
+VOLUME $MAPFILE
 
 EXPOSE 69/udp
-VOLUME /tftpboot
+VOLUME $TFTPROOT
 
-COPY mapfile /mapfile
-
+# add entrypoint
 COPY ./docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
-CMD ["--verbose", "-c", "-m", "/mapfile"]
+
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
+    CMD getent services tftp || exit 1
