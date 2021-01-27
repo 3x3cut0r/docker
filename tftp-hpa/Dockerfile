@@ -1,16 +1,6 @@
-FROM 3x3cut0r/alpine:3.13.0
+FROM alpine:3.13.0
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="tftp-hpa server on alpine linux"
-
-# set UID/GID for tftp
-ENV UID=9069 \
-    GID=9069
-
-# add user tftp
-RUN addgroup -g $GID -S tftp && \
-    adduser --disabled-password --gecos "" --shell /sbin/nologin \
-            --home /home/tftp --no-create-home --ingroup tftp \
-            --uid $UID tftp
 
 # add tftp-hpa
 RUN apk add --no-cache tftp-hpa
