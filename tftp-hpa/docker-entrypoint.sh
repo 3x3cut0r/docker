@@ -3,11 +3,11 @@ set -e
 # create and set permissions to TFTPROOT
 mkdir -p "${TFTPROOT}"
 chown -R "${UID}":"${GID}" "${TFTPROOT}"
-chmod -R 0744 "${TFTPROOT}"
+chmod -R 0777 "${TFTPROOT}"
 cd "${TFTPROOT}"
 # set permissions for MAPFILE
 chown "${UID}":"${GID}" "${MAPFILE}"
-chmod 0400 "${MAPFILE}"
+chmod 0775 "${MAPFILE}"
 # if started without args, exec in.tftpd
 if [ "$#" = "0" ]; then
     param=""
@@ -35,12 +35,12 @@ if [ "$#" = "0" ]; then
 else
     # if the first arg is "in.tftpd" ...
     if [ "$1" = "in.tftpd" ]; then
-        exec gosu "${UID}":"${GID}" $@
+        exec gosu "${UID}":"${GID}" $@ 2>&1
     # if first arg looks like a flag, assume we want to run in.tftpd
     elif [ "$( echo "$1" | cut -c1 )" = "-" ]; then
-        exec gosu "${UID}":"${GID}" in.tftpd $@
+        exec gosu "${UID}":"${GID}" in.tftpd $@ 2>&1
     # if first arg is either 'in.tftpd' or args of 'in.tftpd'
     else
-        exec gosu "${UID}":"${GID}" $@
+        exec gosu "${UID}":"${GID}" $@ 2>&1
     fi
 fi
