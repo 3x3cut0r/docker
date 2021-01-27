@@ -4,7 +4,6 @@ set -e
 mkdir -p "${TFTPROOT}"
 chown -R "${UID}":"${GID}" "${TFTPROOT}"
 chmod -R 0777 "${TFTPROOT}"
-cd "${TFTPROOT}"
 # set permissions for MAPFILE
 chown "${UID}":"${GID}" "${MAPFILE}"
 chmod 0775 "${MAPFILE}"
