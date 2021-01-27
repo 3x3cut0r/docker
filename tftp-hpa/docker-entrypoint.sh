@@ -31,7 +31,7 @@ if [ "$#" = "0" ]; then
     if [ "$VERBOSITY" = "1" ]; then param="${param} --verbosity $VERBOSITY"; fi
     param="${param} ${TFTPROOT}"
     # exec gosu ${UID}:${GID} in.tftpd ${param}
-    in.tftpd ${param}
+    exec in.tftpd ${param}
 else
     # if the first arg is "in.tftpd" ...
     if [ "$1" = "in.tftpd" ]; then
