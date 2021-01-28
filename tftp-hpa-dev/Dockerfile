@@ -13,7 +13,9 @@ RUN addgroup -g $GID -S tftp && \
             --uid $UID tftp
 
 # add tftp-hpa
-RUN apk add --no-cache tftp-hpa
+RUN apk add --no-cache tftp-hpa && \
+    # Set the privileges for in.tftpd executable to run on privileged ports
+    setcap 'cap_net_bind_service=+ep' /usr/sbin/in.tftpd
 
 # tftp-hpa environment variables
 # (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
@@ -31,7 +33,7 @@ ENV ADDRESS="" \
     REFUSE="" \
     RETRANSMIT="" \
     SECURE=1 \
-    TFTPROOT=/var/tftpboot \
+    TFTPROOT=/srv/tftp \
     TIMEOUT="" \
     UMASK="" \
     USER=tftp \
@@ -41,9 +43,6 @@ ENV ADDRESS="" \
 # add mapfile
 COPY mapfile $MAPFILE
 
-EXPOSE 69/udp
-VOLUME $TFTPROOT
-
 # add docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
@@ -51,3 +50,6 @@ ENTRYPOINT ["/docker-entrypoint.sh"]
 
 HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
     CMD getent services tftp || exit 1
+
+EXPOSE 69/udp
+VOLUME $TFTPROOT
