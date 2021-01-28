@@ -3,10 +3,10 @@ set -e
 # create and set permissions to TFTPROOT
 mkdir -p "${TFTPROOT}"
 chown -R "${UID}":"${GID}" "${TFTPROOT}"
-chmod -R 0777 "${TFTPROOT}"
+chmod -R 0660 "${TFTPROOT}"
 # set permissions for MAPFILE
 chown "${UID}":"${GID}" "${MAPFILE}"
-chmod 0775 "${MAPFILE}"
+chmod 0400 "${MAPFILE}"
 # if started without args, exec in.tftpd
 if [ "$#" = "0" ]; then
     param=""
