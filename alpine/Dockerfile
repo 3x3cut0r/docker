@@ -30,3 +30,8 @@ RUN set -eux; \
 # verify that the binary works
     gosu --version; \
     gosu nobody true
+
+# add dependencies for all images
+RUN apk add --no-cache \
+    libcap
+    vim
