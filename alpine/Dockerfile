@@ -33,5 +33,4 @@ RUN set -eux; \
 
 # add dependencies for all images
 RUN apk add --no-cache \
-    libcap \
-    vim
+    libcap
