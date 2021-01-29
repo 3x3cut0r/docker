@@ -6,6 +6,7 @@ A lightweight and secure tftp-server (tftp-hpa)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftp-hpa)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tftp-hpa)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tftp-hpa)
+![run as](https://img.shields.io/badge/run%20as-non--root-red)
 
 GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
 
