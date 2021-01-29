@@ -117,15 +117,13 @@ services:
 
 ### Volumes <a name="volumes"></a>
 
-* `/tftpboot` - tftp root directory -> your directory needs to be at least 0770 (rwxrwx---),
-                owned by uid=9069, gid=9069
-* `/mapfile`  - mapfile for tftp-hpa -> your mapfile needs to be at least 0400 (r--------),
-                owned by uid=9069, gid=9069
+* `/tftpboot` - tftp root directory -> **your directory needs to be at least 0770 (rwxrwx---), owned by uid=9069, gid=9069**
+* `/mapfile`  - mapfile for tftp-hpa -> your mapfile needs to be at least 0400 (r--------), owned by uid=9069, gid=9069
 
 ### Ports <a name="ports"></a>
 
-* `9069/udp` - TFTP Port -> remap to 69! (docker run ... -p 69:9069/udp ...)
-               (because the container runs as non-root, ports lower then 1024 can't be mapped)
+* `9069/udp` - TFTP Port -> **remap to 69!** (docker run ... -p 69:9069/udp ...)
+(because the container runs as non-root, ports lower then 1024 can't be mapped)
 
 ## Find Me <a name="findme"></a>
 
