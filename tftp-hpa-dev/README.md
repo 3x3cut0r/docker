@@ -1,3 +1,125 @@
-# tftp-hpa-dev (tftpd)
+# tftp-hpa (tftpd)
 
-for testing purposes only !!!
+A lightweight and secure tftp-server (tftp-hpa)
+
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tftp-hpa)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftp-hpa)
+![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tftp-hpa)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tftp-hpa)
+
+GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
+
+DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
+
+## Usage
+
+### docker run
+
+**Example 1 - run without arguments (environment variables will be used):**  
+**This is the recommended way to use this container !!!**
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
+    3x3cut0r/tftp-hpa:latest
+```
+
+**Example 2 - run with specified environment variables:**  
+**CREATE=1: allow uploads, even if file doesn't exist**
+**MAPFILE="": do not use the mapfile**
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -e CREATE=1 \
+    -e MAPFILE="" \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
+    3x3cut0r/tftp-hpa:latest
+```
+
+**Example 3 - run with arguments (environment variables will be ignored):**  
+**in.tftpd --foreground --address 0.0.0.0:9069 --user tftp <your arguments>**
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
+    3x3cut0r/tftp-hpa:latest \
+    -c --secure --verbose /tftpboot
+```
+
+**Example 4 - run with arguments with optional 'in.tftpd' as first argument:**  
+**in.tftpd --foreground --address 0.0.0.0:9069 --user tftp <your arguments>**
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
+    3x3cut0r/tftp-hpa:latest \
+    in.tftpd -c --secure --verbose /tftpboot
+```
+
+**Example 5 - run without arguments and custom MAPFILE:**  
+**you need to VOLUME your MAPFILE**
+```shell
+docker run -d \
+    --name tftp-hpa \
+    -e MAPFILE=/mapfile \
+    -v /path/of/some/files:/tftpboot \
+    -v /path/of/your/mapfile:/mapfile \
+    -p 69:9069/udp \
+    3x3cut0r/tftp-hpa:latest
+```
+
+### docker-compose.yaml
+
+```shell
+version: '3'
+
+services:
+  tftp-hpa:
+    image: 3x3cut0r/tftp-hpa
+    volumes:
+      - /path/of/some/files:/tftpboot
+    ports:
+      - 69:9069/udp
+```
+
+### Environment Variables
+**for more information, see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
+
+* `BLOCKSIZE` - Specifies the maximum permitted block size
+* `CREATE` - Allow new files to be created - Default: 0 (only upload files, if they already exist)
+* `MAPFILE` - Specify the use of filename remapping - **Default: /mapfile**
+* `PERMISSIVE` - Perform no additional permissions checks - Default: 0
+* `PORTRANGE` - Force the server port number (the Transaction ID) to be in the specified range of port numbers
+* `REFUSE` - Indicate that a specific RFC 2347 TFTP option should never be accepted
+* `RETRANSMIT` - Determine the default timeout, in microseconds, before the first packet is retransmitted - Default: 1000000 (1 second)
+* `SECURE` - Change root directory on startup - **Default: 1**
+* `TIMEOUT` - This specifies how long, in seconds, to wait for a second connection before terminating the server - Default: 900
+* `UMASK` - Sets the umask for newly created files
+* `VERBOSE` - Increase the logging verbosity of tftpd - **Default: 1**
+* `VERBOSITY` - Set the verbosity value from 0 to 7
+
+### Volumes
+
+* `/tftpboot` - tftp root directory -> your directory needs to be at least 0770 (rwxrwx---),
+                owned by uid=9069, gid=9069
+* `/mapfile`  - mapfile for tftp-hpa -> your mapfile needs to be at lease 0400 (r--------),
+                owned by uid=9069, gid=9069
+
+### Ports
+
+* `9069/udp` - TFTP Port -> remap to 69! (docker run ... -p 69:9069/udp ...)
+               (because the container runs as non-root, ports lower then 1024 can't be mapped)
+
+## Find Me
+
+![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
+* [GitHub](https://github.com/3x3cut0r)
+* [DockerHub](https://hub.docker.com/u/3x3cut0r)
+
+## License
+
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) - This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
