@@ -12,9 +12,18 @@ GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
 
 DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 
-## Usage
+1. [Usage](#usage)
+    1. [docker run](#dockerrun)
+    2. [docker-compose.yaml](#dockercompose)
+2. [Environment Variables](#environment-variables)
+3. [Volumes](#volumes)
+4. [Ports](#ports)
+5. [Find Me](#findme)
+6. [License](#findme)
 
-### docker run
+## Usage <a name="usage"></a>
+
+### docker run <a name="dockerrun"></a>
 
 **Example 1 - run without arguments (environment variables will be used):**  
 **This is the recommended way to use this container !!!**
@@ -73,7 +82,7 @@ docker run -d \
     3x3cut0r/tftp-hpa:latest
 ```
 
-### docker-compose.yaml
+### docker-compose.yaml <a name="docker-compose"></a>
 
 ```shell
 version: '3'
@@ -87,7 +96,7 @@ services:
       - 69:9069/udp
 ```
 
-### Environment Variables
+### Environment Variables <a name="environment-variables"></a>
 **for more information, see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
 
 * `BLOCKSIZE` - Specifies the maximum permitted block size
@@ -104,24 +113,24 @@ services:
 * `VERBOSE` - Increase the logging verbosity of tftpd - **Default: 1**
 * `VERBOSITY` - Set the verbosity value from 0 to 4 - **Default: 3**
 
-### Volumes
+### Volumes <a name="volumes"></a>
 
 * `/tftpboot` - tftp root directory -> your directory needs to be at least 0770 (rwxrwx---),
                 owned by uid=9069, gid=9069
 * `/mapfile`  - mapfile for tftp-hpa -> your mapfile needs to be at least 0400 (r--------),
                 owned by uid=9069, gid=9069
 
-### Ports
+### Ports <a name="ports"></a>
 
 * `9069/udp` - TFTP Port -> remap to 69! (docker run ... -p 69:9069/udp ...)
                (because the container runs as non-root, ports lower then 1024 can't be mapped)
 
-## Find Me
+## Find Me <a name="findme"></a>
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
 * [GitHub](https://github.com/3x3cut0r)
 * [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
-## License
+## License <a name="license"></a>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) - This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
