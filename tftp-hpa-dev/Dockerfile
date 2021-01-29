@@ -19,9 +19,9 @@ RUN apk add --no-cache tftp-hpa
 # (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
 ENV BLOCKSIZE="" \
     CREATE=0 \
-    PORTRANGE="4096:32767" \
     MAPFILE=/mapfile \
     PERMISSIVE=0 \
+    PORTRANGE="4096:32767" \
     REFUSE="" \
     RETRANSMIT="" \
     SECURE=1 \
