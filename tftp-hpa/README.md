@@ -1,6 +1,6 @@
 # tftp-hpa (tftpd)
 
-A lightweight tftp-server (tftp-hpa)
+A lightweight and secure tftp-server (tftp-hpa)
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tftp-hpa)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftp-hpa)
@@ -20,62 +20,55 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 ```shell
 docker run -d \
     --name tftp-hpa \
-    -v /path/of/some/files:/srv/tftp:ro \
-    -p 69:69/udp \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
     3x3cut0r/tftp-hpa:latest
 ```
 
 **Example 2 - run with specified environment variables:**  
+**CREATE=1: allow uploads, even if file doesn't exist**
+**MAPFILE="": do not use the mapfile**
 ```shell
 docker run -d \
     --name tftp-hpa \
     -e CREATE=1 \
-    -v /path/of/some/files:/srv/tftp:ro \
-    -p 69:69/udp \
+    -e MAPFILE="" \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
     3x3cut0r/tftp-hpa:latest
 ```
 
 **Example 3 - run with arguments (environment variables will be ignored):**  
+**in.tftpd --foreground --address 0.0.0.0:9069 --user tftp <your arguments>**
 ```shell
 docker run -d \
     --name tftp-hpa \
-    -v /path/of/some/files:/srv/tftp:ro \
-    -p 69:69/udp \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
     3x3cut0r/tftp-hpa:latest \
-    -L -u tftp -c --secure --verbose /srv/tftp
+    -c --secure --verbose /tftpboot
 ```
 
 **Example 4 - run with arguments with optional 'in.tftpd' as first argument:**  
+**in.tftpd --foreground --address 0.0.0.0:9069 --user tftp <your arguments>**
 ```shell
 docker run -d \
     --name tftp-hpa \
-    -v /path/of/some/files:/srv/tftp:ro \
-    -p 69:69/udp \
+    -v /path/of/some/files:/tftpboot \
+    -p 69:9069/udp \
     3x3cut0r/tftp-hpa:latest \
-    in.tftp -L -u tftp -c --secure --verbose /srv/tftp
+    in.tftpd -c --secure --verbose /tftpboot
 ```
 
-**Example 5 - run with arguments and custom path for TFTPROOT:**  
-you need to specify TFTPROOT if you want to use a custom tftp-root-dir
+**Example 5 - run without arguments and custom MAPFILE:**  
+**you need to VOLUME your MAPFILE**
 ```shell
 docker run -d \
     --name tftp-hpa \
-    -e TFTPROOT=/tftpboot \
-    -v /path/of/some/files:/tftpboot:ro \
-    -p 69:69/udp \
-    3x3cut0r/tftp-hpa:latest \
-    -L -u tftp -c --secure --verbose /tftpboot
-```
-
-**Example 6 - run without arguments and custom MAPFILE:**  
-you need to VOLUME your MAPFILE if you want to use a custom MAPFILE
-```shell
-docker run -d \
-    --name tftp-hpa \
-    -e MAPFILE=/srv/mapfile \
-    -v /path/of/some/files:/srv/tftp:ro \
-    -v /path/of/your/mapfile:/srv/mapfile:ro \
-    -p 69:69/udp \
+    -e MAPFILE=/mapfile \
+    -v /path/of/some/files:/tftpboot \
+    -v /path/of/your/mapfile:/mapfile \
+    -p 69:9069/udp \
     3x3cut0r/tftp-hpa:latest
 ```
 
@@ -88,43 +81,39 @@ services:
   tftp-hpa:
     image: 3x3cut0r/tftp-hpa
     volumes:
-      - /path/of/some/files:/srv/tftp
+      - /path/of/some/files:/tftpboot
     ports:
-      - 69:69/udp
+      - 69:9069/udp
 ```
 
 ### Environment Variables
 **for more information, see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
 
-* `ADDRESS` - Address and Port to listen to - Default: "" (all local addresses)
 * `BLOCKSIZE` - Specifies the maximum permitted block size
 * `CREATE` - Allow new files to be created - Default: 0 (only upload files, if they already exist)
-* `FOREGROUND` - Similar to --listen but do not detach from the foreground process - **Default: 1**
-* `IPV4` - Connect with IPv4 only - Default: 0
-* `IPV6` - Connect with IPv6 only - Default: 0
-* `LISTEN` - Run the server in standalone (listen) mode - Default: 0 (use FOREGROUND instead!)
-* `MAPFILE` - Specify the use of filename remapping - **Default: /srv/mapfile**
+* `MAPFILE` - Specify the use of filename remapping - **Default: /mapfile**
+(leave empty, if you don't want to use a mapfile)
 * `PERMISSIVE` - Perform no additional permissions checks - Default: 0
-* `PIDFILE` - When run in standalone mode, write the process ID of the listening server into pidfile - Default: ""
 * `PORTRANGE` - Force the server port number (the Transaction ID) to be in the specified range of port numbers
 * `REFUSE` - Indicate that a specific RFC 2347 TFTP option should never be accepted
 * `RETRANSMIT` - Determine the default timeout, in microseconds, before the first packet is retransmitted - Default: 1000000 (1 second)
 * `SECURE` - Change root directory on startup - **Default: 1**
-* `TFTPROOT` - TFTP-Root-Directory - **Default: /srv/tftp**
 * `TIMEOUT` - This specifies how long, in seconds, to wait for a second connection before terminating the server - Default: 900
 * `UMASK` - Sets the umask for newly created files
-* `USER` - Specify the username which tftpd will run as - **Default: tftp**
 * `VERBOSE` - Increase the logging verbosity of tftpd - **Default: 1**
-* `VERBOSITY` - Set the verbosity value from 0 to 7
+* `VERBOSITY` - Set the verbosity value from 0 to 4 - **Default: 3**
 
 ### Volumes
 
-* `/srv/tftp` - tftp root directory
-* `/srv/mapfile` - map-file for tftp-hpa
+* `/tftpboot` - tftp root directory -> your directory needs to be at least 0770 (rwxrwx---),
+                owned by uid=9069, gid=9069
+* `/mapfile`  - mapfile for tftp-hpa -> your mapfile needs to be at least 0400 (r--------),
+                owned by uid=9069, gid=9069
 
 ### Ports
 
-* `69/udp` - TFTP Port
+* `9069/udp` - TFTP Port -> remap to 69! (docker run ... -p 69:9069/udp ...)
+               (because the container runs as non-root, ports lower then 1024 can't be mapped)
 
 ## Find Me
 
