@@ -21,7 +21,7 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
 3. [Volumes](#volumes)
 4. [Ports](#ports)
 5. [Find Me](#findme)
-6. [License](#findme)
+6. [License](#license)
 
 ## Usage <a name="usage"></a>
 
