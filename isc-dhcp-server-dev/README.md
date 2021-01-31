@@ -1,47 +1,72 @@
 # tftp-hpa (tftpd)
 
-A lightweight tftp-server (tftp-hpa)
+A lightweight and secure dhcp-server (isc-dhcp-server, ipv4 only)
 
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tftp-hpa)
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftp-hpa)
-![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tftp-hpa)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tftp-hpa)
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/isc-dhcp-server)
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/isc-dhcp-server)
+![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/isc-dhcp-server)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20isc-dhcp-server)
+![run as](https://img.shields.io/badge/run%20as-non--root-red)
 
-GitHub: https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
+GitHub: https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server
 
-DockerHub: https://hub.docker.com/r/3x3cut0r/tftp-hpa
+DockerHub: https://hub.docker.com/r/3x3cut0r/isc-dhcp-server
 
-## Usage
+## Index
 
+1. [Usage](#usage)
+    1. [docker run](#dockerrun)
+    2. [docker-compose.yaml](#dockercompose)
+2. [Environment Variables](#environment-variables)
+3. [Volumes](#volumes)
+4. [Ports](#ports)
+5. [Find Me](#findme)
+6. [License](#license)
+
+## Usage <a name="usage"></a>
+
+### docker run <a name="dockerrun"></a>
+
+**Example 1 - run without arguments (environment variables will be used):**  
 ```shell
 docker run -d \
-    --name tftp-hpa \
-    -v /path/of/some/file:/tftpboot/file:ro \
-    -p 69:69/udp \
-    3x3cut0r/tftp-hpa:latest
+    --name isc-dhcp-server \
+    -p 67:9067/udp \
+    3x3cut0r/isc-dhcp-server:latest
 ```
 
-#### Environment Variables
+### docker-compose.yaml <a name="docker-compose"></a>
 
-* `USER` `tftp` - Username who owns the in.tftpd process
-* `UID` `9069`- User-ID of the USER
-* `GID` `9069`- Group-ID of the USER
-* `TFTP_ROOT` `"/tftpboot"` - Path of the tftp-root
+```shell
+version: '3'
 
-#### Volumes
+services:
+  tftp-hpa:
+    image: 3x3cut0r/isc-dhcp-server
+    ports:
+      - 67:9067/udp
+```
 
-* `/tftpboot` - TFTP_ROOT
+### Environment Variables <a name="environment-variables"></a>
+**for more information, see https://manpages.debian.org/jessie/isc-dhcp-server/dhcpd.8.en.html**
 
-#### Ports
+* `COMING SOON` - coming soon **Default: 1**
 
-* `69/udp` - TFTP Port
+### Volumes <a name="volumes"></a>
 
-## Find Me
+* `/etc/dhcp/dhcpd.conf` - DHCP-Server configuration file -> **no need to mount if you configure your dhcp-server via environment variables**
+
+### Ports <a name="ports"></a>
+
+* `9067/udp` - DHCP-Server IPv4 Port -> **remap to 67!** (docker run ... -p 67:9067/udp ...)
+(because the container runs as non-root, ports lower then 1024 can't be mapped)
+
+## Find Me <a name="findme"></a>
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
 * [GitHub](https://github.com/3x3cut0r)
 * [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
-## License
+## License <a name="license"></a>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) - This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
