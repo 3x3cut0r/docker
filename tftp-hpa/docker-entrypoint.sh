@@ -16,19 +16,19 @@ if [ "$#" = "0" ]; then
     if [ "$VERBOSE" = "1" ]; then param="${param} --verbose"; fi
     if [ "$VERBOSITY" != "" ]; then param="${param} --verbosity $VERBOSITY"; fi
     param="--foreground --address 0.0.0.0:9069 --user tftp ${param} /tftpboot"
-    echo "INFO: in.tftpd ${param}"
+    printf "\nINFO: in.tftpd ${param}\n\n"
     exec in.tftpd ${param}
 else
     # if first arg looks like a flag, assume we want to run in.tftpd
     if [ "$( echo "$1" | cut -c1 )" = "-" ]; then
-        echo "INFO: in.tftpd --foreground --address 0.0.0.0:9069 --user tftp $@"
+        printf "\nINFO: in.tftpd --foreground --address 0.0.0.0:9069 --user tftp $@\n\n"
         exec in.tftpd --foreground --address 0.0.0.0:9069 --user tftp $@
     # if the first arg is "in.tftpd" ...
     elif [ "$1" = "in.tftpd" ]; then
         exec in.tftpd --foreground --address 0.0.0.0:9069 --user tftp "${@:9}"
     # if first arg doesn't looks like a flag
     else
-        echo "INFO: $@"
+        printf "\nINFO: $@\n\n"
         exec $@
     fi
 fi
