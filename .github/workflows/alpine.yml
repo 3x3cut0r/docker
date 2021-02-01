@@ -6,6 +6,8 @@ on:
       - 'main'
     tags:
       - 'latest'
+    paths:
+      - 'alpine/**'
 
 jobs:
   multi:
@@ -44,5 +46,5 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
           repository: 3x3cut0r/docker
           short-description: official alpine:3.13.1 base-image with gosu, libcap
-          readme-filepath: ./alpine/README.md
+          readme-filepath: /alpine/README.md
 
