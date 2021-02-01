@@ -1,4 +1,4 @@
-# tftp-hpa (tftpd)
+# isc-dhcp-server (dhcpd)
 
 A lightweight and secure dhcp-server (isc-dhcp-server)
 
