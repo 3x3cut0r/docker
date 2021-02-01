@@ -42,5 +42,5 @@ jobs:
         with:
           user: ${{ secrets.DOCKERHUB_USERNAME }}
           pass: ${{ secrets.DOCKERHUB_TOKEN }}
-          slug: 3x3cut0r/alpine
+          slug: 3x3cut0r/alpine:3.13.1
           readme: ./alpine/README.md
