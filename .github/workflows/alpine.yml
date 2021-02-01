@@ -36,6 +36,8 @@ jobs:
           push: true
           tags: |
             3x3cut0r/alpine:3.13.1
+      - 
+        uses: actions/checkout@main
       -
         name: Sync README.md
         uses: meeDamian/sync-readme@v1.0.6
@@ -44,3 +46,4 @@ jobs:
           pass: ${{ secrets.DOCKERHUB_TOKEN }}
           slug: 3x3cut0r/alpine:3.13.1
           readme: ./alpine/README.md
+          description: true
