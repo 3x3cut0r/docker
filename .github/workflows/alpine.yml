@@ -5,7 +5,7 @@ on:
     branches:
       - 'main'
     paths:
-      - 'alpine/**'
+      - 'docker/alpine/**'
 
 jobs:
   multi:
