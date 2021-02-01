@@ -4,8 +4,6 @@ on:
   push:
     branches:
       - 'main'
-    tags:
-      - 'latest'
     paths:
       - 'alpine/**'
 
@@ -39,7 +37,7 @@ jobs:
           tags: |
             3x3cut0r/alpine:3.13.1
       - 
-        name: Docker Hub README + Description
+        name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
