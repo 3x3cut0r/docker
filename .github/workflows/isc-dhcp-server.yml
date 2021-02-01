@@ -7,7 +7,7 @@ on:
     tags:
       - 'latest'
     paths:
-      - '/tftp-hpa/**'
+      - '/isc-dhcp-server/**'
 
 jobs:
   multi:
