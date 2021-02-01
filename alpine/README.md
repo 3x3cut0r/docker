@@ -1,4 +1,4 @@
-# alpine
+# alpine (FROM alpine:3.13.1)
 
 official alpine:3.13.1 base-image with gosu, libcap
 
