@@ -2,10 +2,8 @@ name: build alpine
 
 on:
   push:
-    branches:
-      - 'main'
     paths:
-      - 'alpine/**'
+      - '/alpine/**'
 
 jobs:
   multi:
