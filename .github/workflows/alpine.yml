@@ -37,13 +37,12 @@ jobs:
           tags: |
             3x3cut0r/alpine:3.13.1
       - 
-        uses: actions/checkout@main
-      -
-        name: Sync README.md
-        uses: meeDamian/sync-readme@v1.0.6
+        name: Docker Hub README + Description
+        uses: peter-evans/dockerhub-description@v2
         with:
-          user: ${{ secrets.DOCKERHUB_USERNAME }}
-          pass: ${{ secrets.DOCKERHUB_TOKEN }}
-          slug: 3x3cut0r/alpine:3.13.1
-          readme: ./alpine/README.md
-          description: true
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          repository: 3x3cut0r/docker
+          short-description: official alpine:3.13.1 base-image with gosu, libcap
+          readme-filepath: ./alpine/README.md
+
