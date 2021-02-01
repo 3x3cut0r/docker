@@ -39,13 +39,13 @@ ENV QUIET=0 \
     OPTION_NTP_SERVERS=""
 
 VOLUME /etc/dhcp
-EXPOSE 9067/udp
+EXPOSE 67/udp
 
 # set permissions for DHCPD
 RUN chown -R "${UID}":"${GID}" /etc/dhcp && \
     chmod -R 0644 /etc/dhcp && \
     chown -R "${UID}":"${GID}" /var/lib/dhcp && \
-    chmod -R 0777 /var/lib/dhcp
+    chmod -R 0644 /var/lib/dhcp
 
 # add docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
