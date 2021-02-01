@@ -6,6 +6,8 @@ on:
       - 'main'
     tags:
       - 'latest'
+    paths:
+      - '/isc-dhcp-server/**'
 
 jobs:
   multi:
