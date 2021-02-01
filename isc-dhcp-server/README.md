@@ -31,7 +31,7 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/isc-dhcp-server
 ```shell
 docker run -d \
     --name isc-dhcp-server \
-    -p 67:9067/udp \
+    -p 67:67/udp \
     3x3cut0r/isc-dhcp-server:latest
 ```
 
@@ -44,7 +44,7 @@ services:
   tftp-hpa:
     image: 3x3cut0r/isc-dhcp-server
     ports:
-      - 67:9067/udp
+      - 67:67/udp
 ```
 
 ### Environment Variables <a name="environment-variables"></a>
@@ -58,8 +58,7 @@ services:
 
 ### Ports <a name="ports"></a>
 
-* `9067/udp` - DHCP-Server IPv4 Port -> **remap to 67!** (docker run ... -p 67:9067/udp ...)
-(because the container runs as non-root, ports lower then 1024 can't be mapped)
+* `67/udp` - DHCP-Server IPv4 Port
 
 ## Find Me <a name="findme"></a>
 
