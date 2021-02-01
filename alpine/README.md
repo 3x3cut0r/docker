@@ -1,4 +1,4 @@
-# tftp-hpa (tftpd)
+# alpine
 
 official alpine:3.13.1 base-image with gosu, libcap
 
@@ -16,7 +16,7 @@ DockerHub: https://hub.docker.com/r/3x3cut0r/alpine
 ### Dockerfile
 
 ```shell
-FROM 3x3cut0r/alpine:3.13.0
+FROM 3x3cut0r/alpine:3.13.1
 ...
 ```
 
