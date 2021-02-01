@@ -3,7 +3,7 @@ name: build alpine
 on:
   push:
     paths:
-      - 'docker/alpine/**'
+      - 'alpine/**'
 
 jobs:
   multi:
