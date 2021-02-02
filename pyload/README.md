@@ -1,6 +1,6 @@
 # pyload
 
-**pyload from writl/pyload with python-openssl for https support**
+**pyload from writl/pyload with python-openssl for SSL/HTTPS support**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/pyload)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/pyload)
