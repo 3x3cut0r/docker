@@ -7,7 +7,7 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/pyload)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20pyload)
 
-`GitHub` - 3x3cut0r/pyload - https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server  
+`GitHub` - 3x3cut0r/pyload - https://github.com/3x3cut0r/docker/tree/main/pyload  
 `DockerHub` - 3x3cut0r/pyload - https://hub.docker.com/r/3x3cut0r/pyload  
 
 ## Documentation
