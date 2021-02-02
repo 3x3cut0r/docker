@@ -12,6 +12,8 @@
 
 ## Documentation
 
+`GitHub (source code)` - pyload/pyload - https://github.com/pyload/pyload  
+
 `GitHub` - writl/pyload - https://github.com/obi12341/docker-pyload  
 `DockerHub` - writl/pyload - https://hub.docker.com/r/writl/pyload  
 
