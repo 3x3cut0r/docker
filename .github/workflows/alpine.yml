@@ -34,12 +34,3 @@ jobs:
           push: true
           tags: |
             3x3cut0r/alpine:3.13.1
-      - 
-        name: Docker Hub Description
-        uses: peter-evans/dockerhub-description@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASSWORD }}
-          repository: 3x3cut0r/docker
-          short-description: 'official alpine:3.13.1 base-image with gosu, libcap'
-          readme-filepath: ./alpine/README.md
