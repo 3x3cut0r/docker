@@ -102,17 +102,46 @@ services:
 ### Environment Variables <a name="environment-variables"></a>
 **for more information, see https://manpages.debian.org/jessie/isc-dhcp-server/dhcpd.8.en.html**
 
-* `IFACE` - Interface to listen on. **Have to fit with your host-interface! Default: eth0**
-* `PROTOCOL` - IP Protocol. (IPv4=4, IPv6=6) **Default: 4**
-* `QUIET` - Be quiet at startup. **Default: 0**
+**dhcpd Environment Variables**  
+* `IFACE` - Interface to listen on. **Have to fit with your host-interface! Default: eth0**  
+* `PROTOCOL` - IP Protocol. (IPv4=4, IPv6=6) **Default: 4**  
+* `QUIET` - Be quiet at startup. **Default: 0**  
+
+**Global dhcpd.conf Environment Variables**  
+* `DEFAULT_LEASE_TIME` - **Default: 3600**  
+* `MAX_LEASE_TIME` - **Default: 86400**  
+* `AUTHORITATIVE` - **Default: 1**  
+* `LOGFACILITY` - **Default: local7**  
+
+**IPv4 Environment Variables (PROTOCOL=4)**  
+* `SUBNET` - Network-Address. Example: "192.168.0.0"  
+* `NETMASK` - Subnet-Mask. Example: "255.255.255.0"  
+* `RANGE_BEGIN` - Subnet-Range (first host). Example: "192.168.0.10"  
+* `RANGE_END` - Subnet-Range (last host). Example: "192.168.0.200"  
+* `OPTION_BROADCAST` - Broadcast-Address. Example: "192.168.0.255"  
+* `OPTION_ROUTERS` - Gateway. Example: "192.168.0.1"  
+* `OPTION_DOMAIN_NAME` - Domain-Name. Example: "domain.example"  
+* `OPTION_DOMAIN_NAME_SERVERS` - DNS-Servers (up to 3). Example: "8.8.8.8, 8.8.4.4"  
+* `NEXT_SERVER` - Next-Server (for PXE/TFTP-Boot). Example: "192.168.0.1"  
+* `OPTION_TFTP_SERVER_NAME` - TFTP-Server (for PXE/TFTP-Boot). Example: "192.168.0.1"  
+* `OPTION_BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). Example: "/tftpboot.img"  
+* `OPTION_NTP_SERVERS` - NTP-Servers (up to 3). Example: "0.de.pool.ntp.org, 1.de.pool.ntp.org"  
+
+**IPv6 Environment Variables (PROTOCOL=6)**  
+* `SUBNET6` - Network-Address. Example: "fe80::0/64"
+* `RANGE6_BEGIN` - Subnet-Range (first host). Example: "fe80::1"  
+* `RANGE6_END` - Subnet-Range (last host). Example: "fe80::ffff"  
+* `OPTION_DHCP6_NAME_SERVERS` - DNS-Servers (up to 3). Example: "2001:4860:4860::8888, 2001:4860:4860::8844"  
+* `OPTION_DHCP6_DOMAIN_SEARCH` - Domain-Name. Example: "domain.example"   
+* `PREFIX6` - IPv6 Subnet-Deligation-Mask Example: "fe80:1:2:3:: fe80:1:2:f:: /60"   
 
 ### Volumes <a name="volumes"></a>
 
-* `/etc/dhcp/dhcpd.conf` - DHCP-Server configuration file - **recommended, otherwise configure your dhcp-server via environment variables**
+* `/etc/dhcp/dhcpd.conf` - DHCP-Server configuration file - **recommended, otherwise configure your dhcp-server via environment variables**  
 
 ### Ports <a name="ports"></a>
 
-* No need for Port-Bindings because of network=host!
+* No need for Port-Bindings because of network=host!  
 
 ## Find Me <a name="findme"></a>
 
