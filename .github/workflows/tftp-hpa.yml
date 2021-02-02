@@ -4,11 +4,17 @@ on:
   push:
     branches:
       - 'main'
-    tags:
-      - 'latest'
     paths:
       - 'tftp-hpa/**'
-
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'run action manually'
+        
 jobs:
   multi:
     runs-on: ubuntu-latest
