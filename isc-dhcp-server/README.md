@@ -1,6 +1,6 @@
 # isc-dhcp-server (dhcpd)
 
-A lightweight and secure dhcp-server (isc-dhcp-server)
+**A lightweight and secure dhcp-server (isc-dhcp-server)**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/isc-dhcp-server)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/isc-dhcp-server)
@@ -8,9 +8,8 @@ A lightweight and secure dhcp-server (isc-dhcp-server)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20isc-dhcp-server)
 ![run as](https://img.shields.io/badge/run%20as-non--root-red)
 
-GitHub: https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server
-
-DockerHub: https://hub.docker.com/r/3x3cut0r/isc-dhcp-server
+`GitHub` - 3x3cut0r/isc-dhcp-server - https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server  
+`DockerHub` - 3x3cut0r/isc-dhcp-server - https://hub.docker.com/r/3x3cut0r/isc-dhcp-server  
 
 ## Index
 
