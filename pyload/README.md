@@ -17,9 +17,9 @@
 
 ## Usage for Synology Users
 
-**locations to your SSL certificates**
-`ssl.crt` - /usr/syno/etc/certificate/system/default/cert.pem
-`ssl.key` - /usr/syno/etc/certificate/system/default/privkey.pem
+**locations to your SSL certificates**  
+`ssl.crt` - /usr/syno/etc/certificate/system/default/cert.pem  
+`ssl.key` - /usr/syno/etc/certificate/system/default/privkey.pem  
 
 ### docker run
 
