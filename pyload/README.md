@@ -1,19 +1,40 @@
 # pyload
 
-pyload from writl/pyload with python-openssl for https support
+**pyload from writl/pyload with python-openssl for https support**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/pyload)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/pyload)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/pyload)
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20pyload)
 
-GitHub 3x3cut0r/pyload: https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server  
-DockerHub 3x3cut0r/pyload: https://hub.docker.com/r/3x3cut0r/pyload  
+`GitHub` - 3x3cut0r/pyload - https://github.com/3x3cut0r/docker/tree/main/isc-dhcp-server  
+`DockerHub` - 3x3cut0r/pyload - https://hub.docker.com/r/3x3cut0r/pyload  
 
 ## Documentation
 
-GitHub writl/pyload: https://github.com/obi12341/docker-pyload  
-DockerHub writl/pyload: https://hub.docker.com/r/writl/pyload  
+`GitHub` - writl/pyload - https://github.com/obi12341/docker-pyload  
+`DockerHub` - writl/pyload - https://hub.docker.com/r/writl/pyload  
+
+## Usage for Synology Users
+
+**locations to your SSL certificates**
+`ssl.crt` - /usr/syno/etc/certificate/system/default/cert.pem
+`ssl.key` - /usr/syno/etc/certificate/system/default/privkey.pem
+
+### docker run
+
+```shell
+docker container run -d --restart=unless-stopped \
+    --name=pyload \
+    -e UID=1024 \
+    -e GID=100 \
+    -p 8000:8000 \
+    -v /volume1/docker/pyload:/opt/pyload/pyload-config:rw \
+    -v /volume1/downloads:/opt/pyload/Downloads:rw \
+    -v /usr/syno/etc/certificate/system/default/cert.pem:/opt/pyload/pyload-config/ssl.crt:ro \
+    -v /usr/syno/etc/certificate/system/default/privkey.pem:/opt/pyload/pyload-config/ssl.key:ro \
+    3x3cut0r/pyload:latest
+```
 
 ## Find Me <a name="findme"></a>
 
