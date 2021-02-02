@@ -8,9 +8,8 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tftp-hpa)
 ![run as](https://img.shields.io/badge/run%20as-non--root-red)
 
-`GitHub` - 3x3cut0r/tftp-hpa - https://github.com/3x3cut0r/docker/tree/main/tftp-hpa
-`DockerHub` - 3x3cut0r/tftp-hpa - https://hub.docker.com/r/3x3cut0r/tftp-hpa
-
+`GitHub` - 3x3cut0r/tftp-hpa - https://github.com/3x3cut0r/docker/tree/main/tftp-hpa  
+`DockerHub` - 3x3cut0r/tftp-hpa - https://hub.docker.com/r/3x3cut0r/tftp-hpa  
 ## Index
 
 1. [Usage](#usage)
