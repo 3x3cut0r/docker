@@ -1,0 +1,11 @@
+docker run -d \
+    --init \
+    --cap-drop=ALL \
+    --cap-add=SYS_ADMIN \
+    --cap-add=SETPCAP \
+    --name nfs-server \
+    -v $(pwd)/exports:/etc/exports:ro \
+    -v $(pwd)/raspberrypi:/nfsroot/raspberrypi \
+    -p 111:111/udp \
+    -p 2049:2049/tcp \
+    3x3cut0r/nfs-server:latest
