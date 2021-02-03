@@ -50,8 +50,8 @@ docker run -d \
     -e NETMASK=255.255.255.0 \
     -e RANGE_BEGIN=192.168.0.100 \
     -e RANGE_END=192.168.0.200 \
-    -e OPTION_ROUTERS=192.168.0.1 \
-    -e OPTION_DOMAIN_NAME_SERVERS="8.8.8.8, 8.8.4.4" \
+    -e ROUTERS=192.168.0.1 \
+    -e DOMAIN_NAME_SERVERS="8.8.8.8, 8.8.4.4" \
     3x3cut0r/isc-dhcp-server:latest
 ```
 
@@ -78,7 +78,7 @@ docker run -d \
     -e SUBNET6="fe80::0/64" \
     -e RANGE6_BEGIN="fe80::1" \
     -e RANGE6_END="fe80::ffff" \
-    -e OPTION_DHCP6_NAME_SERVERS="2001:4860:4860::8888, 2001:4860:4860::8844" \
+    -e DHCP6_NAME_SERVERS="2001:4860:4860::8888, 2001:4860:4860::8844" \
     3x3cut0r/isc-dhcp-server:latest
 ```
 
@@ -114,26 +114,27 @@ services:
 * `LOGFACILITY` - **Default: local7**  
 
 **IPv4 Environment Variables (PROTOCOL=4)**  
-* `SUBNET` - Network-Address. Example: "192.168.0.0"  
-* `NETMASK` - Subnet-Mask. Example: "255.255.255.0"  
-* `RANGE_BEGIN` - Subnet-Range (first host). Example: "192.168.0.10"  
-* `RANGE_END` - Subnet-Range (last host). Example: "192.168.0.200"  
-* `OPTION_BROADCAST` - Broadcast-Address. Example: "192.168.0.255"  
-* `OPTION_ROUTERS` - Gateway. Example: "192.168.0.1"  
-* `OPTION_DOMAIN_NAME` - Domain-Name. Example: "domain.example"  
-* `OPTION_DOMAIN_NAME_SERVERS` - DNS-Servers (up to 3). Example: "8.8.8.8, 8.8.4.4"  
-* `NEXT_SERVER` - Next-Server (for PXE/TFTP-Boot). Example: "192.168.0.1"  
-* `OPTION_TFTP_SERVER_NAME` - TFTP-Server (for PXE/TFTP-Boot). Example: "192.168.0.1"  
-* `OPTION_BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). Example: "/tftpboot.img"  
-* `OPTION_NTP_SERVERS` - NTP-Servers (up to 3). Example: "0.de.pool.ntp.org, 1.de.pool.ntp.org"  
+* `SUBNET` - Network-Address. e.g.: `192.168.0.0`  
+* `NETMASK` - Subnet-Mask. e.g.: `255.255.255.0`  
+* `RANGE_BEGIN` - Subnet-Range (first host). e.g.: `192.168.0.10`  
+* `RANGE_END` - Subnet-Range (last host). e.g.: `192.168.0.200`  
+* `BROADCAST` - Broadcast-Address. e.g.: `192.168.0.255`  
+* `ROUTERS` - Gateway. e.g.: `192.168.0.1`  
+* `DOMAIN_NAME` - Domain-Name. e.g.: `domain.example`  
+* `DOMAIN_NAME_SERVERS` - DNS-Servers (up to 3). e.g.: `8.8.8.8,8.8.4.4` (avoid using spaces!)  
+* `DOMAIN_SEARCH` - Search-List of Domains (up to 3). e.g.: `example.com,sales.example.com` (avoid using spaces!)  
+* `NEXT_SERVER` - Next-Server (for PXE/TFTP-Boot). e.g.: `192.168.0.1`  
+* `TFTP_SERVER_NAME` - TFTP-Server (for PXE/TFTP-Boot). e.g.: `192.168.0.1`  
+* `BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). e.g.: `/tftpboot.img`  
+* `NTP_SERVERS` - NTP-Servers (up to 3). e.g.: `0.de.pool.ntp.org,1.de.pool.ntp.org` (avoid using spaces!)  
 
 **IPv6 Environment Variables (PROTOCOL=6)**  
-* `SUBNET6` - Network-Address. Example: "fe80::0/64"
-* `RANGE6_BEGIN` - Subnet-Range (first host). Example: "fe80::1"  
-* `RANGE6_END` - Subnet-Range (last host). Example: "fe80::ffff"  
-* `OPTION_DHCP6_NAME_SERVERS` - DNS-Servers (up to 3). Example: "2001:4860:4860::8888, 2001:4860:4860::8844"  
-* `OPTION_DHCP6_DOMAIN_SEARCH` - Domain-Name. Example: "domain.example"   
-* `PREFIX6` - IPv6 Subnet-Deligation-Mask Example: "fe80:1:2:3:: fe80:1:2:f:: /60"   
+* `SUBNET6` - Network-Address. e.g.: `fe80::0/64`  
+* `RANGE6_BEGIN` - Subnet-Range (first host). e.g.: `fe80::1`  
+* `RANGE6_END` - Subnet-Range (last host). e.g.: `fe80::ffff`  
+* `DHCP6_NAME_SERVERS` - DNS-Servers (up to 3). e.g.: `2001:4860:4860::8888,2001:4860:4860::8844` (avoid using spaces!)  
+* `DHCP6_DOMAIN_SEARCH` - Domain-Name. e.g.: `domain.example`  
+* `PREFIX6` - IPv6 Subnet-Deligation-Mask e.g.: `fe80:1:2:3:: fe80:1:2:f:: /60`   
 
 ### Volumes <a name="volumes"></a>
 
