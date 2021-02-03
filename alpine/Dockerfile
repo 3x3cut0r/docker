@@ -1,6 +1,6 @@
 FROM alpine:3.13.1
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="official alpine linux with gosu installed"
+LABEL description="official alpine linux with gosu, libcap installed"
 
 # add gosu
 ENV GOSU_VERSION 1.12
@@ -33,5 +33,4 @@ RUN set -eux; \
 
 # add dependencies for all images
 RUN apk add --no-cache \
-    libcap \
-    tini
+    libcap
