@@ -17,14 +17,15 @@ if [ $PROTOCOL = "4" ]; then
     # subnet declaration ipv4 (envirionment variables)
     echo "subnet $SUBNET netmask $NETMASK {" >> $FILE
     echo "  range $RANGE_BEGIN $RANGE_END;" >> $FILE
-    if [ "$OPTION_BROADCAST" != "" ]; then echo "  option broadcast-address $OPTION_BROADCAST;" >> $FILE; fi
-    if [ "$OPTION_ROUTERS" != "" ]; then echo "  option routers $OPTION_ROUTERS;" >> $FILE; fi
-    if [ "$OPTION_DOMAIN_NAME" != "" ]; then echo "  option domain-name \"$OPTION_DOMAIN_NAME\";" >> $FILE; fi
-    if [ "$OPTION_DOMAIN_NAME_SERVERS" != "" ]; then echo "  option domain-name-servers $OPTION_DOMAIN_NAME_SERVERS;" >> $FILE; fi
+    if [ "$BROADCAST" != "" ]; then echo "  option broadcast-address $BROADCAST;" >> $FILE; fi
+    if [ "$ROUTERS" != "" ]; then echo "  option routers $ROUTERS;" >> $FILE; fi
+    if [ "$DOMAIN_NAME" != "" ]; then echo "  option domain-name \"$DOMAIN_NAME\";" >> $FILE; fi
+    if [ "$DOMAIN_NAME_SERVERS" != "" ]; then echo "  option domain-name-servers $DOMAIN_NAME_SERVERS;" >> $FILE; fi
+    if [ "$DOMAIN_SEARCH" != "" ]; then echo "  option domain-search \"$DOMAIN_SEARCH\";" >> $FILE; fi
     if [ "$NEXT_SERVER" != "" ]; then echo "  option next-server $NEXT_SERVER;" >> $FILE; fi
-    if [ "$OPTION_TFTP_SERVER_NAME" != "" ]; then echo "  option tftp-server-name $OPTION_TFTP_SERVER_NAME;" >> $FILE; fi
-    if [ "$OPTION_BOOTFILE_NAME" != "" ]; then echo "  option bootfile-name $OPTION_BOOTFILE_NAME;" >> $FILE; fi
-    if [ "$OPTION_NTP_SERVERS" != "" ]; then echo "  option ntp-servers $OPTION_NTP_SERVERS;" >> $FILE; fi
+    if [ "$TFTP_SERVER_NAME" != "" ]; then echo "  option tftp-server-name $TFTP_SERVER_NAME;" >> $FILE; fi
+    if [ "$BOOTFILE_NAME" != "" ]; then echo "  option bootfile-name $BOOTFILE_NAME;" >> $FILE; fi
+    if [ "$NTP_SERVERS" != "" ]; then echo "  option ntp-servers $NTP_SERVERS;" >> $FILE; fi
     echo "}" >> $FILE
 
     # subnet declaration ipv4 (docker subnet)
@@ -36,8 +37,8 @@ elif [ $PROTOCOL = "6" ]; then
     # subnet declaration ipv6 (envirionment variables)
     echo "subnet6 $SUBNET6 {" >> $FILE
     echo "  range6 $RANGE6_BEGIN $RANGE6_END;" >> $FILE
-    if [ "$OPTION_DHCP6_NAME_SERVERS" != "" ]; then echo "  option dhcp6.name-servers $OPTION_DHCP6_NAME_SERVERS;" >> $FILE; fi
-    if [ "$OPTION_DHCP6_DOMAIN_SEARCH" != "" ]; then echo "  option dhcp6.domain-search \"$OPTION_DHCP6_DOMAIN_SEARCH\";" >> $FILE; fi
+    if [ "$DHCP6_NAME_SERVERS" != "" ]; then echo "  option dhcp6.name-servers $DHCP6_NAME_SERVERS;" >> $FILE; fi
+    if [ "$DHCP6_DOMAIN_SEARCH" != "" ]; then echo "  option dhcp6.domain-search \"$DHCP6_DOMAIN_SEARCH\";" >> $FILE; fi
     if [ "$PREFIX6" != "" ]; then echo "  prefix6 $PREFIX6;" >> $FILE; fi
     echo "}" >> $FILE
 fi
