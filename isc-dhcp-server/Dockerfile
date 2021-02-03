@@ -9,7 +9,7 @@ ENV UID=9067 \
 # add user dhcp
 RUN addgroup -g $GID -S dhcp && \
     adduser --disabled-password --gecos "" --shell /sbin/nologin \
-            --home /home/dhcp --no-create-home --ingroup dhcp \
+            --home /var/lib/dhcp --no-create-home --ingroup dhcp \
             --uid $UID dhcp
 
 # add isc-dhcp-server
