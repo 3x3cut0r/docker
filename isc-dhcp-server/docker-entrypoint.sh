@@ -1,5 +1,7 @@
 #!/bin/sh
 set -e
+# show available interfaces:
+ls /sys/class/net/
 # (re-)generate /var/lib/dhcp/dhcpd.conf
 FILE=/var/lib/dhcp/dhcpd.conf
 echo "#" > $FILE
