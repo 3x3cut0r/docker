@@ -24,7 +24,7 @@ echo "LENGTH OF SECOND PARTITION=$COUNT_PART_2"
 echo "split image ..."
 dd if=raspios.img of=raspios.img1 bs=$UNITS skip=$SKIP_PART_1 count=$COUNT_PART_1
 dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2
-
+ls -la
 # make tftpboot
 echo "mount raspios.img1 ..."
 mount -v -t vfat -o loop raspios.img1 fat32
