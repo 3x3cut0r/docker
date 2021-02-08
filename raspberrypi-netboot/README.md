@@ -14,7 +14,7 @@
 
 ### docker run
 
-**Example - without mounting a custom RaspiOS.img**  
+**Example 1 - without mounting a custom RaspiOS.img**  
 **(image will be downloaded from given url)**  
 ```shell
 docker container run --rm \
@@ -28,6 +28,21 @@ docker container run --rm \
     3x3cut0r/raspberrypi-netboot:latest
 ```
 
+**Example 2 - with mounting a custom RaspiOS.img**  
+**download your image from https://downloads.raspberrypi.org**  
+**(this will perform a lot faster !!!)**  
+```shell
+docker container run --rm \
+    --privileged \
+    --name raspberrypi-netboot \
+    -e NFSIP=192.168.0.200 \
+    -e NFSROOT=/nfsroot/raspberrypi \
+    -v /path/to/your/raspios-armhf-lite.zip:/netboot/raspios.zip \
+    -v /path/to/some/folder/nfsroot:/netboot/nfsroot \
+    -v /path/to/some/folder/tftpboot:/netboot/tftpboot \
+    3x3cut0r/raspberrypi-netboot:latest
+```
+
 ### docker-compose.yaml
 
 ```shell
@@ -35,15 +50,15 @@ version: '3'
 
 services:
   raspberrypi-netboot:
-    network_mode: host
+    privileged: true
     image: 3x3cut0r/raspberrypi-netboot
     environment:
       IMG: "https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip"
       NFSIP=192.168.0.200
       NFSROOT=/nfsroot/raspberrypi
     volumes:
-    - /path/to/some/folder/nfsroot:/netboot/nfsroot
-    - /path/to/some/folder/tftpboot:/netboot/tftpboot
+      - /path/to/some/folder/nfsroot:/netboot/nfsroot
+      - /path/to/some/folder/tftpboot:/netboot/tftpboot
 ```
 
 ### Environment Variables
