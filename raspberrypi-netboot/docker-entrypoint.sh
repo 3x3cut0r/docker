@@ -49,5 +49,5 @@ umount ext4
 echo "remove raspios.img2 ..."
 rm -rf raspios.img2
 echo "setup /etc/fstab for NFS-boot ..."
-echo "proc /proc proc defaults 0 0" > $NFSROOT/etc/fstab
+echo "proc /proc proc defaults 0 0" > nfsroot/etc/fstab
 echo "DONE"
