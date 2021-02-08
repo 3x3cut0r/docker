@@ -22,7 +22,7 @@ VOLUME /netboot/tftpboot
 # netboot environment variables
 # (see: https://www.raspberrypi.org/software/operating-systems/)
 ENV IMG="https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip" \
-    NFSIP=192.168.15.26 \
+    NFSIP=192.168.0.200 \
     NFSROOT=/nfsroot/raspberrypi
 
 # add docker-entrypoint.sh
