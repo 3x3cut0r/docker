@@ -33,7 +33,7 @@ rsync -rq --exclude=boot fat32/ tftpboot/
 echo "mount raspios.img1 ..."
 umount fat32
 echo "setup cmdline.txt for NFS-boot ..."
-echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFSIP:$NFSROOT,v4 ip=dhcp root=/dev/nfs elevator=deadline" > tftpboot/cmdline.txt
+echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFSIP:$NFSROOT,v$NFSVERSION ip=dhcp root=/dev/nfs elevator=deadline" > tftpboot/cmdline.txt
 echo "setup config.txt for NFS-boot ..."
 echo "program_usb_boot_mode=1" >> tftpboot/config.txt
 
