@@ -1,11 +1,11 @@
 #!/bin/sh
 ls -la .
 # download RPi OS image
-if [ ! -f *.zip ] && [ ! -f *.img ]; then echo "download raspios.zip ..." && wget $IMG; fi
+if [ ! -f *.zip ] && [ ! -f *.img ]; then echo "download raspios.zip ..." && wget $IMG -O raspios.zip; fi
 # unzip RPi OS image
 if [ -f *.zip ]; then echo "unzip raspios.zip ..." && unzip *.zip; fi
 # rename RPi OS image
-if [ -f *.img ]; then echo "rename raspios.img ..." && mv *raspios*.img raspios.img; fi
+if [ -f *.img ]; then echo "rename raspios.img ..." && mv *.img raspios.img; fi
 set -e
 # split image to have both partitions reparate
 echo "get raspios.img info ..."
@@ -32,8 +32,6 @@ echo "rsync raspios.img1 to /netboot/tftpboot ..."
 rsync -rq --exclude=boot fat32/ tftpboot/
 echo "mount raspios.img1 ..."
 umount fat32
-echo "remove raspios.img1 ..."
-rm -rf raspios.img1
 echo "setup cmdline.txt for NFS-boot ..."
 echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFSIP:$NFSROOT,v4 ip=dhcp root=/dev/nfs elevator=deadline" > tftpboot/cmdline.txt
 echo "setup config.txt for NFS-boot ..."
@@ -46,8 +44,11 @@ echo "rsync raspios.img2 to /netboot/nfsboot ... (this takes some time)"
 rsync -rq --exclude=boot/* ext4/ nfsroot/
 echo "unmount raspios.img2 ..."
 umount ext4
-echo "remove raspios.img2 ..."
-rm -rf raspios.img2
 echo "setup /etc/fstab for NFS-boot ..."
 echo "proc /proc proc defaults 0 0" > nfsroot/etc/fstab
+
+# clean environment
+echo "clean environment ..."
+if [ -w *.zip ]; then rm -rf *.zip; fi
+rm -rf raspios.img*
 echo "DONE"
