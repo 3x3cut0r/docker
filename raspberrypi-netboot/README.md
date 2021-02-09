@@ -1,6 +1,6 @@
 # raspberrypi-netboot
 
-**A simple docker container to extract files from a RaspiOS image into the tftpboot and nfsroot directory which a raspberry pi can boot from via pxe**  
+**extract files from a RaspiOS.img into the tftpboot and nfsroot directory for RPi pxe-boot**  
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/raspberrypi-netboot)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/raspberrypi-netboot)
