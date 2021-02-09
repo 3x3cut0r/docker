@@ -1,7 +1,6 @@
 # raspberrypi-netboot
 
-**A simple container to create the tftpboot and nfsroot directory**  
-**a raspberry pi can boot from**  
+**A simple docker container to extract files from a RaspiOS image into the tftpboot and nfsroot directory which a raspberry pi can boot from via pxe**  
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/raspberrypi-netboot)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/raspberrypi-netboot)
@@ -22,8 +21,9 @@ docker container run --rm \
     --privileged \
     --name raspberrypi-netboot \
     -e IMG="https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip" \
-    -e NFSIP=192.168.0.200 \
-    -e NFSROOT=/nfsroot/raspberrypi \
+    -e NFS_IP=192.168.0.200 \
+    -e NFS_ROOT=/nfsroot/raspberrypi \
+    -e NFS_VERSION=4 \
     -v /path/to/some/folder/nfsroot:/netboot/nfsroot \
     -v /path/to/some/folder/tftpboot:/netboot/tftpboot \
     3x3cut0r/raspberrypi-netboot:latest
@@ -36,8 +36,9 @@ docker container run --rm \
 docker container run --rm \
     --privileged \
     --name raspberrypi-netboot \
-    -e NFSIP=192.168.0.200 \
-    -e NFSROOT=/nfsroot/raspberrypi \
+    -e NFS_IP=192.168.0.200 \
+    -e NFS_ROOT=/nfsroot/raspberrypi \
+    -e NFS_VERSION=4 \
     -v /path/to/your/raspios-armhf-lite.zip:/netboot/raspios.zip \
     -v /path/to/some/folder/nfsroot:/netboot/nfsroot \
     -v /path/to/some/folder/tftpboot:/netboot/tftpboot \
@@ -55,8 +56,9 @@ services:
     image: 3x3cut0r/raspberrypi-netboot
     environment:
       IMG: "https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip"
-      NFSIP=192.168.0.200
-      NFSROOT=/nfsroot/raspberrypi
+      NFS_IP=192.168.0.200
+      NFS_ROOT=/nfsroot/raspberrypi
+      NFS_VERSION=4
     volumes:
       - /path/to/some/folder/nfsroot:/netboot/nfsroot
       - /path/to/some/folder/tftpboot:/netboot/tftpboot
@@ -64,8 +66,9 @@ services:
 
 ### Environment Variables
 
-* `NFSIP` - NFS-Server IP-Address to be written in the boot/cmdline.txt  
-* `NFSROOT` - NFS-Root-Directory to be written in the boot/cmdline.txt and /etc/fstab  
+* `NFS_IP` - NFS-Server IP-Address to be written in the boot/cmdline.txt  
+* `NFS_ROOT` - NFS-Root-Directory to be written in the boot/cmdline.txt and /etc/fstab  
+* `NFS_VERSION` - NFS-Version to be written in the boot/cmdline.txt and /etc/fstab  
 
 ### Volumes
 
