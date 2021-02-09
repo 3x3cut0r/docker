@@ -39,7 +39,7 @@ docker container run --rm \
     -e NFS_IP=192.168.0.200 \
     -e NFS_ROOT=/nfsroot/raspberrypi \
     -e NFS_VERSION=4 \
-    -v /path/to/your/raspios-armhf-lite.zip:/netboot/raspios.zip \
+    -v /path/to/your/2021-01-11-raspios-buster-armhf-lite.zip:/netboot/raspios.zip \
     -v /path/to/some/folder/nfsroot:/netboot/nfsroot \
     -v /path/to/some/folder/tftpboot:/netboot/tftpboot \
     3x3cut0r/raspberrypi-netboot:latest
