@@ -68,7 +68,7 @@ services:
 
 * `NFS_IP` - NFS-Server IP-Address to be written in the boot/cmdline.txt  
 * `NFS_ROOT` - NFS-Root-Directory to be written in the boot/cmdline.txt and /etc/fstab  
-* `NFS_VERSION` - NFS-Version to be written in the boot/cmdline.txt and /etc/fstab  
+* `NFS_VERSION` - NFS-Version to be written in the boot/cmdline.txt
 
 ### Volumes
 
