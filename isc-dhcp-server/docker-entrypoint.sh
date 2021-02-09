@@ -1,6 +1,7 @@
 #!/bin/sh
 set -e
 # show available interfaces:
+printf "\nINFO: available interfaces:\n\n"
 ls /sys/class/net/
 # (re-)generate /var/lib/dhcp/dhcpd.conf
 FILE=/var/lib/dhcp/dhcpd.conf
