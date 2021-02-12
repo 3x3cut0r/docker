@@ -1,5 +1,5 @@
 #!/bin/sh
-# chekc RPi OS image
+# check RPi OS image
 printf '\n\e[0;33m%-6s\e[m\n' " ==> check if image is mounted ... "
 ls -la .
 
