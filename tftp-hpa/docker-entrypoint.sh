@@ -15,17 +15,17 @@ if [ "$#" = "0" ]; then
     if [ "$UMASK" != "" ]; then param="${param} --umask $UMASK"; fi
     if [ "$VERBOSE" = "1" ]; then param="${param} --verbose"; fi
     if [ "$VERBOSITY" != "" ]; then param="${param} --verbosity $VERBOSITY"; fi
-    param="--foreground --address 0.0.0.0:9069 --user tftp ${param} /tftpboot"
-    printf "\nINFO: in.tftpd ${param}\n\n"
-    exec in.tftpd ${param}
+    param="--foreground --address 0.0.0.0:69 --user tftp ${param} /tftpboot"
+    printf "\nINFO: /usr/sbin/in.tftpd ${param}\n\n"
+    exec /usr/sbin/in.tftpd ${param}
 else
     # if first arg looks like a flag, assume we want to run in.tftpd
     if [ "$( echo "$1" | cut -c1 )" = "-" ]; then
-        printf "\nINFO: in.tftpd --foreground --address 0.0.0.0:9069 --user tftp $@\n\n"
-        exec in.tftpd --foreground --address 0.0.0.0:9069 --user tftp $@
+        printf "\nINFO: /usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp $@\n\n"
+        exec /usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp $@
     # if the first arg is "in.tftpd" ...
     elif [ "$1" = "in.tftpd" ]; then
-        exec in.tftpd --foreground --address 0.0.0.0:9069 --user tftp "${@:9}"
+        exec /usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp "${@:9}"
     # if first arg doesn't looks like a flag
     else
         printf "\nINFO: $@\n\n"
