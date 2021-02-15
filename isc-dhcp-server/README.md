@@ -125,8 +125,9 @@ services:
 * `DOMAIN_SEARCH` - Search-List of Domains (up to 3). e.g.: `example.com,sales.example.com` (avoid using spaces!)  
 * `NEXT_SERVER` - Next-Server (for PXE/TFTP-Boot). e.g.: `192.168.0.1`  
 * `TFTP_SERVER_NAME` - TFTP-Server (for PXE/TFTP-Boot). e.g.: `192.168.0.1`  
-* `BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). e.g.: `/tftpboot.img`  
+* `BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). e.g.: `bootcode.bin`  
 * `NTP_SERVERS` - NTP-Servers (up to 3). e.g.: `0.de.pool.ntp.org,1.de.pool.ntp.org` (avoid using spaces!)  
+* `VENDOR_ENCAPSULATED_OPTIONS` - String of vendor-specific information. e.g.: `Raspberry Pi Boot`  
 
 **IPv6 Environment Variables (PROTOCOL=6)**  
 * `SUBNET6` - Network-Address. e.g.: `fe80::0/64`  
