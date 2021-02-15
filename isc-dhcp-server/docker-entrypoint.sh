@@ -27,8 +27,9 @@ if [ $PROTOCOL = "4" ]; then
     if [ "$DOMAIN_SEARCH" != "" ]; then echo "  option domain-search \"$DOMAIN_SEARCH\";" >> $FILE; fi
     if [ "$NEXT_SERVER" != "" ]; then echo "  next-server $NEXT_SERVER;" >> $FILE; fi
     if [ "$TFTP_SERVER_NAME" != "" ]; then echo "  option tftp-server-name \"$TFTP_SERVER_NAME\";" >> $FILE; fi
-    if [ "$BOOTFILE_NAME" != "" ]; then echo "  option bootfile-name $BOOTFILE_NAME;" >> $FILE; fi
+    if [ "$BOOTFILE_NAME" != "" ]; then echo "  option bootfile-name \"$BOOTFILE_NAME\";" >> $FILE; fi
     if [ "$NTP_SERVERS" != "" ]; then echo "  option ntp-servers $NTP_SERVERS;" >> $FILE; fi
+    if [ "$VENDOR_ENCAPSULATED_OPTIONS" != "" ]; then echo "  option vendor-encapsulated-options \"$VENDOR_ENCAPSULATED_OPTIONS\";" >> $FILE; fi
     echo "}" >> $FILE
 
     # subnet declaration ipv4 (docker subnet)
