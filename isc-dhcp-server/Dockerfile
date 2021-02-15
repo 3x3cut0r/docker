@@ -40,6 +40,7 @@ ENV IFACE=eth0 \
     TFTP_SERVER_NAME="" \
     BOOTFILE_NAME="" \
     NTP_SERVERS="" \
+    VENDOR_ENCAPSULATED_OPTIONS="" \
     SUBNET6="" \
     RANGE6_BEGIN="" \
     RANGE6_END="" \
