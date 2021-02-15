@@ -32,7 +32,7 @@ printf '\n\e[0;33m%-6s\e[m\n' " ==> split image ... " && echo "first partition:"
 dd if=raspios.img of=raspios.img1 bs=$UNITS skip=$SKIP_PART_1 count=$COUNT_PART_1
 echo "" && echo "second partition:" && echo "dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2"
 dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2
-sleep 3
+sleep 10
 echo "" && echo "ls -la raspios.img*" && ls -la raspios.img*
 
 # make tftpboot
@@ -42,8 +42,8 @@ printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img1 to /netboot/tftpboot ... 
 rsync -rq --exclude=boot fat32/ tftpboot/
 printf '\n\e[0;33m%-6s\e[m\n' " ==> umount raspios.img1 ... " && echo "umount fat32"
 umount fat32
-printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFSIP:$NFSROOT,v$NFSVERSION ip=dhcp root=/dev/nfs elevator=deadline\" > tftpboot/cmdline.txt"
-echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFSIP:$NFSROOT,v$NFSVERSION ip=dhcp root=/dev/nfs elevator=deadline" > tftpboot/cmdline.txt
+printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFS_IP:$NFS_ROOT,v$NFS_VERSION ip=dhcp root=/dev/nfs elevator=deadline\" > tftpboot/cmdline.txt"
+echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 rootwait rw nfsroot=$NFS _IP:$NFS _ROOT,v$NFS_VERSION ip=dhcp root=/dev/nfs elevator=deadline" > tftpboot/cmdline.txt
 printf '\n\e[0;33m%-6s\e[m\n' " ==> setup config.txt for NFS-boot ... " && echo "echo \"program_usb_boot_mode=1\" >> tftpboot/config.txt"
 echo "program_usb_boot_mode=1" >> tftpboot/config.txt
 
