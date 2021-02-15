@@ -13,7 +13,8 @@ RUN addgroup -g $GID -S tftp && \
             --uid $UID tftp
 
 # add tftp-hpa
-RUN apk add --no-cache tftp-hpa
+RUN apk add --no-cache tftp-hpa libcap && \
+    setcap 'cap_net_bind_service=+ep' /usr/sbin/in.tftpd
 
 # tftp-hpa environment variables
 # (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
@@ -31,7 +32,7 @@ ENV BLOCKSIZE="" \
     VERBOSITY=3
 
 VOLUME /tftpboot
-EXPOSE 9069/udp
+EXPOSE 69/udp
 
 # add mapfile
 COPY mapfile $MAPFILE
