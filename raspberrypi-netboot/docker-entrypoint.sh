@@ -31,7 +31,7 @@ echo "" && echo "UNITS=$UNITS" && echo "START OF FIRST PARTITION=$SKIP_PART_1" &
 printf '\n\e[0;33m%-6s\e[m\n' " ==> split image ... " && echo "first partition:" && echo "dd if=raspios.img of=raspios.img1 bs=$UNITS skip=$SKIP_PART_1 count=$COUNT_PART_1"
 dd if=raspios.img of=raspios.img1 bs=$UNITS skip=$SKIP_PART_1 count=$COUNT_PART_1
 echo "" && echo "second partition:" && echo "dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2"
-dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2
+dd if=raspios.img of=raspios.img2 bs=$UNITS skip=$SKIP_PART_2 count=$COUNT_PART_2; sync
 sleep 10
 echo "" && echo "ls -la raspios.img*" && ls -la raspios.img*
 
