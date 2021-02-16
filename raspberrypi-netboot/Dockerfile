@@ -1,6 +1,6 @@
 FROM alpine:3.13.1
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="RaspberryPi netboot"
+LABEL description="extract files from a RaspiOS.img into the tftpboot and nfsroot directory for RPi pxe-boot"
 
 # set UID/GID for pi
 ENV UID=9999 \
@@ -22,9 +22,9 @@ VOLUME /netboot/tftpboot
 # netboot environment variables
 # (see: https://www.raspberrypi.org/software/operating-systems/)
 ENV IMG="https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip" \
-    NFSIP=192.168.0.200 \
-    NFSROOT=/nfsroot/raspberrypi \
-    NFSVERSION=4
+    NFS_IP=192.168.0.200 \
+    NFS_ROOT=/nfsroot/raspberrypi \
+    NFS_VERSION=4
 
 # add docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
