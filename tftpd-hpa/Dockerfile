@@ -23,7 +23,8 @@ RUN apk add --no-cache tftp-hpa runit && \
         /runit-services/syslogd && \
     echo -e "#!/bin/sh\nbusybox syslogd -n -O /dev/stdout" > \
         /runit-services/syslogd/run && \
-    echo -e "#!/bin/sh\n/usr/sbin/in.tftpd --foreground --verbose --secure /tftpboot" > \
+    echo -e "#!/bin/sh\n/usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 \
+        --user tftp --verbose --secure /tftpboot" > \
         /runit-services/tftpd-hpa/run && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/tftpd-hpa/run
