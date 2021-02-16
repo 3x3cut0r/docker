@@ -117,8 +117,8 @@ services:
 
 ### Volumes <a name="volumes"></a>
 
-* `/tftpboot` - tftp root directory -> **your directory needs to be at least 0770 (rwxrwx---), owned by uid=9069, gid=9069**  
-* `/mapfile`  - mapfile for tftpd-hpa -> your mapfile needs to be at least 0400 (r--------), owned by uid=9069, gid=9069  
+* `/tftpboot` - tftp root directory -> **your directory needs to be at least 0555 (dr-xr-xr-x), owned by root or uid=9069, gid=9069**  
+* `/mapfile`  - mapfile for tftpd-hpa -> your mapfile needs to be at least 0444 (-r--r--r--), owned by root or uid=9069, gid=9069  
 
 ### Ports <a name="ports"></a>
 
