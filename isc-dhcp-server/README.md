@@ -106,6 +106,7 @@ services:
 * `IFACE` - Interface to listen on. **Have to fit with your host-interface! Default: eth0**  
 * `PROTOCOL` - IP Protocol. (IPv4=4, IPv6=6) **Default: 4**  
 * `QUIET` - Be quiet at startup. **Default: 0**  
+* `TZ` - Specifies the server timezone - **Default: UTC**  
 
 **Global dhcpd.conf Environment Variables**  
 * `DEFAULT_LEASE_TIME` - **Default: 3600**  
@@ -143,7 +144,7 @@ services:
 
 ### Ports <a name="ports"></a>
 
-* No need for Port-Bindings because of network=host!  
+* No need for Port-Bindings because you need to specify network=host!  
 
 ## Find Me <a name="findme"></a>
 
