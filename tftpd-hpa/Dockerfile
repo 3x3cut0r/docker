@@ -16,7 +16,7 @@ RUN addgroup -g $GID -S tftp && \
             --uid $UID tftp
 
 # add tftp-hpa
-RUN apk add --no-cache tftp-hpa runit && \
+RUN apk add --no-cache tftp-hpa runit tzdata && \
     mkdir -p /tftpboot \
         /runit-services \
         /runit-services/tftpd-hpa \
@@ -29,13 +29,13 @@ RUN apk add --no-cache tftp-hpa runit && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/tftpd-hpa/run
 
-# tftp-hpa environment variables
+# tftpd-hpa environment variables
 # (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
-ENV BLOCKSIZE="" \
+ENV TZ="UTC" \
     CREATE=0 \
-    MAPFILE=/mapfile \
+    MAPFILE="/mapfile" \
     PERMISSIVE=0 \
-    PORTRANGE="4096:32767" \
+    PORTRANGE="4096:32760" \
     REFUSE="" \
     RETRANSMIT="" \
     SECURE=1 \
