@@ -32,5 +32,5 @@ RUN set -eux; \
     gosu nobody true
 
 # add dependencies for all images
-RUN apk add --no-cache \
+RUN apk add --no-cache tzdata \
     libcap
