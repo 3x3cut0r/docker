@@ -38,24 +38,25 @@ echo "" && echo "ls -la raspios.img*" && ls -la raspios.img*
 # make tftpboot
 printf '\n\e[0;33m%-6s\e[m\n' " ==> mount raspios.img1 to fat32/ ... " && echo "mount -v -t vfat -o loop raspios.img1 fat32"
 mount -v -t vfat -o loop raspios.img1 fat32
-printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img1 to /netboot/tftpboot ... " && echo "rsync -rq --exclude=boot fat32/ tftpboot/"
-rsync -rq --exclude=boot fat32/ tftpboot/
+printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img1 to /tftpboot ... " && echo "rsync -rq fat32/ tftpboot/"
+rsync -rq fat32/ tftpboot/
 printf '\n\e[0;33m%-6s\e[m\n' " ==> umount raspios.img1 ... " && echo "umount fat32"
 umount fat32
-printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs nfsroot=$NFS_IP:$NFS_ROOT,v$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline\" > tftpboot/cmdline.txt"
-echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs nfsroot=$NFS_IP:$NFS_ROOT,v$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline" > tftpboot/cmdline.txt
+printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs rootfstype=nfs nfsroot=$NFS_IP:$NFS_ROOT,v$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline\" > tftpboot/cmdline.txt"
+echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs rootfstype=nfs nfsroot=$NFS_IP:$NFS_ROOT,vers=$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline" > tftpboot/cmdline.txt
 printf '\n\e[0;33m%-6s\e[m\n' " ==> setup config.txt for NFS-boot ... " && echo "echo \"program_usb_boot_mode=1\" >> tftpboot/config.txt"
 echo "program_usb_boot_mode=1" >> tftpboot/config.txt
 
 # make nfsroot
 printf '\n\e[0;33m%-6s\e[m\n' " ==> mount raspios.img2 to ext4/ ... " && echo "mount -v -t ext4 -o loop raspios.img2 ext4"
 mount -v -t ext4 -o loop raspios.img2 ext4
-printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img2 to /netboot/nfsboot ... (this may take some time) " && echo "rsync -rq --exclude=boot/* ext4/ nfsroot/"
-rsync -rq --exclude=boot/* ext4/ nfsroot/
+printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img2 to /netboot/nfsboot ... (this may take some time) " && echo "rsync -rq ext4/ nfsroot/"
+rsync -rq ext4/ nfsroot/
 printf '\n\e[0;33m%-6s\e[m\n' " ==> umount raspios.img2 ... " && echo "umount ext4"
 umount ext4
-printf '\n\e[0;33m%-6s\e[m\n' " ==> setup /etc/fstab to not boot from SD-Card ... " && echo "echo \"proc /proc proc defaults 0 0\" > nfsroot/etc/fstab"
+printf '\n\e[0;33m%-6s\e[m\n' " ==> setup /etc/fstab to not boot from SD-Card ... " && echo "echo \"proc /proc proc defaults 0 0\" > nfsroot/etc/fstab" && "echo \"$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp 0 0\" > nfsroot/etc/fstab"
 echo "proc /proc proc defaults 0 0" > nfsroot/etc/fstab
+echo "$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp 0 0" > nfsroot/etc/fstab
 sleep 3
 
 # clean environment
