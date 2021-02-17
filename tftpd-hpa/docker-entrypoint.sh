@@ -1,5 +1,7 @@
 #!/bin/sh
 set -e
+# set timezone
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # if started without args, exec in.tftpd
 if [ "$#" = "0" ]; then
     param=""
