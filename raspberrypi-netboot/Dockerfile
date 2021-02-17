@@ -24,7 +24,7 @@ VOLUME /netboot/tftpboot
 ENV IMG="https://downloads.raspberrypi.org/raspios_lite_armhf/images/raspios_lite_armhf-2021-01-12/2021-01-11-raspios-buster-armhf-lite.zip" \
     NFS_IP=192.168.0.200 \
     NFS_ROOT=/nfsroot/raspberrypi \
-    NFS_VERSION=4
+    NFS_VERSION=3
 
 # add docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
