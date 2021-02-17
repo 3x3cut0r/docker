@@ -13,14 +13,15 @@ RUN addgroup -g $GID -S dhcp && \
             --uid $UID dhcp
 
 # add isc-dhcp-server
-RUN apk add --no-cache dhcp && \
+RUN apk add --no-cache dhcp tzdata && \
     mkdir -p /var/lib/dhcp && \
     touch /var/lib/dhcp/dhcpd.conf && \
     touch /var/lib/dhcp/dhcpd.leases
 
 # isc-dhcp-server environment variables
 # (see: https://manpages.debian.org/jessie/isc-dhcp-server/dhcpd.8.en.html)
-ENV IFACE=eth0 \
+ENV TZ="UTC" \
+    IFACE=eth0 \
     PROTOCOL=4 \
     QUIET=0 \
     DEFAULT_LEASE_TIME=3600 \
