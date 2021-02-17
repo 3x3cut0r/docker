@@ -1,5 +1,7 @@
 #!/bin/sh
 set -e
+# set timezone
+ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # show available interfaces:
 printf "\nINFO: available interfaces:\n\n"
 ls /sys/class/net/
