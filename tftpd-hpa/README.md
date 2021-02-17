@@ -101,12 +101,13 @@ services:
 ### Environment Variables <a name="environment-variables"></a>
 **for more information, see https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html**
 
+* `TZ` - Specifies the server timezone - **Default: UTC**  
 * `BLOCKSIZE` - Specifies the maximum permitted block size  
 * `CREATE` - Allow new files to be created - Default: 0 (only upload files, if they already exist)  
-* `MAPFILE` - Specify the use of filename remapping - **Default: /mapfile**
+* `MAPFILE` - Specify the use of filename remapping - **Default: /mapfile**  
 (leave empty, if you don't want to use a mapfile)  
 * `PERMISSIVE` - Perform no additional permissions checks - Default: 0  
-* `PORTRANGE` - Force the server port number (the Transaction ID) to be in the specified range of port numbers  
+* `PORTRANGE` - Force the server port number (the Transaction ID) to be in the specified range of port numbers - **Default: 4096:32760**  
 * `REFUSE` - Indicate that a specific RFC 2347 TFTP option should never be accepted  
 * `RETRANSMIT` - Determine the default timeout, in microseconds, before the first packet is retransmitted - Default: 1000000 (1 second)  
 * `SECURE` - Change root directory on startup - **Default: 1**  
