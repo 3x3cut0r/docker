@@ -41,6 +41,7 @@ ENV TZ="UTC" \
     TFTP_SERVER_NAME="" \
     BOOTFILE_NAME="" \
     NTP_SERVERS="" \
+    ROOT_PATH="" \
     VENDOR_ENCAPSULATED_OPTIONS="" \
     SUBNET6="" \
     RANGE6_BEGIN="" \
