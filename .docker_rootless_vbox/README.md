@@ -5,8 +5,8 @@
 ## Usage
 
 **run first time: install prerequisites as root**  
-ssh docker@docker-host
-su -
+ssh docker@docker-host  
+su -  
 ```shell
 apt install wget -y
 wget https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker_rootless.sh
