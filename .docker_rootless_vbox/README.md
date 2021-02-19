@@ -1,21 +1,79 @@
-# rootless docker
+# docker rootless mode
 
-**install docker in rootless mode on debian 10 vm in virtualbox**
+**script to install docker in rootless mode on debian 10 in virtualbox**
 
-## Usage
-
-**run first time: install prerequisites as root**  
-ssh docker@docker-host  
-su -  
+## Create new VirtualMachine in VirtualBox
 ```shell
+# VirtualBox Settings:
+#
+# VM Name:          docker-host
+# VM Typ:           Linux
+# VM Version:       Debian (64-bit)
+# VM optical img:   e.g.: debian-10.8.0-amd64-netinst.iso
+# VM Boot-order:    optical, hard disk
+# VM RAM:           4 GB
+# VM CPU-Cores:     2
+# VM CPU-Options:   PAE/NX activated
+# VM GPU-RAM:       32MB
+# VM Netwerk:       network-bridge
+#
+```
+
+## Install Debian 10 in VirtualBox
+```shell
+# Debian 10 Installation:
+#
+# Graphical install (Debian 10)
+# language:         <choose your own>
+# hostname:         docker-host
+# root username:    root
+# root password:    root
+# username:         docker
+# password:         docker
+# ip:               dhcp
+#
+# Software to install:
+# x SSH server
+# x Standard-Systemtools
+#
+```
+
+## Set static ip address in /etc/network/interfaces
+```shell
+# auto lo
+# iface lo inet loopback
+# iface enp0s3 inet static
+#   address 192.168.0.254/24
+#   gateway 192.168.0.1
+#   dns-servers 8.8.8.8 8.8.4.4
+#
+# The primary network interface
+# This is an autoconfigured IPv6 interface
+# allow-hotplug enp0s3
+# iface enp0s3 inet6 auto
+#
+```
+
+## download and run script first time as root
+on your host:
+```shell
+ssh docker@docker-host  
+```
+on your guest: (debian 10)  
+```shell
+su -
 apt install wget -y
 wget https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker_rootless.sh
 chmod +x docker_rootless.sh
 ./docker_rootless.sh
 ```
 
-**run second time: install docker as docker**  
-ssh docker@docker-host
+## run script second time as docker
+on your host:
+```shell
+ssh docker@docker-host  
+```
+on your guest: (debian 10)
 ```shell
 ./docker_rootless.sh install
 ```
