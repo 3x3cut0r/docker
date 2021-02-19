@@ -2,7 +2,22 @@
 
 **script to install docker in rootless mode on debian 10 in virtualbox**  
 
-## Create new VirtualMachine in VirtualBox
+## Index
+
+1. [VirtualBox](#virtualbox)
+    1. [Create new VirtualMachine in VirtualBox](#create_vm)
+    2. [Install Debian 10 in VirtualBox](#install_debian)
+    3. [Set static ip address in /etc/network/interfaces](#set_ip)
+2. [Usage](#usage)
+    1. [first-run: install prerequisites](#first_run)
+    2. [second-run: install docker](#second_run)
+    3. [use docker](#use_docker)
+3. [Find Me](#findme)
+4. [License](#license)
+
+## VirtualBox <a name="virtualbox"></a>
+
+### 1. Create new VirtualMachine in VirtualBox <a name="create_vm"></a>
 ```shell
 # VirtualBox Settings:
 #
@@ -19,7 +34,7 @@
 #
 ```
 
-## Install Debian 10 in VirtualBox
+### 2. Install Debian 10 in VirtualBox <a name="install_debian"></a>
 ```shell
 # Debian 10 Installation:
 #
@@ -38,7 +53,7 @@
 #
 ```
 
-## Set static ip address in /etc/network/interfaces
+### 3. Set static ip address in /etc/network/interfaces <a name="set_ip"></a>
 ```shell
 # auto lo
 # iface lo inet loopback
@@ -54,7 +69,9 @@
 #
 ```
 
-## download and run script first time as root
+## Usage <a name="usage"></a>
+
+### 1. download and run script first time as root <a name="first_run"></a>
 on your host:
 ```shell
 ssh docker@docker-host  
@@ -68,7 +85,7 @@ chmod +x docker_rootless.sh
 ./docker_rootless.sh
 ```
 
-## run script second time as docker
+### 2. run script second time as docker <a name="second_run"></a>
 on your host:
 ```shell
 ssh docker@docker-host  
@@ -78,7 +95,7 @@ on your guest: (debian 10)
 ./docker_rootless.sh install
 ```
 
-## use docker only with user docker
+### 3. use docker only with user docker <a name="use_docker"></a>
 on your host:
 ```shell
 ssh docker@docker-host  
