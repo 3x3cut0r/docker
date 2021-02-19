@@ -132,6 +132,7 @@ services:
 * `TFTP_SERVER_NAME` - TFTP-Server (for PXE/TFTP-Boot). e.g.: `192.168.0.1`  
 * `BOOTFILE_NAME` - Bootfile-Name (for PXE/TFTP-Boot). e.g.: `bootcode.bin`  
 * `NTP_SERVERS` - NTP-Servers (up to 3). e.g.: `0.de.pool.ntp.org,1.de.pool.ntp.org` (avoid using spaces!)  
+* `ROOT_PATH` - Root-Path. e.g. NFS-Root-Path: `192.168.0.1:/nfs/client1`   
 * `VENDOR_ENCAPSULATED_OPTIONS` - String of vendor-specific information. e.g.: `Raspberry Pi Boot`  
 
 **IPv6 Environment Variables (PROTOCOL=6)**  
