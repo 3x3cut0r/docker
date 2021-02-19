@@ -29,6 +29,7 @@
 ```shell
 docker run -d \
     --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
     -v /path/of/some/files:/tftpboot \
     -p 69:69/udp \
     3x3cut0r/tftpd-hpa:latest
@@ -40,6 +41,7 @@ docker run -d \
 ```shell
 docker run -d \
     --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
     -e CREATE=1 \
     -e MAPFILE="" \
     -v /path/of/some/files:/tftpboot \
@@ -52,6 +54,7 @@ docker run -d \
 ```shell
 docker run -d \
     --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
     -v /path/of/some/files:/tftpboot \
     -p 69:69/udp \
     3x3cut0r/tftpd-hpa:latest \
@@ -63,6 +66,7 @@ docker run -d \
 ```shell
 docker run -d \
     --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
     -v /path/of/some/files:/tftpboot \
     -p 69:69/udp \
     3x3cut0r/tftpd-hpa:latest \
@@ -74,6 +78,7 @@ docker run -d \
 ```shell
 docker run -d \
     --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
     -e MAPFILE=/mapfile \
     -v /path/of/some/files:/tftpboot \
     -v /path/of/your/mapfile:/mapfile \
@@ -90,6 +95,7 @@ services:
   tftpd-hpa:
     image: 3x3cut0r/tftpd-hpa
     environment:
+        TZ: Europe/Berlin
         CREATE: 1
         VERBOSE: 1
     volumes:
