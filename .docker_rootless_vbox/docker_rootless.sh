@@ -56,8 +56,8 @@
 if [ "$#" = "0" ]; then
     # check root
     if [ $UID -ne 0 ]; then
-        printf '\n\e[1;31m%-6s\e[m\n' "run as root (uid=0) to install prerequisites"
-        echo -e "if you want do install docker rootless, do:\n ./docker_rootless.sh install"
+        printf '\e[1;31m%-6s\e[m\n\n' "run as root (uid=0) to install prerequisites"
+        echo -e "if you want do install docker rootless, do:\n ./docker_rootless.sh install\n"
         exit 1
     fi
 
@@ -114,8 +114,24 @@ if [ "$#" = "0" ]; then
     reboot
 
 elif [ ! "$#" = "0" ]; then
-    # install rootless docker
+    # check second run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
+    read -p "do you want to continue? (y/N): " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "exited by user"
+        exit 1
+    fi
+
+    # check docker
+    if  [ "$(/home/docker/bin/docker --version)" && $(ls -l /home/docker/bin/docker) ] || \
+        [ "$(/usr/local/bin/docker --version)" && $(ls -l /usr/local/bin/docker) ] || \
+        [ "$(/usr/bin/docker.io --version)" && $(ls -l /usr/bin/docker.io) ]; then
+        printf '\e[1;31m%-6s\e[m\n\n' "docker is already installed. abort"
+        exit 1
+    fi
+
+    # install rootless docker
     if [ $UID -eq 0 ]; then echo "you need to login (via ssh) as docker (uid=1000) to install rootless docker!"; exit 1; fi
     curl -fsSL https://get.docker.com/rootless | sh
     sudo loginctl enable-linger docker
