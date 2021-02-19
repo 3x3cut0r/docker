@@ -1,7 +1,7 @@
 #!/bin/bash
-# Author: 	3x3cut0r <executor55@gmx.de>
-# Version:	0.1
-# Date:		2021-02-19
+# Author:   3x3cut0r <executor55@gmx.de>
+# Version:  1.0
+# Date:     2021-02-19
 #
 # Description:
 #  this script installs a rootless docker-host on a debian 10 virtualbox
