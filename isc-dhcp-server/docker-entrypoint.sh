@@ -31,6 +31,7 @@ if [ $PROTOCOL = "4" ]; then
     if [ "$TFTP_SERVER_NAME" != "" ]; then echo "  option tftp-server-name \"$TFTP_SERVER_NAME\";" >> $FILE; fi
     if [ "$BOOTFILE_NAME" != "" ]; then echo "  option bootfile-name \"$BOOTFILE_NAME\";" >> $FILE; fi
     if [ "$NTP_SERVERS" != "" ]; then echo "  option ntp-servers $NTP_SERVERS;" >> $FILE; fi
+    if [ "$ROOT_PATH" != "" ]; then echo "  option root-path \"$ROOT_PATH\";" >> $FILE; fi
     if [ "$VENDOR_ENCAPSULATED_OPTIONS" != "" ]; then echo "  option vendor-encapsulated-options \"$VENDOR_ENCAPSULATED_OPTIONS\";" >> $FILE; fi
     echo "}" >> $FILE
 
