@@ -72,11 +72,11 @@
 ## 2. Usage <a name="usage"></a>
 
 ### download and run script first time as root <a name="first_run"></a>
-on your host:
+login (via ssh) on your guest as docker:
 ```shell
 ssh docker@docker-host  
 ```
-on your guest: (debian 10)  
+on your guest: 
 ```shell
 su -
 apt install wget -y
@@ -86,21 +86,21 @@ chmod +x docker_rootless.sh
 ```
 
 ### run script second time as docker <a name="second_run"></a>
-on your host:
+login (via ssh) on your guest as docker:
 ```shell
-ssh docker@docker-host  
+ssh docker@192.168.0.254
 ```
-on your guest: (debian 10)
+on your guest:
 ```shell
 ./docker_rootless.sh install
 ```
 
 ### use docker only with user docker <a name="use_docker"></a>
-on your host:
+login (via ssh) on your guest as docker:
 ```shell
-ssh docker@docker-host  
+ssh docker@192.168.0.254
 ```
-on your guest: (debian 10)
+on your guest:
 ```shell
 docker ps
 ```
