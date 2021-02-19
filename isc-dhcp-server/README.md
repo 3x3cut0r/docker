@@ -45,6 +45,7 @@ docker run -d \
 docker run -d \
     --name isc-dhcp-server \
     --network=host \
+    -e TZ="Europe/Berlin" \
     -e IFACE=eth0 \
     -e SUBNET=192.168.0.0 \
     -e NETMASK=255.255.255.0 \
@@ -61,6 +62,7 @@ docker run -d \
 docker run -d \
     --name isc-dhcp-server \
     --network=host \
+    -e TZ="Europe/Berlin" \
     -e IFACE=eth0 \
     -e PROTOCOL=6 \
     -v /path/to/your/dhcpd.conf:/etc/dhcp/dhcpd.conf:ro \
@@ -73,6 +75,7 @@ docker run -d \
 docker run -d \
     --name isc-dhcp-server \
     --network=host \
+    -e TZ="Europe/Berlin" \
     -e IFACE=eth0 \
     -e PROTOCOL=6 \
     -e SUBNET6="fe80::0/64" \
@@ -91,6 +94,7 @@ services:
   isc-dhcp-server:
     network_mode: host
     environment:
+        TZ: Europe/Berlin
         IFACE: eth0
         PROTOCOL: 4
     volumes:
