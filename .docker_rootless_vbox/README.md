@@ -1,6 +1,6 @@
 # docker rootless mode
 
-**script to install docker in rootless mode on debian 10 in virtualbox**
+**script to install docker in rootless mode on debian 10 in virtualbox**  
 
 ## Create new VirtualMachine in VirtualBox
 ```shell
@@ -76,6 +76,16 @@ ssh docker@docker-host
 on your guest: (debian 10)
 ```shell
 ./docker_rootless.sh install
+```
+
+## use docker only with user docker
+on your host:
+```shell
+ssh docker@docker-host  
+```
+on your guest: (debian 10)
+```shell
+docker ps
 ```
 
 ## Find Me <a name="findme"></a>
