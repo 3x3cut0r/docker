@@ -55,7 +55,7 @@
 # run as root first without args
 if [ "$#" = "0" ]; then
     # APT: prerequisites
-    if [ $UID -ne 0 ]; then echo "run as root (uid=0) to install dependencies"; exit 1; fi
+    if [ $UID -ne 0 ]; then echo "run as root (uid=0) to install prerequisites"; exit 1; fi
     printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
     apt update && apt upgrade -y
     apt install \
