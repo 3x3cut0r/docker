@@ -140,7 +140,7 @@ elif [ ! "$#" = "0" ]; then
     echo "export DOCKER_HOST=unix:///run/user/1000/docker.sock" >> ~/.bashrc
 
     # reboot
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot again, now you can use 'docker ...'\n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'\n"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
 fi
