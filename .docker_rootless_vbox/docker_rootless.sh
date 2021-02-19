@@ -54,9 +54,19 @@
 
 # run as root first without args
 if [ "$#" = "0" ]; then
-    # APT: prerequisites
+    # check root
     if [ $UID -ne 0 ]; then echo "run as root (uid=0) to install prerequisites"; exit 1; fi
+
+    # check first run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
+    read -p "do you want to continue? (y/N): " -n 1 -r
+    if [[ ! $REPLY =~ ^[Yy]$ ]]
+    then
+        echo "exited by user"
+        exit 1
+    fi
+
+    # APT: prerequisites
     apt update && apt upgrade -y
     apt install \
             build-essential \
