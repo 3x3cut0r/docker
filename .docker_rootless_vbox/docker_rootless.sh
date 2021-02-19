@@ -55,7 +55,11 @@
 # run as root first without args
 if [ "$#" = "0" ]; then
     # check root
-    if [ $UID -ne 0 ]; then echo -e "run as root (uid=0) to install prerequisites\nif you want do install docker, do:\n./docker_rootless.sh install"; exit 1; fi
+    if [ $UID -ne 0 ]; then
+        printf '\n\e[1;31m%-6s\e[m\n' "run as root (uid=0) to install prerequisites"
+        echo -e "if you want do install docker rootless, do:\n ./docker_rootless.sh install"
+        exit 1
+    fi
 
     # check first run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
