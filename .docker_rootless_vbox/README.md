@@ -107,6 +107,7 @@ ssh docker@192.168.0.254
 on your guest:
 ```shell
 docker ps
+CONTAINER ID   IMAGE     COMMAND   CREATED   STATUS    PORTS     NAMES
 ```
 
 ## Find Me <a name="findme"></a>
