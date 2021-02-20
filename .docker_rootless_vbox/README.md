@@ -82,7 +82,7 @@ su -
 apt install wget -y
 wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker_rootless.sh -O docker_rootless.sh
 chmod +x docker_rootless.sh
-./docker_rootless.sh
+./docker_rootless.sh --prepare
 ...
 reboot
 ```
@@ -94,7 +94,7 @@ ssh docker@192.168.0.254
 ```
 on your guest:
 ```shell
-./docker_rootless.sh install
+./docker_rootless.sh --install
 ...
 reboot
 ```
