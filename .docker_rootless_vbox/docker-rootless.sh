@@ -168,8 +168,10 @@ function install () {
 
     # reboot
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'\n"
-    read -n 1 -s -r -p "press any key to continue ..."
-    reboot
+    if [ $(sudo ls) ]; then
+        read -n 1 -s -r -p "press any key to reboot ..."
+        reboot
+    fi
 }
 
 function help () {
