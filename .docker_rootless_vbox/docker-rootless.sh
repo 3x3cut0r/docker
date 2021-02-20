@@ -96,7 +96,7 @@ function prepare () {
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         sed -i s/#PermitRootLogin\ prohibit-password/PermitRootLogin\ yes/g /etc/ssh/sshd_config
-        systemctl restart sshd
+        # systemctl restart sshd
     fi
 
     # SUDO: add docker to sudo group
@@ -108,19 +108,23 @@ function prepare () {
     fi
 
     # docker: prerequisites
-    echo -e "# docker rootless mode prerequisites:\nkernel.unprivileged_userns_clone=1" >> /etc/sysctl.d/docker_rootless.conf
+    echo -e "# docker rootless mode prerequisites:\nkernel.unprivileged_userns_clone=1" > /etc/sysctl.d/docker_rootless.conf
     sysctl --system
     modprobe overlay permit_mounts_in_userns=1
 
     # VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom
     printf '\n\e[0;33m%-6s\e[m\n' " ==> VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom ... \n"
-    read -n 1 -s -r -p "attach virtualbox guest tools -> then press any key to continue ..."
-    mount /dev/cdrom /mnt
-    /mnt/VBoxLinuxAdditions.run
-    umount /mnt
+    read -p "Do you want to install VirtualBox Guest Tools via CD/DVD Optical-Drive? (y/N): "
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        read -n 1 -s -r -p "Attach virtualbox guest tools -> then press any key to continue ..."
+        mount /dev/cdrom /mnt
+        /mnt/VBoxLinuxAdditions.run
+        umount /mnt
+    fi
 
     # reboot
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login as docker to continue with './docker_rootless.sh install'\n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as docker to continue with './docker_rootless.sh --install'\n"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
 }
