@@ -153,7 +153,15 @@ function install () {
     # install rootless docker
     if [ $UID -eq 0 ]; then echo "You need to login (via ssh) as docker (uid=1000) to install rootless docker!"; exit 1; fi
     curl -fsSL https://get.docker.com/rootless | sh
-    sudo loginctl enable-linger docker
+    if [ $(sudo ls) ]; then
+        sudo loginctl enable-linger docker
+    else
+        echo "enter 'loginctl enable-linger docker' as root"
+        echo "to start docker daemon on system start automatically"
+        echo "OR:"
+        echo "systemctl --user start docker"
+        echo "to start docker manually"
+    fi
     echo -e "\n# Docker environment variables" >> ~/.bashrc
     echo "export PATH=/home/docker/bin:$PATH" >> ~/.bashrc
     echo "export DOCKER_HOST=unix:///run/user/1000/docker.sock" >> ~/.bashrc
