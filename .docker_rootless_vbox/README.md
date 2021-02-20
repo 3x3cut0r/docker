@@ -4,20 +4,20 @@
 
 ## Index
 
-1. [VirtualBox](#virtualbox)
-    1. [Create new VirtualMachine in VirtualBox](#create_vm)
-    2. [Install Debian 10 in VirtualBox](#install_debian)
-    3. [Set static ip address in /etc/network/interfaces](#set_ip)
-2. [Usage](#usage)
-    1. [first-run: install prerequisites](#first_run)
-    2. [second-run: install docker](#second_run)
-    3. [use docker](#use_docker)
-3. [Find Me](#findme)
-4. [License](#license)
+1. [VirtualBox](#virtualbox)  
+  1.1 [Create new VirtualMachine in VirtualBox](#create_vm)  
+  1.2 [Install Debian 10 in VirtualBox](#install_debian)  
+  1.3 [Set static ip address in /etc/network/interfaces](#set_ip)  
+2. [Usage](#usage)  
+  2.1 [first-run: install prerequisites](#first_run)  
+  2.2 [second-run: install docker](#second_run)  
+  2.3 [use docker](#use_docker)  
+3. [Find Me](#findme)  
+4. [License](#license)  
 
 ## 1. VirtualBox <a name="virtualbox"></a>
 
-### Create new VirtualMachine in VirtualBox <a name="create_vm"></a>
+### 1.1 Create new VirtualMachine in VirtualBox <a name="create_vm"></a>
 ```shell
 # VirtualBox Settings:
 #
@@ -34,7 +34,7 @@
 #
 ```
 
-### Install Debian 10 in VirtualBox <a name="install_debian"></a>
+### 1.2 Install Debian 10 in VirtualBox <a name="install_debian"></a>
 ```shell
 # Debian 10 Installation:
 #
@@ -53,7 +53,7 @@
 #
 ```
 
-### Set static ip address in /etc/network/interfaces <a name="set_ip"></a>
+### 1.3 Set static ip address in /etc/network/interfaces <a name="set_ip"></a>
 ```shell
 # auto lo
 # iface lo inet loopback
@@ -71,7 +71,7 @@
 
 ## 2. Usage <a name="usage"></a>
 
-### download and run script first time as root <a name="first_run"></a>
+### 2.1 download and run script first time as root <a name="first_run"></a>
 login (via ssh) on your guest as docker:
 ```shell
 ssh docker@192.168.0.254
@@ -87,7 +87,7 @@ chmod +x docker_rootless.sh
 reboot
 ```
 
-### run script second time as docker <a name="second_run"></a>
+### 2.2 run script second time as docker <a name="second_run"></a>
 login (via ssh) on your guest as docker:
 ```shell
 ssh docker@192.168.0.254
@@ -99,7 +99,7 @@ on your guest:
 reboot
 ```
 
-### use docker only with user docker <a name="use_docker"></a>
+### 2.3 use docker only with user docker <a name="use_docker"></a>
 login (via ssh) on your guest as docker:
 ```shell
 ssh docker@192.168.0.254
