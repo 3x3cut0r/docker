@@ -52,8 +52,8 @@
 # iface enp0s3 inet6 auto
 #
 
-# run as root first without args
-if [ "$#" = "0" ]; then
+# first run as root
+function prepare () {
     # check root
     if [ $UID -ne 0 ]; then
         printf '\e[1;31m%-6s\e[m\n\n' "run as root (uid=0) to install prerequisites"
@@ -121,8 +121,10 @@ if [ "$#" = "0" ]; then
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login as docker to continue with './docker_rootless.sh install'\n"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
+}
 
-elif [ ! "$#" = "0" ]; then
+# second run as docker
+function install () {
     # check second run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
     read -p "do you want to continue? (y/N): "
@@ -152,4 +154,22 @@ elif [ ! "$#" = "0" ]; then
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'\n"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
-fi
+}
+
+function help () {
+    printf "USAGE:\n"
+    printf "  ./docker-rootless.sh [OPTIONS]\n\n"
+    printf "OPTIONS:\n"
+    printf "  --prepare\trun as root (uid=0) to install prerequisites\n\n"
+    printf "  --install\trun as docker (uid=1000) to install docker rootless-mode\n\n"
+}
+
+case "$1" in
+    --first|--first-run|--prepare|first|first-run|1|prepare)
+    prepare
+    ;;
+    --second|--second-run|--install|second|second-run|2|install)
+    install
+    ;;
+esac
+help
