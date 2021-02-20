@@ -52,15 +52,35 @@
 # iface enp0s3 inet6 auto
 #
 
+
+DOCKER_USERNAME="docker"
+DOCKER_UID="1000"
+
+# change username
+function username () {
+    echo ""
+    read -p "Enter the username under which the docker service should run. ($DOCKER_USERNAME): "
+    if [ ! -z $REPLY ]; then
+        if [ $(id -u $REPLY 2> /dev/null ) ]; then
+            DOCKER_USERNAME=$REPLY
+            DOCKER_UID="$(id -u $DOCKER_USERNAME)"
+        else
+            printf '\e[1;31m%-6s\e[m\n'  "username: $REPLY does not exits "
+            echo "using $DOCKER_USERNAME instead"
+        fi
+    fi
+    echo "DOCKER_USERNAME: $DOCKER_USERNAME (uid=$DOCKER_UID)"
+}
+
 # first run as root
 function prepare () {
-    printf '\e[1;31m%-6s\e[m\n' " ==> Step 1/2: prepare environment "
+    printf '\n\e[1;31m%-6s\e[m\n\n' " ==> Step 1/2: prepare environment "
 
     # check first run
     read -p "Do you want to continue with Step 1? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
-        echo "exited by user"
+        echo -e "exited by user\n"
         exit 1
     fi
 
@@ -104,7 +124,7 @@ function prepare () {
     read -p "Do you want to add docker to sudo group? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
-        usermod -aG sudo docker
+        usermod -aG sudo $DOCKER_USERNAME
     fi
 
     # docker: prerequisites
@@ -124,34 +144,33 @@ function prepare () {
     fi
 
     # reboot
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as docker to continue with './docker_rootless.sh --install'\n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to continue with './docker_rootless.sh --install'\n"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
 }
 
 # second run as docker
 function install () {
-    printf '\e[1;31m%-6s\e[m\n'  " ==> Step 2/2: install docker rootless "
+    printf '\n\e[1;31m%-6s\e[m\n\n'  " ==> Step 2/2: install docker rootless "
 
     # check second run
     read -p "Do you want to continue with Step 2? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
-        echo "exited by user"
+        echo -e "exited by user\n"
         exit 1
     fi
 
     # check docker already installed
     printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
-    if  [ "$(/home/docker/bin/docker --version)" && $(ls -l /home/docker/bin/docker) ] || \
-        [ "$(/usr/local/bin/docker --version)" && $(ls -l /usr/local/bin/docker) ] || \
-        [ "$(/usr/bin/docker.io --version)" && $(ls -l /usr/bin/docker.io) ]; then
+    if  [[ -f /home/"$DOCKER_USERNAME"/bin/docker ]] || [[ -f /usr/local/bin/docker ]] || [[ -f /usr/bin/docker.io ]]; then
+        which docker
         printf '\e[1;31m%-6s\e[m\n\n' "Docker is already installed. Abort"
         exit 1
     fi
 
     # install rootless docker
-    if [ $UID -eq 0 ]; then echo "You need to login (via ssh) as docker (uid=1000) to install rootless docker!"; exit 1; fi
+    if [ $UID -eq 0 ]; then echo "You need to login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to install rootless docker!"; exit 1; fi
     curl -fsSL https://get.docker.com/rootless | sh
     if [ $(sudo ls) ]; then
         sudo loginctl enable-linger docker
@@ -163,8 +182,8 @@ function install () {
         echo "to start docker manually"
     fi
     echo -e "\n# Docker environment variables" >> ~/.bashrc
-    echo "export PATH=/home/docker/bin:$PATH" >> ~/.bashrc
-    echo "export DOCKER_HOST=unix:///run/user/1000/docker.sock" >> ~/.bashrc
+    echo "export PATH=/home/$DOCKER_USERNAME/bin:$PATH" >> ~/.bashrc
+    echo "export DOCKER_HOST=unix:///run/user/$DOCKER_UID/docker.sock" >> ~/.bashrc
 
     # reboot
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'\n"
@@ -179,14 +198,16 @@ function help () {
     printf "  ./docker-rootless.sh [OPTIONS]\n\n"
     printf "OPTIONS:\n"
     printf "  --prepare\trun as root (uid=0) to install prerequisites\n\n"
-    printf "  --install\trun as docker (uid=1000) to install docker rootless-mode\n\n"
+    printf "  --install\trun as $DOCKER_USERNAME (uid=$DOCKER_UID) to install docker rootless-mode\n\n"
 }
 
 case "$1" in
     --first|--first-run|--prepare|first|first-run|1|prepare)
+    username
     prepare
     ;;
     --second|--second-run|--install|second|second-run|2|install)
+    username
     install
     ;;
 esac
