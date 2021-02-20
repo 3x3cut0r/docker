@@ -1,7 +1,7 @@
 #!/bin/bash
 # Author:   3x3cut0r <executor55@gmx.de>
 # Version:  1.0
-# Date:     2021-02-19
+# Date:     2021-02-20
 #
 # Description:
 #  this script installs a rootless docker-host on a debian 10 virtualbox
@@ -54,23 +54,25 @@
 
 # first run as root
 function prepare () {
-    # check root
-    if [ $UID -ne 0 ]; then
-        printf '\e[1;31m%-6s\e[m\n\n' "run as root (uid=0) to install prerequisites"
-        echo -e "if you want do install docker rootless, do:\n ./docker_rootless.sh install\n"
-        exit 1
-    fi
+    printf '\e[1;31m%-6s\e[m\n' " ==> Step 1/2: prepare environment "
 
     # check first run
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
-    read -p "do you want to continue? (y/N): "
+    read -p "Do you want to continue with Step 1? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "exited by user"
         exit 1
     fi
 
+    # check root
+    if [ $UID -ne 0 ]; then
+        printf '\e[1;31m%-6s\e[m\n\n' "run as root (uid=0) to install prerequisites"
+        echo -e "If you want do install docker rootless, do:\n ./docker_rootless.sh install\n"
+        exit 1
+    fi
+
     # APT: prerequisites
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
     apt update && apt upgrade -y
     apt install \
             build-essential \
@@ -90,7 +92,7 @@ function prepare () {
 
     # SSH: PermitRootLogin (optional)
     printf '\n\e[0;33m%-6s\e[m\n' " ==> SSH: PermitRootLogin ... \n"
-    read -p "do you want to permit root login via ssh? (y/N): "
+    read -p "Do you want to permit root login via ssh? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         sed -i s/#PermitRootLogin\ prohibit-password/PermitRootLogin\ yes/g /etc/ssh/sshd_config
@@ -99,7 +101,7 @@ function prepare () {
 
     # SUDO: add docker to sudo group
     printf '\n\e[0;33m%-6s\e[m\n' " ==> SUDO: add docker to sudo group ... \n"
-    read -p "do you want to add docker to sudo group? (y/N): "
+    read -p "Do you want to add docker to sudo group? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         usermod -aG sudo docker
@@ -125,25 +127,27 @@ function prepare () {
 
 # second run as docker
 function install () {
+    printf '\e[1;31m%-6s\e[m\n'  " ==> Step 2/2: install docker rootless "
+
     # check second run
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
-    read -p "do you want to continue? (y/N): "
+    read -p "Do you want to continue with Step 2? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "exited by user"
         exit 1
     fi
 
-    # check docker
+    # check docker already installed
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
     if  [ "$(/home/docker/bin/docker --version)" && $(ls -l /home/docker/bin/docker) ] || \
         [ "$(/usr/local/bin/docker --version)" && $(ls -l /usr/local/bin/docker) ] || \
         [ "$(/usr/bin/docker.io --version)" && $(ls -l /usr/bin/docker.io) ]; then
-        printf '\e[1;31m%-6s\e[m\n\n' "docker is already installed. abort"
+        printf '\e[1;31m%-6s\e[m\n\n' "Docker is already installed. Abort"
         exit 1
     fi
 
     # install rootless docker
-    if [ $UID -eq 0 ]; then echo "you need to login (via ssh) as docker (uid=1000) to install rootless docker!"; exit 1; fi
+    if [ $UID -eq 0 ]; then echo "You need to login (via ssh) as docker (uid=1000) to install rootless docker!"; exit 1; fi
     curl -fsSL https://get.docker.com/rootless | sh
     sudo loginctl enable-linger docker
     echo -e "\n# Docker environment variables" >> ~/.bashrc
