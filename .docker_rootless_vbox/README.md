@@ -83,7 +83,7 @@ on your guest:
 su -
 apt install wget -y
 wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker-rootless.sh -O docker-rootless.sh
-chmod +x docker_rootless.sh
+chmod +x docker-rootless.sh
 ./docker-rootless.sh --prepare
 ...
 reboot
