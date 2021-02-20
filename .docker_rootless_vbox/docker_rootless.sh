@@ -63,7 +63,7 @@ if [ "$#" = "0" ]; then
 
     # check first run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
-    read -p "do you want to continue? (y/N): " -n 1 -r
+    read -p "do you want to continue? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "exited by user"
@@ -90,23 +90,32 @@ if [ "$#" = "0" ]; then
 
     # SSH: PermitRootLogin (optional)
     printf '\n\e[0;33m%-6s\e[m\n' " ==> SSH: PermitRootLogin ... \n"
-    read -p "do you want to permit root login via ssh? (y/N): " -n 1 -r
+    read -p "do you want to permit root login via ssh? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         sed -i s/#PermitRootLogin\ prohibit-password/PermitRootLogin\ yes/g /etc/ssh/sshd_config
         systemctl restart sshd
     fi
 
-    # VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom ... \n"
-    read -n 1 -s -r -p "attach virtualbox guest tools -> then press any key to continue ..."
-    mount /dev/cdrom /mnt
-    /mnt/VBoxLinuxAdditions.run
+    # SUDO: add docker to sudo group
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> SUDO: add docker to sudo group ... \n"
+    read -p "do you want to add docker to sudo group? (y/N): "
+    if [[ $REPLY =~ ^[Yy]$ ]]
+    then
+        usermod -aG sudo docker
+    fi
 
     # docker: prerequisites
     echo -e "# docker rootless mode prerequisites:\nkernel.unprivileged_userns_clone=1" >> /etc/sysctl.d/docker_rootless.conf
     sysctl --system
     modprobe overlay permit_mounts_in_userns=1
+
+    # VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom ... \n"
+    read -n 1 -s -r -p "attach virtualbox guest tools -> then press any key to continue ..."
+    mount /dev/cdrom /mnt
+    /mnt/VBoxLinuxAdditions.run
+    umount /mnt
 
     # reboot
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login as docker to continue with './docker_rootless.sh install'\n"
@@ -116,7 +125,7 @@ if [ "$#" = "0" ]; then
 elif [ ! "$#" = "0" ]; then
     # check second run
     printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
-    read -p "do you want to continue? (y/N): " -n 1 -r
+    read -p "do you want to continue? (y/N): "
     if [[ ! $REPLY =~ ^[Yy]$ ]]
     then
         echo "exited by user"
