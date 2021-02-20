@@ -2,6 +2,8 @@
 
 **script to install docker in rootless mode on debian 10 in virtualbox**  
 
+**if you have no VirtualBox, skip 1 and see Usage**  
+
 ## Index
 
 1. [VirtualBox](#virtualbox)  
