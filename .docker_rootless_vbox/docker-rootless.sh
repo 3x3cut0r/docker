@@ -92,13 +92,10 @@ function prepare () {
     fi
 
     # APT: prerequisites
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> APT: install prerequisites ... "
     apt update && apt upgrade -y
     apt install \
-            build-essential \
             curl \
-            dkms \
-            linux-headers-$(uname -r) \
             openssh-server \
             sudo \
             uidmap \
@@ -107,11 +104,11 @@ function prepare () {
             -y
 
     # VI: arrow key fix
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> VI: arrow key fix ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> VI: arrow key fix ... "
     sed -i s/set\ compatible/set\ nocompatible/g /etc/vim/vimrc.tiny
 
     # SSH: PermitRootLogin (optional)
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> SSH: PermitRootLogin ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> SSH: PermitRootLogin ... "
     read -p "Do you want to permit root login via ssh? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
@@ -120,7 +117,7 @@ function prepare () {
     fi
 
     # SUDO: add docker to sudo group
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> SUDO: add docker to sudo group ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> SUDO: add docker to sudo group ... "
     read -p "Do you want to add docker to sudo group? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
@@ -133,18 +130,24 @@ function prepare () {
     modprobe overlay permit_mounts_in_userns=1
 
     # VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> VBoxGuestTools: attach virtualbox guest tools to /dev/cdrom ... "
     read -p "Do you want to install VirtualBox Guest Tools via CD/DVD Optical-Drive? (y/N): "
     if [[ $REPLY =~ ^[Yy]$ ]]
     then
         read -n 1 -s -r -p "Attach virtualbox guest tools -> then press any key to continue ..."
+        apt update && apt upgrade -y
+        apt install \
+                build-essential \
+                dkms \
+                linux-headers-$(uname -r) \
+                -y
         mount /dev/cdrom /mnt
         /mnt/VBoxLinuxAdditions.run
         umount /mnt
     fi
 
     # reboot
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to continue with './docker_rootless.sh --install'\n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to continue with '/tmp/docker_rootless.sh --install'"
     read -n 1 -s -r -p "press any key to continue ..."
     reboot
 }
@@ -162,7 +165,7 @@ function install () {
     fi
 
     # check docker already installed
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... \n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> Docker: install rootless docker ... "
     if  [[ -f /home/"$DOCKER_USERNAME"/bin/docker ]] || [[ -f /usr/local/bin/docker ]] || [[ -f /usr/bin/docker.io ]]; then
         which docker
         printf '\e[1;31m%-6s\e[m\n\n' "Docker is already installed. Abort"
@@ -186,7 +189,7 @@ function install () {
     echo "export DOCKER_HOST=unix:///run/user/$DOCKER_UID/docker.sock" >> ~/.bashrc
 
     # reboot
-    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'\n"
+    printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'"
     if [ $(sudo ls) ]; then
         read -n 1 -s -r -p "press any key to reboot ..."
         reboot
