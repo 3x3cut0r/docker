@@ -204,6 +204,7 @@ function help () {
     printf "  --install\trun as $DOCKER_USERNAME (uid=$DOCKER_UID) to install docker rootless-mode\n\n"
 }
 
+if "$#"; then help; fi
 case "$1" in
     --first|--first-run|--prepare|first|first-run|1|prepare)
     username
@@ -214,4 +215,3 @@ case "$1" in
     install
     ;;
 esac
-help
