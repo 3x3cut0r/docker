@@ -82,9 +82,9 @@ su -
 on your guest:
 ```shell
 apt install wget -y
-wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker-rootless.sh -O /tmp/docker-rootless.sh
-chmod +x /tmp/docker-rootless.sh
-/tmp/docker-rootless.sh --prepare
+wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker-rootless.sh -O /opt/docker-rootless.sh
+chmod +x /opt/docker-rootless.sh
+/opt/docker-rootless.sh --prepare
 ```
 
 ### 2.2 run script second time as docker <a name="second_run"></a>
@@ -94,7 +94,7 @@ ssh docker@192.168.0.254
 ```
 on your guest:
 ```shell
-/tmp/docker-rootless.sh --install
+/opt/docker-rootless.sh --install
 ```
 
 ### 2.3 use docker only with user docker <a name="use_docker"></a>
