@@ -192,7 +192,7 @@ function install () {
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'"
     if [ $(sudo ls) ]; then
         read -n 1 -s -r -p "press any key to reboot ..."
-        reboot
+        sudo reboot
     fi
 }
 
