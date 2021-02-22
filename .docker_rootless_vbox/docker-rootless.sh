@@ -178,7 +178,7 @@ function install () {
     if [ $(sudo ls) ]; then
         sudo loginctl enable-linger docker
     else
-        echo "enter 'loginctl enable-linger docker' as root"
+        echo -e "\nenter 'loginctl enable-linger docker' as root"
         echo "to start docker daemon on system start automatically"
         echo "OR:"
         echo "systemctl --user start docker"
