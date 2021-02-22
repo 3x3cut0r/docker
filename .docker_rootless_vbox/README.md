@@ -74,19 +74,17 @@
 ## 2. Usage <a name="usage"></a>
 
 ### 2.1 download and run script first time as root <a name="first_run"></a>
-login (via ssh) on your guest as docker:
+login (via ssh) on your guest as docker and switch user to root:
 ```shell
 ssh docker@192.168.0.254
+su -
 ```
 on your guest:
 ```shell
-su -
 apt install wget -y
-wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker-rootless.sh -O docker-rootless.sh
-chmod +x docker-rootless.sh
-./docker-rootless.sh --prepare
-...
-reboot
+wget -q https://raw.githubusercontent.com/3x3cut0r/docker/main/.docker_rootless_vbox/docker-rootless.sh -O /tmp/docker-rootless.sh
+chmod +x /tmp/docker-rootless.sh
+/tmp/docker-rootless.sh --prepare
 ```
 
 ### 2.2 run script second time as docker <a name="second_run"></a>
@@ -96,9 +94,7 @@ ssh docker@192.168.0.254
 ```
 on your guest:
 ```shell
-./docker-rootless.sh --install
-...
-reboot
+/tmp/docker-rootless.sh --install
 ```
 
 ### 2.3 use docker only with user docker <a name="use_docker"></a>
