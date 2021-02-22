@@ -149,7 +149,7 @@ function prepare () {
     # reboot
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot, then login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to continue with '/tmp/docker_rootless.sh --install'"
     read -n 1 -s -r -p "press any key to continue ..."
-    reboot
+    /usr/sbin/reboot
 }
 
 # second run as docker
@@ -175,7 +175,7 @@ function install () {
     # install rootless docker
     if [ $UID -eq 0 ]; then echo "You need to login (via ssh) as $DOCKER_USERNAME (uid=$DOCKER_UID) to install rootless docker!"; exit 1; fi
     curl -fsSL https://get.docker.com/rootless | sh
-    if [ $(sudo ls) ]; then
+    if sudo ls > /dev/null; then
         sudo loginctl enable-linger docker
     else
         echo -e "\nenter 'loginctl enable-linger docker' as root"
@@ -190,9 +190,9 @@ function install () {
 
     # reboot
     printf '\n\e[0;33m%-6s\e[m\n' " ==> reboot ... login with docker ... and use 'docker ...'"
-    if [ $(sudo ls) ]; then
+    if sudo ls > /dev/null; then
         read -n 1 -s -r -p "press any key to reboot ..."
-        sudo reboot
+        sudo /usr/sbin/reboot
     fi
 }
 
