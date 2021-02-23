@@ -37,18 +37,16 @@
 # x Standard-Systemtools
 #
 
-# set up static ip address in /etc/network/interfaces
+# set up static ip address in /etc/network/interfaces:
 #
 # auto lo
 # iface lo inet loopback
-# iface enp0s3 inet static
-#   address 192.168.15.254/24
-#   gateway 192.168.15.1
-#   dns-servers 8.8.8.8 8.8.4.4
 #
-# The primary network interface
-# This is an autoconfigured IPv6 interface
 # allow-hotplug enp0s3
+# iface enp0s3 inet static
+#   address 192.168.0.254/24
+#   gateway 192.168.0.1
+#
 # iface enp0s3 inet6 auto
 #
 
