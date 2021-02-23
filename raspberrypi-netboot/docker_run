@@ -1,0 +1,80 @@
+https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net.md
+https://www.raspberrypi.org/documentation/hardware/raspberrypi/bootmodes/net_tutorial.md
+
+serial: 76ef6118
+ether b8:27:eb:ef:61:18
+
+# docker container run - examle
+# raspberrypi-netboot - prepare netboot folders /tftpboot and /nfsroot
+docker container run --rm \
+    --privileged \
+    --name raspberrypi-netboot \
+    -e NFS_IP=192.168.15.254 \
+    -e NFS_ROOT=/nfsroot/raspberrypi \
+    -e NFS_VERSION=3 \
+    -v /media/sf_Ablage/RaspiOS/2019-04-08-raspbian-stretch-lite.zip:/netboot/raspios.zip \
+    -v /nfsroot/raspberrypi:/netboot/nfsroot \
+    -v /tftpboot:/netboot/tftpboot \
+    3x3cut0r/raspberrypi-netboot:latest
+
+# tftp-hpa - for /tftpboot
+docker run -d --restart=unless-stopped \
+    --name tftpd-hpa \
+    -e TZ="Europe/Berlin" \
+    -e MAPFILE="" \
+    -v /tftpboot:/tftpboot \
+    -p 69:69/udp \
+    3x3cut0r/tftpd-hpa:latest
+
+# nfs-server - for /nfsroot
+docker run -d --restart=unless-stopped \
+    --privileged \
+    --name nfs-server \
+    -v /lib/modules:/lib/modules:ro \
+    -v /tftpboot:/tftpboot \
+    -v /nfsroot/raspberrypi:/nfsroot/raspberrypi \
+    -v /etc/exports:/etc/exports:ro \
+    -p 2049:2049   -p 2049:2049/udp   \
+    -p 111:111     -p 111:111/udp     \
+    -p 32765:32765 -p 32765:32765/udp \
+    -p 32767:32767 -p 32767:32767/udp \
+    erichough/nfs-server:latest
+
+docker run -d \
+    --privileged \
+    --name nfs-server \
+    -p 2049:2049 \
+    -e NFS_DIR=/nfsroot/raspberrypi \
+    -e NFS_DOMAIN="*" \
+    -e NFS_OPTION="rw,sync,no_subtree_check,no_root_squash" \
+    -v /nfsroot/raspberrypi:/nfsroot/raspberrypi \
+    gists/nfs-server
+
+# isc-dhcp-server
+docker run -d --restart=unless-stopped \
+    --name isc-dhcp-server \
+    --network=host \
+    -e IFACE=enp0s3 \
+    -e DEFAULT_LEASE_TIME=100000 \
+    -e MAX_LEASE_TIME=172800 \
+    -e SUBNET=192.168.15.0 \
+    -e NETMASK=255.255.255.0 \
+    -e RANGE_BEGIN=192.168.15.100 \
+    -e RANGE_END=192.168.15.200 \
+    -e DOMAIN_NAME=".local" \
+    -e ROUTERS=192.168.15.1 \
+    -e NEXT_SERVER="192.168.15.254" \
+    -e TFTP_SERVER_NAME="192.168.15.254" \
+    -e ROOT_PATH="192.168.15.254:/nfsroot/raspberrypi" \
+    -e DOMAIN_NAME_SERVERS="8.8.8.8, 8.8.4.4" \
+    -e VENDOR_ENCAPSULATED_OPTIONS="Raspberry Pi Boot" \
+    3x3cut0r/isc-dhcp-server:latest
+
+cd /nfsroot/raspberrypi
+mount --bind /dev dev
+mount --bind /sys sys
+mount --bind /proc proc
+chroot .
+rm /etc/ssh/ssh_host_*
+dpkg-reconfigure openssh-server
+exit

@@ -42,8 +42,8 @@ printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img1 to /tftpboot ... " && ech
 rsync -rq fat32/ tftpboot/
 printf '\n\e[0;33m%-6s\e[m\n' " ==> umount raspios.img1 ... " && echo "umount fat32"
 umount fat32
-printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs rootfstype=nfs nfsroot=$NFS_IP:$NFS_ROOT,v$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline\" > tftpboot/cmdline.txt"
-echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs rootfstype=nfs nfsroot=$NFS_IP:$NFS_ROOT,vers=$NFS_VERSION,proto=tcp rw ip=dhcp rootwait elevator=deadline" > tftpboot/cmdline.txt
+printf '\n\e[0;33m%-6s\e[m\n' " ==> setup cmdline.txt for NFS-boot ... " && echo "echo \"selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs nfsroot=$NFS_IP:$NFS_ROOT,vers=$NFS_VERSION,proto=tcp,retrans=2,mountaddr=$NFS_IP,mountvers=$NFS_VERSION,mountport=32767,mountproto=tcp rw ip=dhcp rootwait elevator=deadline\" > tftpboot/cmdline.txt"
+echo "selinux=0 dwc_otg.lpm_enable=0 console=tty1 root=/dev/nfs nfsroot=$NFS_IP:$NFS_ROOT,vers=$NFS_VERSION,proto=tcp,retrans=2,mountaddr=$NFS_IP,mountvers=$NFS_VERSION,mountport=32767,mountproto=tcp rw ip=dhcp rootwait elevator=deadline" > tftpboot/cmdline.txt
 printf '\n\e[0;33m%-6s\e[m\n' " ==> setup config.txt for NFS-boot ... " && echo "echo \"program_usb_boot_mode=1\" >> tftpboot/config.txt"
 echo "program_usb_boot_mode=1" >> tftpboot/config.txt
 
@@ -54,9 +54,10 @@ printf '\n\e[0;33m%-6s\e[m\n' " ==> rsync raspios.img2 to /netboot/nfsboot ... (
 rsync -rq ext4/ nfsroot/
 printf '\n\e[0;33m%-6s\e[m\n' " ==> umount raspios.img2 ... " && echo "umount ext4"
 umount ext4
-printf '\n\e[0;33m%-6s\e[m\n' " ==> setup /etc/fstab to not boot from SD-Card ... " && echo "echo \"proc /proc proc defaults 0 0\" > nfsroot/etc/fstab" && "echo \"$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp 0 0\" > nfsroot/etc/fstab"
+printf '\n\e[0;33m%-6s\e[m\n' " ==> setup /etc/fstab to not boot from SD-Card ... " && echo "echo \"proc /proc proc defaults 0 0\" > nfsroot/etc/fstab"
 echo "proc /proc proc defaults 0 0" > nfsroot/etc/fstab
-echo "$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp 0 0" > nfsroot/etc/fstab
+echo "echo \"$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp,retrans=2,mountaddr=$NFS_IP,mountvers=$NFS_VERSION,mountport=32767,mountproto=tcp 0 0\" >> nfsroot/etc/fstab"
+echo "$NFS_IP:/tftpboot /boot nfs defaults,vers=$NFS_VERSION,proto=tcp,retrans=2,mountaddr=$NFS_IP,mountvers=$NFS_VERSION,mountport=32767,mountproto=tcp 0 0" >> nfsroot/etc/fstab
 sleep 3
 
 # clean environment
