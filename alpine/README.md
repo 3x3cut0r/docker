@@ -1,6 +1,6 @@
-# alpine (FROM alpine:3.13.1)
+# alpine (FROM alpine:3.13.4)
 
-**official alpine:3.13.1 base-image with gosu, libcap, tzdata**
+**official alpine:3.13.4 base-image with gosu, libcap, tzdata**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/alpine)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/alpine)
@@ -15,7 +15,7 @@
 ### Dockerfile
 
 ```shell
-FROM 3x3cut0r/alpine:3.13.1
+FROM 3x3cut0r/alpine:3.13.4
 ...
 ```
 
