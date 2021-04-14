@@ -44,4 +44,4 @@ jobs:
           platforms: linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-            3x3cut0r/alpine:3.13.1
+            3x3cut0r/alpine:3.13.4
