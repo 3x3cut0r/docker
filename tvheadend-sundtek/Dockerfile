@@ -1,6 +1,6 @@
 FROM linuxserver/tvheadend:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="tvheadend from linuxserver/tvheadend with Sundtek SkyTV Ultimate drivers"
+LABEL description="tvheadend from linuxserver/tvheadend with Sundtek drivers"
 
 RUN mkdir /sundtek && \
     cd /sundtek && \
