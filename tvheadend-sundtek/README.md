@@ -1,6 +1,6 @@
 # tvheadend-sundtek
 
-**tvheadend from linuxserver/tvheadend with Sundtek SkyTV Ultimate drivers**
+**tvheadend from linuxserver/tvheadend with Sundtek drivers**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tvheadend-sundtek)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tvheadend-sundtek)
