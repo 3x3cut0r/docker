@@ -4,7 +4,7 @@ LABEL description="glype - a web-based proxy on nginx:alpine"
 
 VOLUME /usr/share/nginx/html
 
-RUN apk --no-cache --virtual .git-deps \
+RUN apk add --no-cache --virtual .git-deps \
     git \
     less \
     openssh
