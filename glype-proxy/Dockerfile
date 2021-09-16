@@ -1,6 +1,6 @@
 FROM alpine:latest as build
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="glype - a web-based proxy on php:fpm-alpine3.13"
+LABEL description="glype - a web-based proxy on webdevops/php-nginx:7.4-alpine"
 
 WORKDIR /app
 
@@ -18,6 +18,6 @@ RUN git clone https://github.com/vincentclee/glype.git .
 
 
 # copy app into container
-FROM php:fpm-alpine3.13
-COPY --from=build /app/* /var/www/html
-VOLUME /var/www/html
+FROM webdevops/php-nginx:7.4-alpine
+COPY --from=build /app/* /app
+VOLUME /app
