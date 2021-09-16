@@ -1,0 +1,48 @@
+name: build glype-proxy
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'glype-proxy/**'
+  schedule:
+    # cron: 'min hour day month weekday'
+    - cron: '0 * * * *'
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'run action manually'
+        
+jobs:
+  multi:
+    runs-on: ubuntu-latest
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      -
+        name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      -
+        name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      -
+        name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      -
+        name: Build and push
+        uses: docker/build-push-action@v2
+        with:
+          context: ./glype-proxy
+          file: ./glype-proxy/Dockerfile
+          platforms: linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64
+          push: true
+          tags: 3x3cut0r/glype-proxy:latest
