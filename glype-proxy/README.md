@@ -1,6 +1,6 @@
 # glype-proxy
 
-**glype - a web-based proxy on nginx:alpine**
+**glype - a web-based proxy on php:fpm-alpine3.13**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/glype-proxy)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/glype-proxy)
@@ -42,7 +42,7 @@ Set the desired options and save your settings.
 
 ### 3 Volumes <a name="volumes"></a>
 
-* `/usr/share/nginx/html` - nginx root directory
+* `/var/www/html` - nginx root directory
 
 ### 4 Ports <a name="ports"></a>
 
