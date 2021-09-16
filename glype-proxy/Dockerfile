@@ -21,5 +21,5 @@ RUN git clone https://github.com/vincentclee/glype.git .
 FROM webdevops/php-nginx:7.4-alpine
 WORKDIR /app
 COPY --from=build /app/ /app/
-RUN chmod +r includes/settings.php
+RUN chown -R 1000:1000 /app
 VOLUME /app
