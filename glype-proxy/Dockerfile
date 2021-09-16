@@ -10,7 +10,7 @@ RUN apk add --no-cache --virtual .git-deps \
     openssh
 
 # clone glype
-RUN git clone https://github.com/vincentclee/glype.git . && \
+RUN git clone https://github.com/vincentclee/glype.git .
 
 # clean up dependencies
 RUN apk del --no-network .git-deps && \
