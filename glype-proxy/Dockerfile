@@ -18,6 +18,6 @@ RUN git clone https://github.com/vincentclee/glype.git .
 
 
 # copy app into container
-FROM nginx:alpine
+FROM nginxinc/nginx-unprivileged:alpine
 COPY --from=build /app/* /usr/share/nginx/html
 VOLUME /usr/share/nginx/html
