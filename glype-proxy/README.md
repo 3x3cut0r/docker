@@ -1,6 +1,6 @@
 # glype-proxy
 
-**glype - a web-based proxy on php:fpm-alpine3.13**
+**glype - a web-based proxy on webdevops/php-nginx:7.4-alpine**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/glype-proxy)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/glype-proxy)
