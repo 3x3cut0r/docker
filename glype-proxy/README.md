@@ -32,7 +32,7 @@
 ```shell
 docker container run -d --restart=unless-stopped \
     --name=glype-proxy \
-    -p 80:8080 \
+    -p 80:80 \
     3x3cut0r/glype-proxy:latest
 ```
 
@@ -46,7 +46,7 @@ Set the desired options and save your settings.
 
 ### 4 Ports <a name="ports"></a>
 
-* `8080/tcp` - HTTP Port  
+* `80/tcp` - HTTP Port  
 
 ### 5 Find Me <a name="findme"></a>
 
