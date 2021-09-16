@@ -19,5 +19,5 @@ RUN git clone https://github.com/vincentclee/glype.git .
 
 # copy app into container
 FROM webdevops/php-nginx:7.4-alpine
-COPY --from=build /app/* /app
+COPY --from=build /app/ /app/
 VOLUME /app
