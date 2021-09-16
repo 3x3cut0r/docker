@@ -2,7 +2,7 @@ FROM nginx:alpine
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="glype - a web-based proxy on nginx:alpine"
 
-VOLUME /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 
 RUN apk add --no-cache --virtual .git-deps \
     git \
