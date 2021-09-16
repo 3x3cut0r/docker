@@ -1,8 +1,8 @@
-FROM nginx:alpine
+FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="glype - a web-based proxy on nginx:alpine"
 
-WORKDIR /usr/share/nginx/html
+WORKDIR /app
 
 RUN apk add --no-cache --virtual .git-deps \
     git \
@@ -12,7 +12,7 @@ RUN apk add --no-cache --virtual .git-deps \
 # clone glype
 RUN git clone https://github.com/vincentclee/glype.git .
 
-# clean up dependencies
-RUN apk del --no-network .git-deps && \
-    rm -rf /var/lib/apt/lists/* && \
-    rm /var/cache/apk/*
+
+FROM nginx:alpine
+WORKDIR /usr/share/nginx/html
+COPY --from=build /app/* /usr/share/nginx/html
