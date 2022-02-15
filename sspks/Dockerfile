@@ -6,7 +6,8 @@ USER root
 RUN wget https://github.com/jdel/sspks/archive/refs/heads/master.zip \
  && unzip master.zip \
  && rm master.zip \
- && cd *master
+ && rm -rf /var/www/localhost/htdocs
+ && mv sspks-master /var/www/localhost/htdocs
 
 RUN apk update && apk add --no-cache apache2 php7-apache2 php7-phar php7-ctype php7-json \
  && apk add --virtual=.build-dependencies curl openssl php7 php7-openssl git \
