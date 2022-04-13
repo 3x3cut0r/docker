@@ -28,6 +28,8 @@ jobs:
         
       - name: Modifiy the specific files using scripts
         run: |
+          mkdir -p tvheadend-sundtek
+          cd tvheadend-sundtek
           wget https://github.com/linuxserver/docker-tvheadend/releases
           cat releases | grep "releases/tag/" | head -n 1 > version
           rm releases
