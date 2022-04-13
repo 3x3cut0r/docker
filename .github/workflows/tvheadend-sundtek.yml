@@ -31,17 +31,17 @@ jobs:
           mkdir -p tvheadend-sundtek
           cd tvheadend-sundtek
           wget https://github.com/linuxserver/docker-tvheadend/releases
-          cat releases | grep "releases/tag/" | head -n 1 > version
+          cat releases | grep "releases/tag/" | head -n 1 > VERSION
           rm releases
           VERSION_STRING=$(cat version | grep 'releases/tag/' | head -n 1)
           VERSION=${VERSION_STRING##*releases/tag/}
-          echo $VERSION | cut -d '"' -f 1 > version
+          echo $VERSION | cut -d '"' -f 1 > VERSION
       - name: Commit and push changes
         run: |
           git config --global user.name "${{ secrets.GIT_USERNAME }}"
           git config --global user.email "${{ secrets.GIT_EMAIL }}"
           git add -A
-          VERSION=${cat version}
+          VERSION=$(cat VERSION)
           git commit -m "version updated ($VERSION)"
           git push
       -
