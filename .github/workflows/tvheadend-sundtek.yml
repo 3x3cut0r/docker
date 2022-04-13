@@ -33,7 +33,7 @@ jobs:
           wget https://github.com/linuxserver/docker-tvheadend/releases
           cat releases | grep "releases/tag/" | head -n 1 > VERSION
           rm releases
-          VERSION_STRING=$(cat version | grep 'releases/tag/' | head -n 1)
+          VERSION_STRING=$(cat VERSION | grep 'releases/tag/' | head -n 1)
           VERSION=${VERSION_STRING##*releases/tag/}
           echo $VERSION | cut -d '"' -f 1 > VERSION
       - name: Commit and push changes
