@@ -45,4 +45,6 @@ jobs:
           file: ./raspberrypi-netboot/Dockerfile
           platforms: linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
-          tags: 3x3cut0r/raspberrypi-netboot:latest
+          tags: |
+              3x3cut0r/raspberrypi-netboot:3.15.4,
+              3x3cut0r/raspberrypi-netboot:latest
