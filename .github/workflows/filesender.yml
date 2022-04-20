@@ -26,7 +26,6 @@ jobs:
         run: |
           git clone https://github.com/AvesIT/filesender-container.git
           cd filesender-container/docker
-          sed -i '/^COPY\ assets\ \/.*/i RUN\ rm\ -rf\ \/etc\/service\*' Dockerfile
           sed -i '/^COPY\ assets\ \/.*/i RUN\ mkdir\ \/etc\/service' Dockerfile
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
