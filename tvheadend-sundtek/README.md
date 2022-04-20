@@ -39,7 +39,7 @@ docker container run -d --restart unless-stopped \
 ```
 
 ### docker compose
-**check volumes! their must be exist!**  
+**check volumes! these must exist!**  
 ```shell
 version: "3.9"
 
