@@ -1,11 +1,11 @@
 name: build filesender
 
 on:
-  push:
-    branches:
-      - 'main'
-    paths:
-      - 'filesender/**'
+# push:
+#   branches:
+#     - 'main'
+#   paths:
+#     - 'filesender/**'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 * * * *'
@@ -22,8 +22,18 @@ jobs:
   multi:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - name: Update Version, commit and push changes
+        run: |
+          git clone https://github.com/AvesIT/filesender-container.git
+          cd filesender-container/docker
+          LINENR=$(grep -n "disable_directory_upload" assets/opt/filesender/config-templates/filesender/config.php | head -n 1 | cut -f1 -d":")
+          head -n $LINENR assets/opt/filesender/config-templates/filesender/config.php > assets/opt/filesender/config-templates/filesender/config.php_new
+          echo "\$config['force_ssl'] = false;" >> assets/opt/filesender/config-templates/filesender/config.php_new
+          LINENR=$((LINENR+1))
+          tail -n +$LINENR assets/opt/filesender/config-templates/filesender/config.php >> assets/opt/filesender/config-templates/filesender/config.php_new
+          rm assets/opt/filesender/config-templates/filesender/config.php
+          mv assets/opt/filesender/config-templates/filesender/config.php_new assets/opt/filesender/config-templates/filesender/config.php
+          sed -i '/^COPY\ assets\ \/.*/i RUN\ rm\ -rf\ \/etc\/service' Dockerfile
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
@@ -36,8 +46,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v2
         with:
-          context: ./filesender
-          file: ./filesender/Dockerfile
+          context: ./filesender-container/docker
+          file: ./filesender-container/docker/Dockerfile
           platforms: linux/amd64
           push: true
           tags: 3x3cut0r/filesender:latest
