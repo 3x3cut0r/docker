@@ -55,7 +55,9 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends nginx runit netcat-traditional msmtp-mta && \
     apt-get autoremove -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/service
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+RUN rm -rf /etc/service
 
 COPY assets /
 
