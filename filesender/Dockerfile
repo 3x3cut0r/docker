@@ -65,7 +65,7 @@ VOLUME ["/data"]
 
 EXPOSE 80 443 9000
 
-RUN chmod 755 /usr/local/sbin/runsvdir-init
+RUN chmod -R 755 /usr/local/sbin/runsvdir-init /etc/service
 
 CMD ["/usr/local/sbin/runsvdir-init"]
 
