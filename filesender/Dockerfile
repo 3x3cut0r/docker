@@ -59,13 +59,17 @@ RUN apt-get update && \
 
 COPY assets /
 
+RUN chmod -R +x /usr/local/sbin/runsvdir-init \
+    /etc/service \
+    /opt/filesender \
+    /usr/local \
+    /setup.sh
+
 VOLUME ["/opt/filesender"]
 VOLUME ["/config/fpm", "/config/filesender", "/config/simplesamlphp/config", "/config/simplesamlphp/metadata"]
 VOLUME ["/data"]
 
 EXPOSE 80 443 9000
-
-RUN chmod -R 755 /usr/local/sbin/runsvdir-init /etc/service
 
 CMD ["/usr/local/sbin/runsvdir-init"]
 
