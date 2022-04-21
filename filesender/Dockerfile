@@ -1,6 +1,6 @@
 FROM php:7.4-fpm-buster
 
-ENV FILESENDER_VERSION=2.30 \
+ENV FILESENDER_VERSION=2.31 \
     FILESENDER_SUM="ef6da83e7ac46303e5f8d620f6858565fd746d7c4b054a12439a561d79b515a2" \
     SSP_VERSION=1.19.1 \
     SSP_SUM="19e3860eff63f2367579b9ee5c2b7b609d7d17daacacd3e04823ddf599124747"
@@ -55,7 +55,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends nginx runit netcat-traditional msmtp-mta && \
     apt-get autoremove -y && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/service*
+    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /etc/service
 
 COPY assets /
 
