@@ -65,6 +65,8 @@ VOLUME ["/data"]
 
 EXPOSE 80 443 9000
 
+RUN chmod 755 /usr/local/sbin/runsvdir-init
+
 CMD ["/usr/local/sbin/runsvdir-init"]
 
 ARG BUILD_DATE
