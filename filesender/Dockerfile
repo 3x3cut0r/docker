@@ -57,8 +57,6 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-RUN rm -rf /etc/service
-
 COPY assets /
 
 VOLUME ["/opt/filesender"]
