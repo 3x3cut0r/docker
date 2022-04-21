@@ -26,7 +26,8 @@ jobs:
         run: |
           git clone https://github.com/AvesIT/filesender-container.git
           cd filesender-container/docker
-          sed -i '/^COPY\ assets\ \/.*/i RUN\ rm\ -rf\ \/etc\/service' Dockerfile
+          sed -i '/^\$config\[\'disable_directory_upload\'\]\ =.*/i \$config\[\'force_ssl\'\]\ =\ false\;' assets/opt/filesender/config-templates/filesender/config.php
+          sed -i 's#rm\ -rf\ /var/lib/apt/lists/\*\ /tmp/\*\ /var/tmp/\*#rm\ -rf\ /var/lib/apt/lists/\*\ /tmp/\*\ /var/tmp/\*\ /etc/service\*#g' Dockerfile
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
       - name: Set up Docker Buildx
