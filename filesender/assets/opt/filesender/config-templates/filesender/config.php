@@ -60,16 +60,16 @@
 //              General settings
 // ---------------------------------------------
 //
-$config['site_url'] = '{FILESENDER_URL}';                // String, URL of the application
+$config['site_url'] = '{FILESENDER_URL}';               // String, URL of the application
 $config['site_logouturl'] = '{FILESENDER_LOGOUT_URL}';
-$config['admin'] = '{ADMIN_USERS}';    // String, UID's (from  $config['saml_uid_attribute'])
-                                       // that have Administrator permissions
-$config['admin_email'] ='{ADMIN_EMAIL}';    // String, email  address(es, separated by ,)
-                                            // to receive administrative messages (low disk  space warning)
-$config['email_reply_to'] ='nobody@filesender.org';    // String, default no-reply email  address
+$config['admin'] = '{ADMIN_USERS}';                     // String, UID's (from  $config['saml_uid_attribute'])
+                                                        // that have Administrator permissions
+$config['admin_email'] ='{ADMIN_EMAIL}';                // String, email  address(es, separated by ,)
+                                                        // to receive administrative messages (low disk  space warning)
+$config['email_reply_to'] ='nobody@filesender.org';     // String, default no-reply email  address
 $config['session_cookie_path'] = '/';
 $config['disable_directory_upload'] = false;
-$config['force_ssl'] = false;
+$config['force_ssl'] = {FILESENDER_FORCE_SSL};          // for using filesender behind a reverse proxy
 
 // -----------------------------------------------------------------
 //   DB configuration
