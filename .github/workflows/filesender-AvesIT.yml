@@ -1,4 +1,4 @@
-name: build filesender
+name: build filesender from AvesIT/filesender-container
 
 on:
 # push:
