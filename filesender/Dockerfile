@@ -70,15 +70,21 @@ RUN apk -U upgrade && \
 
 COPY --chown=root:root assets /
 
-RUN chown -R www-data:www-data /opt/filesender
+RUN chown -R www-data:www-data /opt/filesender && \
+    chmod -R +x \
+      /etc/nginx \
+      /etc/service \
+      /usr/local/ \
+      /setup.sh \
+      /docker-entrypoint.sh
 
 VOLUME ["/opt/filesender"]
-VOLUME ["/config/fpm", "/config/filesender", "/config/simplesamlphp/config", "/config/simplesamlphp/metadata"]
+VOLUME ["/config"]
 VOLUME ["/data"]
 
 EXPOSE 80 443 9000
 
-CMD ["/usr/local/sbin/runsvdir-init"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
 
 ARG BUILD_DATE
 ARG VCS_REF
