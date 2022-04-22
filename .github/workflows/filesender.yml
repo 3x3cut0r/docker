@@ -26,8 +26,8 @@ jobs:
         run: |
           git clone https://github.com/AvesIT/filesender-container.git
           cd filesender-container/docker
-          wget -O assets/opt/filesender/config-templates/filesender/config.php https://raw.githubusercontent.com/3x3cut0r/docker/main/filesender/config-templates/filesender/config.php
-          wget -O assets/opt/filesender/config-templates/simplesaml/config.php https://raw.githubusercontent.com/3x3cut0r/docker/main/filesender/config-templates/simplesaml/config.php
+          wget -O assets/opt/filesender/config-templates/filesender/config.php https://raw.githubusercontent.com/3x3cut0r/docker/main/filesender/assets/opt/filesender/config-templates/filesender/config.php
+          wget -O assets/opt/filesender/config-templates/simplesaml/config.php https://raw.githubusercontent.com/3x3cut0r/docker/main/filesender/assets/opt/filesender/config-templates/simplesaml/config.php
           sed -i '/^COPY\ assets\ \/.*/i RUN\ rm\ -rf\ \/etc\/service' Dockerfile
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v1
