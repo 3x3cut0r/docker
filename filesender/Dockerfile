@@ -68,7 +68,9 @@ RUN apk -U upgrade && \
     apk del --no-network .filesender-deps && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-COPY assets /
+COPY --chown=root:root assets /
+
+RUN chown -R www-data:www-data /opt/filesender
 
 VOLUME ["/opt/filesender"]
 VOLUME ["/config/fpm", "/config/filesender", "/config/simplesamlphp/config", "/config/simplesamlphp/metadata"]
