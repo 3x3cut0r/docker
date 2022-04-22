@@ -68,10 +68,10 @@ RUN apk -U upgrade && \
     apk del --no-network .filesender-deps && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-COPY --chown=root:root assets /
+COPY --chown=root:root --chmod=0755 assets /
 
 RUN chown -R www-data:www-data /opt/filesender && \
-    chmod -R +x \
+    chmod -R a+x \
       /etc/nginx \
       /etc/service \
       /usr/local/ \
