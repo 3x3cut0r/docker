@@ -68,7 +68,7 @@ RUN apk -U upgrade && \
     apk del --no-network .filesender-deps && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-COPY --chown=root:root --chmod=0755 assets /
+COPY assets /
 
 VOLUME ["/opt/filesender"]
 VOLUME ["/config"]
