@@ -70,14 +70,6 @@ RUN apk -U upgrade && \
 
 COPY --chown=root:root --chmod=0755 assets /
 
-RUN chown -R www-data:www-data /opt/filesender && \
-    chmod -R a+x \
-      /etc/nginx \
-      /etc/service \
-      /usr/local/ \
-      /setup.sh \
-      /docker-entrypoint.sh
-
 VOLUME ["/opt/filesender"]
 VOLUME ["/config"]
 VOLUME ["/data"]
