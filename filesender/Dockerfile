@@ -64,11 +64,20 @@ RUN mkdir -p /config/fpm /config/filesender /config/simplesamlphp/config /config
 
 # Get common tools
 RUN apk -U upgrade && \
-    apk add --no-cache nginx runit netcat-openbsd msmtp vim nano && \
+    apk add --no-cache bash nginx runit netcat-openbsd msmtp vim nano && \
     apk del --no-network .filesender-deps && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-COPY assets /
+RUN mkdir -p /assets
+COPY assets /assets
+RUN chmod -R 755 /assets &&\
+    cp -R /assets/* / && \
+    rm -rf /assets && \
+    chown -R www-data:www-data /opt/filesender && \
+    rm -rf /etc/nginx/sites-enabled/default && \
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
+    rm -rf /usr/local/sbin/php-fpm-env && \
+    ln -s /usr/local/lib/php-fpm-env/PhpFpmEnvironment.php /usr/local/sbin/php-fpm-env
 
 VOLUME ["/opt/filesender"]
 VOLUME ["/config"]
