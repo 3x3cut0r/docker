@@ -76,8 +76,7 @@ RUN chmod -R 755 /assets &&\
     rm -rf /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
     rm -rf /usr/local/sbin/php-fpm-env && \
-    ln -s /usr/local/lib/php-fpm-env/PhpFpmEnvironment.php /usr/local/sbin/php-fpm-env && \
-    chown -R www-data:www-data /opt/* /config /data 
+    ln -s /usr/local/lib/php-fpm-env/PhpFpmEnvironment.php /usr/local/sbin/php-fpm-env
 
 VOLUME ["/opt/filesender"]
 VOLUME ["/config"]
