@@ -71,7 +71,7 @@ RUN apk -U upgrade && \
 RUN mkdir -p /assets
 COPY assets /assets
 RUN chmod -R 755 /assets &&\
-    cp -R /assets/* / && \
+    cp -Rp /assets/* / && \
     rm -rf /assets && \
     rm -rf /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
