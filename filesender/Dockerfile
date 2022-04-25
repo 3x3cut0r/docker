@@ -73,7 +73,6 @@ COPY assets /assets
 RUN chmod -R 755 /assets/* /opt/* /config/* /data/* && \
     chown -R www-data:www-data /opt/* /config/* /data/* && \
     cp -Rp /assets/* / && \
-    chmod 777 /opt/filesender/simplesamlphp/data/sqlite.db && \
     rm -rf /assets && \
     rm -rf /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
