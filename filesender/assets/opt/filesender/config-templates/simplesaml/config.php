@@ -229,6 +229,6 @@ $config = [
     'store.sql.password' => null,
     'store.sql.prefix' => 'SimpleSAMLphp',
     'store.redis.host' => '${REDIS_HOST}',
-    'store.redis.port' => ${REDIS_PORT},
+    'store.redis.port' => '${REDIS_PORT}'',
     'store.redis.prefix' => 'SimpleSAMLphp',
 ];
