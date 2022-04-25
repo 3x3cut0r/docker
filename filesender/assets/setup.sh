@@ -161,7 +161,7 @@ elif [ "$FILESENDER_AUTHTYPE" = "fake" ]; then
   SAML_UID_ATTR=${SAML_UID_ATTR:-"fakeuser"}
 else
   # Attributes passed from simplesamlphp
-  FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"sp-default"}
+  FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"default-sp"}
   SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"mail"}
   SAML_NAME_ATTR=${SAML_NAME_ATTR:-"cn"}
   SAML_UID_ATTR=${SAML_UID_ATTR:-"uid"}
