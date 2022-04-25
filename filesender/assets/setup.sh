@@ -190,6 +190,8 @@ if [ "`which nc`" != "" ]; then
   fi
 fi
 
+touch /opt/filesender/simplesamlphp/data/sqlite.db
+chmod 777 /opt/filesender/simplesamlphp/data/sqlite.db
 chown -R www-data:www-data /opt/*
 
 # Check if www-data's uid:gid has been requested to be changed
