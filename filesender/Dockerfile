@@ -14,7 +14,7 @@ ENV FILESENDER_VERSION=$REF \
     SSP_SUM=$SSP_REF_SUM
 
 # Install needed extensions
-COPY --from=mlocati/php-extension-installer:1.5.10 /usr/bin/install-php-extensions /usr/local/bin/
+COPY --from=mlocati/php-extension-installer:1.5.11 /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions pdo_mysql pdo_pgsql
 
 # Get dependencies
