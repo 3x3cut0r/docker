@@ -224,11 +224,11 @@ $config = [
     'metadata.sign.certificate' => null,
 
     'store.type'                    => 'sql',
-    'store.sql.dsn'                 => 'sqlite:/opt/filesender/simplesamlphp/data/sqlite.db',
+    'store.sql.dsn'                 => 'sqlite:/data/sqlite.db',
     'store.sql.username' => null,
     'store.sql.password' => null,
     'store.sql.prefix' => 'SimpleSAMLphp',
-    'store.redis.host' => '${REDIS_HOST}',
-    'store.redis.port' => '${REDIS_PORT}'',
+    'store.redis.host' => '{REDIS_HOST}',
+    'store.redis.port' => {REDIS_PORT},
     'store.redis.prefix' => 'SimpleSAMLphp',
 ];
