@@ -5,8 +5,8 @@
 sv once personalisation
 
 USER='www-data'
-USER_ID='33'
-GROUP_ID='33'
+USER_ID='82'
+GROUP_ID='82'
 
 FILESENDER_SERIES=${FILESENDER_V%%.*}
 FILESENDER_AUTHTYPE=${FILESENDER_AUTHTYPE:-simplesamlphp}
