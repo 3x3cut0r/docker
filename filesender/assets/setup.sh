@@ -5,8 +5,8 @@
 sv once personalisation
 
 USER='www-data'
-USER_ID='82'
-GROUP_ID='82'
+USER_ID="$(cat /etc/passwd | grep www-data | cut -d ':' -f 3)"
+GROUP_ID="$(cat /etc/passwd | grep www-data | cut -d ':' -f 4)"
 
 FILESENDER_SERIES=${FILESENDER_V%%.*}
 FILESENDER_AUTHTYPE=${FILESENDER_AUTHTYPE:-simplesamlphp}
