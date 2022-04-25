@@ -190,8 +190,14 @@ if [ "`which nc`" != "" ]; then
   fi
 fi
 
+# create sqlite.db and give permissions
 touch /opt/filesender/simplesamlphp/data/sqlite.db
 chmod 777 /opt/filesender/simplesamlphp/data/sqlite.db
+
+# enable sqlauth module for simplesaml
+touch /opt/filesender/simplesamlphp/modules/sqlauth/enable
+
+# change ownership of filesender to www-data
 chown -R www-data:www-data /opt/*
 
 # Check if www-data's uid:gid has been requested to be changed
