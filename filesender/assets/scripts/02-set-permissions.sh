@@ -19,5 +19,4 @@ chmod -R 755    /opt/* \
                 /usr/local/sbin/runsvdir-init \
                 /etc/service/*
 
-chmod -R o-rwx  /data/* \
-                $FILESENDER_CONFIG_DIR/config/config.php
+chmod -R o-rwx  /data/*
