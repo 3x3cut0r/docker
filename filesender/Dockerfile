@@ -45,8 +45,7 @@ RUN cd /opt && \
     cp -r metadata-templates/*.php metadata/ && \
     patch -p1 < /opt/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch && \
     cp /opt/filesender/scripts/simplesamlphp/passwordverify/PasswordVerify.php modules/sqlauth/lib/Auth/Source/ && \
-    touch data/sqlite.db && \
-    chmod o+rwx data/sqlite.db
+    touch data/sqlite.db
 
 # copy config-templates and files
 COPY assets /
