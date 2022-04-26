@@ -107,9 +107,9 @@ RUN apk del patch && \
     rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
 VOLUME ["/config", "/data", "/opt/filesender", "/opt/simplesamlphp"]
-
 EXPOSE 80 443
 
+WORKDIR /config
 RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
