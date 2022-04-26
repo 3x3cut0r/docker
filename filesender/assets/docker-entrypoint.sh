@@ -1,6 +1,5 @@
 #!/bin/sh
 set -e
-source /usr/local/etc/envvars
 
 # exec scripts
 chmod +x /scripts/*.sh
