@@ -1,7 +1,12 @@
 #!/bin/sh
 set -e
-# set timezone
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+source /usr/local/etc/envvars
+
+# exec scripts
+chmod +x /scripts/*.sh
+for script in /scripts/*.sh; do
+    exec "$script"
+done
 
 # exec /usr/local/sbin/runsvdir-init
 exec /usr/local/sbin/runsvdir-init
