@@ -1,10 +1,11 @@
-#!/bin/sh
+#!/bin/bash
 set -e
 
 # exec scripts
 chmod +x /scripts/*.sh
-for script in /scripts/*.sh; do
-    exec "$script"
+cd /scripts
+for script in $(ls); do
+    /bin/bash ./"$script"
 done
 
 # exec /usr/local/sbin/runsvdir-init
