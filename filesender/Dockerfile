@@ -55,11 +55,11 @@ COPY assets /
 RUN mkdir -p /config/filesender/config /config/filesender/www && \
     cd /config/filesender && \
     cp /opt/filesender/config/config_sample.php config/config.php && \
-    mv /opt/filesender/config /config/filesender/config && \
+    mv /opt/filesender/config/* /config/filesender/config/ && \
     rm -Rf /opt/filesendre/config && \
-    ln -s config /opt/filesender/ && \
+    ln -s /config/filesender/config/ /opt/filesender/config && \
     cp /config/config-templates/filesender/www/favicon.ico www/favicon.ico && \
-    ln -s www/favicon.ico /opt/filesender/www/favicon.ico
+    ln -s /config/filesender/www/favicon.ico /opt/filesender/www/favicon.ico
 
 # /config/simplesamlphp
 RUN mkdir -p /config/simplesamlphp/config /config/simplesamlphp/metadata && \
@@ -67,11 +67,11 @@ RUN mkdir -p /config/simplesamlphp/config /config/simplesamlphp/metadata && \
     mv -f /opt/simplesamlphp/config/*.php config/ && \
     mv -f /opt/simplesamlphp/metadata/*.php metadata/ && \
     rm -rf /opt/simplesamlphp/config/* && \
-    ln -s config/acl.php /opt/simplesamlphp/config/acl.php && \
-    ln -s config/authsources.php /opt/simplesamlphp/config/authsources.php && \
-    ln -s config/config.php /opt/simplesamlphp/config/config.php && \
+    ln -s /config/simplesamlphp/config/acl.php /opt/simplesamlphp/config/acl.php && \
+    ln -s /config/simplesamlphp/config/authsources.php /opt/simplesamlphp/config/authsources.php && \
+    ln -s /config/simplesamlphp/config/config.php /opt/simplesamlphp/config/config.php && \
     rm -rf /opt/simplesamlphp/metadata && \
-    ln -s metadata /opt/simplesamlphp/
+    ln -s /config/simplesamlphp/metadata /opt/simplesamlphp/
 
 # /config/fpm
 RUN mkdir -p /config/fpm /run/php && \
@@ -90,9 +90,9 @@ RUN mkdir -p /data && \
     mkdir -p files tmp log && \
     cd /opt/filesender && \
     rm -Rf files tmp log && \
-    ln -s /data/files files && \
-    ln -s /data/tmp tmp && \
-    ln -s /data/log log
+    ln -s /data/files /opt/filesender/files && \
+    ln -s /data/tmp /opt/filesender/tmp && \
+    ln -s /data/log /opt/filesender/log
 
 # /etc/nginx
 RUN rm -rf /etc/nginx/sites-enabled/default && \
