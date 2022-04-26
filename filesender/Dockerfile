@@ -46,14 +46,14 @@ RUN cd /opt && \
     patch -p1 < /opt/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch && \
     cp /opt/filesender/scripts/simplesamlphp/passwordverify/PasswordVerify.php modules/sqlauth/lib/Auth/Source/ && \
     touch data/sqlite.db && \
-    chown o+rwx data/sqlite.db
+    chmod o+rwx data/sqlite.db
 
 # copy config-templates and files
 COPY assets /
 
 # create docker specific folders
 # /config/filesender
-RUN mkdir -p /config/filesender/config && \
+RUN mkdir -p /config/filesender/config /config/filesender/www && \
     cd /config/filesender && \
     cp /opt/filesender/config/config_sample.php config/config.php && \
     mv /opt/filesender/config /config/filesender/config && \
