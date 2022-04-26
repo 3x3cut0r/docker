@@ -36,7 +36,7 @@ ADMIN_EMAIL=${ADMIN_EMAIL:-admin@abcde.edu}
 
 # simplesaml
 SIMPLESAML_DIR="/opt/simplesamlphp"
-SIMPLESAML_CONFIG_DIR="/config/simplesaml"
+SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
 SIMPLESAML_MODULES="cas exampleauth sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-false}
 
@@ -142,9 +142,9 @@ if [ "$SIMPLESAML_SALT" = "" ]; then
     SIMPLESAML_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
 fi
 
-sed_file "${TEMPLATE_DIR}/simplesaml/acl.php" "${SIMPLESAML_CONFIG_DIR}/config/acl.php"
-sed_file "${TEMPLATE_DIR}/simplesaml/authsources.php" "${SIMPLESAML_CONFIG_DIR}/config/authsources.php"
-sed_file "${TEMPLATE_DIR}/simplesaml/config.php" "${SIMPLESAML_CONFIG_DIR}/config/config.php"
+sed_file "${TEMPLATE_DIR}/simplesamlphp/config/acl.php" "${SIMPLESAML_CONFIG_DIR}/config/acl.php"
+sed_file "${TEMPLATE_DIR}/simplesamlphp/config/authsources.php" "${SIMPLESAML_CONFIG_DIR}/config/authsources.php"
+sed_file "${TEMPLATE_DIR}/simplesamlphp/config/config.php" "${SIMPLESAML_CONFIG_DIR}/config/config.php"
 
 for MODULE in $SIMPLESAML_MODULES; do
     if [ -d ${SIMPLESAML_DIR}/modules/$MODULE ]; then

@@ -15,7 +15,8 @@ chown -R www-data:www-data  /opt/* \
 
 chmod -R 755    /opt/* \
                 /config/* \
-                /data/*
+                /data/* \
+                /usr/local/sbin/runsvdir-init
 
 chmod -R o-rwx  /data/* \
                 $FILESENDER_CONFIG_DIR/config/config.php
