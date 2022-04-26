@@ -181,6 +181,3 @@ else
 fi
 
 sed_file ${TEMPLATE_DIR}/filesender/config/config.php ${FILESENDER_CONFIG_DIR}/config/config.php
-
-# We are done here
-exit 0

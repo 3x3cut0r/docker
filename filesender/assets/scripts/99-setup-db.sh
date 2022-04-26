@@ -52,5 +52,3 @@ if [ ! -f ${DB_STATUS_FILE} ]; then
     fi
 
 fi
-
-exit 0
