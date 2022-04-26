@@ -13,85 +13,110 @@ ENV FILESENDER_VERSION=$REF \
     SSP_VERSION=$SSP_REF \
     SSP_SUM=$SSP_REF_SUM
 
-# Install needed extensions
+# install php extensions
 COPY --from=mlocati/php-extension-installer:1.5.11 /usr/bin/install-php-extensions /usr/local/bin/
 RUN install-php-extensions pdo_mysql pdo_pgsql
 
-# Get dependencies
-RUN apk add --no-cache --virtual .filesender-deps \
-    patch
-
-# Get software in
-RUN mkdir /opt/filesender && \
-    cd /opt/filesender && \
-    curl -kL https://github.com/filesender/filesender/archive/master-filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
-    ln -s filesender-master-filesender-${FILESENDER_VERSION} filesender && \
-    curl -L https://github.com/simplesamlphp/simplesamlphp/releases/download/v${SSP_VERSION}/simplesamlphp-${SSP_VERSION}.tar.gz | tar xz && \
-    ln -s simplesamlphp-${SSP_VERSION} simplesamlphp && \
-    rm -f filesender-master-filesender-${FILESENDER_VERSION}.tar.gz simplesamlphp-${SSP_VERSION}.tar.gz
-
-# Run basic install steps from application manual
-RUN cd /opt/filesender/filesender && \
-    cp config/config_sample.php config/config.php && \
-    mkdir -p tmp files log && \
-    chmod o-rwx tmp files log config/config.php && \
-    chown www-data:www-data tmp files log && \
-    chgrp www-data config/config.php && \
-    cd /opt/filesender/simplesamlphp && \
-    cp -r config-templates/*.php config/ && \
-    cp -r metadata-templates/*.php metadata/
-
-# Specialize: Configs are in /config, Data is in /data
-RUN mkdir -p /config/fpm /config/filesender /config/simplesamlphp/config /config/simplesamlphp/metadata /data && \
-    mv -f /usr/local/etc/php-fpm.d/www.conf /config/fpm/www.conf && \
-    mv -f /opt/filesender/filesender/config /config/filesender && \
-    rm -Rf /opt/filesender/filesender/files /opt/filesender/filesender/tmp /opt/filesender/filesender/log && \
-    mv -f /opt/filesender/simplesamlphp/config/*.php /config/simplesamlphp/config/ && \
-    mv -f /opt/filesender/simplesamlphp/metadata/*.php /config/simplesamlphp/metadata/ && \
-    ln -s /config/fpm/www.conf /usr/local/etc/php-fpm.d/filesender.conf && \
-    ln -s /config/filesender/config /opt/filesender/filesender/config && \
-    ln -s /config/simplesamlphp/config/acl.php /opt/filesender/simplesamlphp/config/acl.php && \
-    ln -s /config/simplesamlphp/config/authsources.php /opt/filesender/simplesamlphp/config/authsources.php && \
-    ln -s /config/simplesamlphp/config/config.php /opt/filesender/simplesamlphp/config/config.php && \
-    mkdir /data/files /data/tmp /data/log && \
-    ln -s /data/files /opt/filesender/filesender/files && \
-    ln -s /data/tmp /opt/filesender/filesender/tmp && \
-    ln -s /data/log /opt/filesender/filesender/log && \
-    chown -R www-data:www-data /data/tmp /data/log /data/files && \
-    ln -s /config/simplesamlphp/metadata/active.php /opt/filesender/simplesamlphp/metadata/active.php && \
-    cp /opt/filesender/filesender/scripts/simplesamlphp/passwordverify/PasswordVerify.php /opt/filesender/simplesamlphp/modules/sqlauth/lib/Auth/Source/ && \
-    cd /opt/filesender/simplesamlphp && patch -p1 < /opt/filesender/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch && cd -
-
-# Get common tools
+# install dependencies & common tools
 RUN apk -U upgrade && \
-    apk add --no-cache bash nginx runit netcat-openbsd msmtp vim nano && \
-    apk del --no-network .filesender-deps && \
-    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
+    apk add --no-cache  bash \
+                        msmtp \
+                        nano \
+                        netcat-openbsd \
+                        nginx \
+                        patch \
+                        runit \
+                        vim
 
-RUN mkdir -p /assets
-COPY assets /assets
-RUN chmod -R 755 /assets/* /opt/* /config/* /data/* && \
-    chown -R www-data:www-data /opt/* /config/* /data/* && \
-    cp -Rp /assets/* / && \
-    rm -rf /assets && \
-    rm -rf /etc/nginx/sites-enabled/default && \
+# download filesender
+RUN cd /opt && \
+    curl -kL https://github.com/filesender/filesender/archive/master-filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
+    mv filesender-master-filesender-${FILESENDER_VERSION} filesender && \
+    cd filesender && \
+    mkdir -p files tmp log && \
+    cp config/config_sample.php config/config.php
+
+# download simplesamlphp
+RUN cd /opt && \
+    curl -L https://github.com/simplesamlphp/simplesamlphp/releases/download/v${SSP_VERSION}/simplesamlphp-${SSP_VERSION}.tar.gz | tar xz && \
+    mv simplesamlphp-${SSP_VERSION} simplesamlphp && \
+    cd simplesamlphp && \
+    cp -r config-templates/*.php config/ && \
+    cp -r metadata-templates/*.php metadata/ && \
+    patch -p1 < /opt/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch
+    cp /opt/filesender/scripts/simplesamlphp/passwordverify/PasswordVerify.php modules/sqlauth/lib/Auth/Source/ && \
+    touch data/sqlite.db && \
+    chown o+rwx data/sqlite.db
+
+# copy config-templates and files
+COPY assets /
+
+# create docker specific folders
+# /config/filesender
+RUN mkdir -p /config/filesender/config && \
+    cd /config/filesender && \
+    cp /opt/filesender/config/config_sample.php config/config.php && \
+    mv /opt/filesender/config /config/filesender/config && \
+    rm -Rf /opt/filesendre/config && \
+    ln -s config /opt/filesender/ && \
+    cp /config/config-templates/filesender/www/favicon.ico www/favicon.ico && \
+    ln -s www/favicon.ico /opt/filesender/www/favicon.ico
+
+# /config/simplesamlphp
+RUN mkdir -p /config/simplesamlphp/config /config/simplesamlphp/metadata && \
+    cd /config/simplesamlphp && \
+    mv -f /opt/simplesamlphp/config/*.php config/ && \
+    mv -f /opt/simplesamlphp/metadata/*.php metadata/ && \
+    rm -rf /opt/simplesamlphp/config/* && \
+    ln -s config/acl.php /opt/simplesamlphp/config/acl.php && \
+    ln -s config/authsources.php /opt/simplesamlphp/config/authsources.php && \
+    ln -s config/config.php /opt/simplesamlphp/config/config.php && \
+    rm -rf /opt/simplesamlphp/metadata && \
+    ln -s metadata /opt/simplesamlphp/
+
+# /config/fpm
+RUN mkdir -p /config/fpm /run/php && \
+    cd /config/fpm && \
+    mv -f /usr/local/etc/php-fpm.d/www.conf filesender.conf && \
+    echo "include=/config/fpm/*.conf" >> /usr/local/etc/php-fpm.conf
+
+# /config/msmtp
+RUN mkdir -p /config/msmtp && \
+    cd /config/msmtp && \
+    cp /config/config-templates/msmtp/msmtprc .
+
+# /data
+RUN mkdir -p /data && \
+    cd /data && \
+    mkdir -p files tmp log && \
+    cd /opt/filesender && \
+    rm -Rf files tmp log && \
+    ln -s /data/files files && \
+    ln -s /data/tmp tmp && \
+    ln -s /data/log log
+
+# /etc/nginx
+RUN rm -rf /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
     rm -rf /usr/local/sbin/php-fpm-env && \
     ln -s /usr/local/lib/php-fpm-env/PhpFpmEnvironment.php /usr/local/sbin/php-fpm-env
 
-VOLUME ["/opt/filesender"]
-VOLUME ["/config"]
-VOLUME ["/data"]
+# clean up
+RUN apk del patch && \
+    rm -rf /var/cache/apk/* /tmp/* /var/tmp/*
 
-EXPOSE 80 443 9000
+VOLUME ["/config", "/data", "/opt/filesender", "/opt/simplesamlphp"]
 
+EXPOSE 80 443
+
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-ARG BUILD_DATE
+ARG BUILD_DATE=$(date +"%Y-%m-%d")
 ARG VCS_REF
 LABEL maintainer="Julian Reith <JulianReith@gmx.de>" \
       org.label-schema.build-date="${BUILD_DATE}" \
-      org.label-schema.docker.dockerfile="/docker/Dockerfile" \
+      org.label-schema.docker.dockerfile="/filesender/Dockerfile" \
       org.label-schema.license="BSD3" \
       org.label-schema.name="Filesender and SimpleSamlPHP on php7-fpm-alpine" \
       org.label-schema.vendor="filesender" \
