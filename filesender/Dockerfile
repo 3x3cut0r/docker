@@ -97,8 +97,10 @@ RUN mkdir -p /data && \
 
 # /etc/nginx
 RUN rm -rf /etc/nginx/sites-enabled/default && \
-    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default && \
-    rm -rf /usr/local/sbin/php-fpm-env && \
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# php-fpm
+RUN rm -rf /usr/local/sbin/php-fpm-env && \
     ln -s /usr/local/lib/php-fpm-env/PhpFpmEnvironment.php /usr/local/sbin/php-fpm-env
 
 # clean up
