@@ -57,7 +57,7 @@ RUN mkdir -p /config/filesender/config /config/filesender/www && \
     cp /opt/filesender/config/config_sample.php config/config.php && \
     mv /opt/filesender/config/* /config/filesender/config/ && \
     rm -Rf /opt/filesendre/config && \
-    ln -s /config/filesender/config/ /opt/filesender/config && \
+    ln -s /config/filesender/config /opt/filesender/config && \
     cp /config/config-templates/filesender/www/favicon.ico www/favicon.ico && \
     ln -s /config/filesender/www/favicon.ico /opt/filesender/www/favicon.ico
 
