@@ -43,7 +43,7 @@ RUN cd /opt && \
     cd simplesamlphp && \
     cp -r config-templates/*.php config/ && \
     cp -r metadata-templates/*.php metadata/ && \
-    patch -p1 < /opt/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch
+    patch -p1 < /opt/filesender/scripts/simplesamlphp/passwordverify/patch-to-simplesamlphp.patch && \
     cp /opt/filesender/scripts/simplesamlphp/passwordverify/PasswordVerify.php modules/sqlauth/lib/Auth/Source/ && \
     touch data/sqlite.db && \
     chown o+rwx data/sqlite.db
