@@ -108,7 +108,6 @@ function sed_file {
         -e "s|{USER_UID}|${USER_UID}|g" \
         -e "s|{USER_GID}|${USER_GID}|g" \
         \
-
         -e "s|{DB_HOST}|${DB_HOST}|g" \
         -e "s|{DB_NAME}|${DB_NAME}|g" \
         -e "s|{DB_USER}|${DB_USER}|g" \
