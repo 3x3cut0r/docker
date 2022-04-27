@@ -14,19 +14,19 @@ server {
         }
         location ~ [^/]\.php(/|$) {
             fastcgi_split_path_info  ^(.+\.php)(/.+)$;
-            # fastcgi_pass  localhost:9000;
-            fastcgi_pass  unix:/run/php/php7.4-fpm.sock;
+            fastcgi_pass  localhost:9000;
+            # fastcgi_pass  unix:/run/php/php7.4-fpm.sock;
             include       fastcgi_params;
             fastcgi_intercept_errors on;
             fastcgi_param PATH_INFO       $fastcgi_path_info;
             fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         }
         location ^~ /simplesamlphp {
-            alias /opt/filesender/simplesamlphp/saml/www;
+            alias /opt/simplesamlphp/www;
             location ~ ^(?<prefix>/saml)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
                 include fastcgi_params;
-                # fastcgi_pass  localhost:9000;
-                fastcgi_pass    unix:/run/php/php7.4-fpm.sock;
+                fastcgi_pass  localhost:9000;
+                # fastcgi_pass    unix:/run/php/php7.4-fpm.sock;
                 fastcgi_param SCRIPT_FILENAME $document_root$phpfile;
                 fastcgi_param PATH_INFO       $pathinfo if_not_empty;
             }
