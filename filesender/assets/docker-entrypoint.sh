@@ -4,7 +4,7 @@ set -e
 # exec scripts
 chmod +x /scripts/*.sh
 cd /scripts
-for script in $(ls); do
+for script in $(ls | grep '.sh$' ); do
     echo "exec: /scripts/$script"
     /bin/bash ./"$script"
 done

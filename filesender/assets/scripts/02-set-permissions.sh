@@ -9,11 +9,12 @@ FILESENDER_CONFIG_DIR="/config/filesender"
 
 
 # change permissions and ownership of filesender to www-data
-chown root:www-data         /config/filesender/config/config.php
+chown root:www-data         /config/filesender/config/*.php \
+                            /config/simplesamlphp/config/*.php
 
 chown -R www-data:www-data  /data/* \
-                            /config/filesender/www \
-                            /config/simplesamlphp/www
+                            /opt/filesender/www \
+                            /opt/simplesamlphp/www
 
 
 # chown -R root:root        /config/fpm/* \

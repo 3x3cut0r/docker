@@ -89,7 +89,7 @@ $config['auth_sp_type'] = '{FILESENDER_AUTHTYPE}';
 
 # simplesamlphp configuration
 $config['auth_sp_saml_simplesamlphp_url'] = '/simplesamlphp/';     // Url of simplesamlphp
-$config['auth_sp_saml_simplesamlphp_location'] = '/opt/filesender/simplesamlphp/';   // Location of simplesamlphp libraries
+$config['auth_sp_saml_simplesamlphp_location'] = '/opt/simplesamlphp/';   // Location of simplesamlphp libraries
 $config['auth_sp_saml_authentication_source'] = '{FILESENDER_AUTHSAML}';
 $config['auth_sp_saml_email_attribute'] = '{SAML_MAIL_ATTR}';
 $config['auth_sp_saml_uid_attribute'] = '{SAML_UID_ATTR}';
@@ -120,7 +120,7 @@ $config['terasender_start_mode'] = 'single';	// I think I prefer to show a nice 
 // ---------------------------------------------
 
 $config['storage_type'] = '{FILESENDER_STORAGE}';
-$config['storage_filesystem_path'] = '/opt/filesender/filesender/files';
+$config['storage_filesystem_path'] = '/opt/filesender/files';
 
 // ---------------------------------------------
 //              Language settings
