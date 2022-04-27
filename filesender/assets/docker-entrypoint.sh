@@ -5,7 +5,7 @@ set -e
 chmod +x /scripts/*.sh
 cd /scripts
 for script in $(ls); do
-    echo "run /scripts/$script"
+    echo "exec: /scripts/$script"
     /bin/bash ./"$script"
 done
 
