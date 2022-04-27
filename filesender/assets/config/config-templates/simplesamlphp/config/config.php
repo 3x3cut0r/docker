@@ -41,7 +41,7 @@ $config = [
     'logging.level' => SimpleSAML\Logger::DEBUG,
     'logging.handler' => 'stderr',
     'logging.processname' => 'simplesamlphp',
-    'logging.logfile' => 'log/simplesamlphp.log',
+    'logging.logfile' => 'simplesamlphp.log',
     'statistics.out' => [
         [
             'class' => 'core:Log',
