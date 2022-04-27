@@ -11,10 +11,10 @@ USER_GID=${USER_GID:-$GROUP_ID}
 
 # database
 DB_HOST=${DB_HOST:-localhost}
-DB_TYPE=${DB_TYPE:-mysql}
 DB_NAME=${DB_NAME:-filesender}
 DB_USER=${DB_USER:-filesender}
 DB_PASSWORD=${DB_PASSWORD:-filesender}
+DB_TYPE=${DB_TYPE:-mysql}
 if [ "$DB_TYPE" = "mysql" ]; then
   # default port for mysql
   DB_PORT=${DB_PORT:-3306}
@@ -34,7 +34,10 @@ FILESENDER_TRUSTED_DOMAINS=${FILESENDER_TRUSTED_DOMAINS:-"localhost.localdomain"
 FILESENDER_LOGOUT_URL=${FILESENDER_LOGOUT_URL:-"$FILESENDER_URL/login.php"}
 FILESENDER_STORAGE=${FILESENDER_STORAGE:-"filesystemChunked"}
 FILESENDER_FORCE_SSL=${FILESENDER_FORCE_SSL:-false}
+
+ADMIN_USERS=${ADMIN_USERS:-admin}
 ADMIN_EMAIL=${ADMIN_EMAIL:-admin@abcde.edu}
+ADMIN_PASSWORD=${ADMIN_PASSWORD:-password}
 
 # simplesaml
 SIMPLESAML_DIR="/opt/simplesamlphp"
@@ -42,6 +45,8 @@ SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
 SIMPLESAML_MODULES="cas exampleauth sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-false}
 SIMPLESAML_LANGUAGE_DEFAULT=${SIMPLESAML_LANGUAGE_DEFAULT:-en}
+SAML_TECHC_NAME=${SAML_TECHC_NAME:-support}
+SAML_TECHC_EMAIL=${SAML_TECHC_EMAIL:-support@abcde.edu}
 if [ "$FILESENDER_AUTHTYPE" = "shibboleth" ]; then
     # Attributes passed via environment variables from shibboleth
     SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"HTTP_SHIB_MAIL"}
@@ -100,50 +105,67 @@ function sed_file {
     fi
 
     cat "$SRCFILE" | sed \
-        -e "s|{FILESENDER_URL}|${FILESENDER_URL}|g" \
-        -e "s|{FILESENDER_LOGOUT_URL}|${FILESENDER_LOGOUT_URL}|g" \
-        -e "s|{FILESENDER_STORAGE}|${FILESENDER_STORAGE}|g" \
-        -e "s|{FILESENDER_FORCE_SSL}|${FILESENDER_FORCE_SSL}|g" \
-        -e "s|{FILESENDER_AUTHTYPE}|${FILESENDER_AUTHTYPE}|g" \
-        -e "s|{FILESENDER_AUTHSAML}|${FILESENDER_AUTHSAML}|g" \
+        -e "s|{USER_UID}|${USER_UID}|g" \
+        -e "s|{USER_GID}|${USER_GID}|g" \
+        \
+
         -e "s|{DB_HOST}|${DB_HOST}|g" \
-        -e "s|{DB_PORT}|${DB_PORT}|g" \
-        -e "s|{DB_TYPE}|${DB_TYPE}|g" \
         -e "s|{DB_NAME}|${DB_NAME}|g" \
         -e "s|{DB_USER}|${DB_USER}|g" \
         -e "s|{DB_PASSWORD}|${DB_PASSWORD}|g" \
+        -e "s|{DB_TYPE}|${DB_TYPE}|g" \
+        -e "s|{DB_PORT}|${DB_PORT}|g" \
+        \
+        -e "s|{FILESENDER_DIR}|${FILESENDER_DIR}|g" \
+        -e "s|{FILESENDER_CONFIG_DIR}|${FILESENDER_CONFIG_DIR}|g" \
+        -e "s|{FILESENDER_SERIES}|${FILESENDER_SERIES}|g" \
+        -e "s|{FILESENDER_AUTHTYPE}|${FILESENDER_AUTHTYPE}|g" \
+        -e "s|{FILESENDER_AUTHSAML}|${FILESENDER_AUTHSAML}|g" \
+        -e "s|{FILESENDER_URL}|${FILESENDER_URL}|g" \
+        -e "s|{FILESENDER_TRUSTED_DOMAINS}|${FILESENDER_TRUSTED_DOMAINS}|g" \
+        -e "s|{FILESENDER_LOGOUT_URL}|${FILESENDER_LOGOUT_URL}|g" \
+        -e "s|{FILESENDER_STORAGE}|${FILESENDER_STORAGE}|g" \
+        -e "s|{FILESENDER_FORCE_SSL}|${FILESENDER_FORCE_SSL}|g" \
+        \
         -e "s|{ADMIN_USERS}|${ADMIN_USERS:-admin}|g" \
         -e "s|{ADMIN_EMAIL}|${ADMIN_EMAIL}|g" \
-        -e "s|{ADMIN_PSWD}|${ADMIN_PSWD}|g" \
+        -e "s|{ADMIN_PASSWORD}|${ADMIN_PASSWORD}|g" \
+        \
+        -e "s|{SIMPLESAML_DIR}|${SIMPLESAML_DIR}|g" \
+        -e "s|{SIMPLESAML_CONFIG_DIR}|${SIMPLESAML_CONFIG_DIR}|g" \
+        -e "s|{SIMPLESAML_MODULES}|${SIMPLESAML_MODULES}|g" \
+        -e "s|{SIMPLESAML_SESSION_COOKIE_SECURE}|${SIMPLESAML_SESSION_COOKIE_SECURE}|g" \
+        -e "s|{SIMPLESAML_LANGUAGE_DEFAULT}|${SIMPLESAML_LANGUAGE_DEFAULT}|g" \
         -e "s|{SIMPLESAML_SALT}|${SIMPLESAML_SALT}|g" \
-        -e "s|'123'|\'${ADMIN_PSWD}\'|g" \
-        -e "s|'defaultsecretsalt'|\'${SIMPLESAML_SALT}\'|g" \
         -e "s|{SAML_MAIL_ATTR}|${SAML_MAIL_ATTR}|g" \
         -e "s|{SAML_NAME_ATTR}|${SAML_NAME_ATTR}|g" \
         -e "s|{SAML_UID_ATTR}|${SAML_UID_ATTR}|g" \
-        -e "s|{TEMPLATE_WARNING}|${TEMPLATE_WARNING}|g" \
-        -e "s|{LOG_DETAIL}|${LOG_DETAIL}|g" \
+        -e "s|{SAML_TECHC_NAME}|${SAML_TECHC_NAME}|g" \
+        -e "s|{SAML_TECHC_EMAIL}|${SAML_TECHC_EMAIL}|g" \
+        \
+        -e "s|{FPM_MIN_SPARE_SERVERS}|${FPM_MIN_SPARE_SERVERS}|g" \
+        -e "s|{FPM_MAX_SPARE_SERVERS}|${FPM_MAX_SPARE_SERVERS}|g" \
+        \
         -e "s|{EMAIL_FROM_ADDRESS}|${EMAIL_FROM_ADDRESS}|g" \
         -e "s|{EMAIL_FROM_NAME}|${EMAIL_FROM_NAME}|g" \
+        -e "s|{SMTP_SERVER}|${SMTP_SERVER}|g" \
         -e "s|{SMTP_HOST}|${SMTP_SERVER}|g" \
+        -e "s|{SMTP_PORT}|${SMTP_PORT}|g" \
         -e "s|{SMTP_TLS}|${SMTP_TLS}|g" \
         -e "s|{SMTP_AUTH}|${SMTP_AUTH}|g" \
         -e "s|{SMTP_USER}|${SMTP_USER}|g" \
         -e "s|{SMTP_PASSWORD}|${SMTP_PASSWORD}|g" \
-        -e "s|{SMTP_PORT}|${SMTP_PORT}|g" \
         -e "s|{SMTP_FROM}|${SMTP_FROM}|g" \
-        -e "s|{SIMPLESAML_SESSION_COOKIE_SECURE}|${SIMPLESAML_SESSION_COOKIE_SECURE}|g" \
+        \
         -e "s|{REDIS_HOST}|${REDIS_HOST}|g" \
         -e "s|{REDIS_PORT}|${REDIS_PORT}|g" \
+        \
+        -e "s|{LOG_DETAIL}|${LOG_DETAIL}|g" \
+        -e "s|{TEMPLATE_DIR}|${TEMPLATE_DIR}|g" \
+        -e "s|{TEMPLATE_WARNING}|${TEMPLATE_WARNING}|g" \
         -e "s|{TRANSFER_MAX_DAYS_VALID}|${TRANSFER_MAX_DAYS_VALID}|g" \
         -e "s|{TRANSFER_DEFAULT_DAYS}|${TRANSFER_DEFAULT_DAYS}|g" \
-        -e "s|{USER_UID}|${USER_UID}|g" \
-        -e "s|{USER_GID}|${USER_GID}|g" \
-        -e "s|{FPM_MIN_SPARE_SERVERS}|${FPM_MIN_SPARE_SERVERS}|g" \
-        -e "s|{FPM_MAX_SPARE_SERVERS}|${FPM_MAX_SPARE_SERVERS}|g" \
-        -e "s|{SAML_TECHC_NAME}|${SAML_TECHC_NAME}|g" \
-        -e "s|{SAML_TECHC_EMAIL}|${SAML_TECHC_EMAIL}|g" \
-        -e "s|{FPM_MAX_SPARE_SERVERS}|${FPM_MAX_SPARE_SERVERS}|g" \
+        -e "s|{TZ}|${TZ}|g" \
     > "$DSTFILE"
 }
 
@@ -167,7 +189,7 @@ sed_file "${TEMPLATE_DIR}/simplesamlphp/config/config.php" "${SIMPLESAML_CONFIG_
 
 for MODULE in $SIMPLESAML_MODULES; do
     if [ -d ${SIMPLESAML_DIR}/modules/$MODULE ]; then
-        touch ${SIMPLESAML_DIR}/modules/$MODULE/enable
+        touch "${SIMPLESAML_DIR}/modules/$MODULE/enable"
     fi
 done
 
