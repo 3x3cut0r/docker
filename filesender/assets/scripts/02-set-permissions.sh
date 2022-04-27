@@ -9,6 +9,8 @@ FILESENDER_CONFIG_DIR="/config/filesender"
 
 
 # change permissions and ownership of filesender to www-data
+chown root:www-data         /config/filesender/config/config.php
+
 chown -R www-data:www-data  /data/* \
                             /config/filesender/www \
                             /config/simplesamlphp/www
@@ -16,6 +18,9 @@ chown -R www-data:www-data  /data/* \
 
 # chown -R root:root        /config/fpm/* \
 #                           /config/simplesamlphp/*
+
+chmod 775       /etc/service/*/run \
+                /etc/nginx/sites-*
 
 chmod -R 755    /opt/* \
                 /config/* \
@@ -25,11 +30,7 @@ chmod -R 755    /opt/* \
 chmod -R o-rwx  /data/* \
                 /config/filesender/config/*
 
-
 # chown -R root:www-data      /config/filesender
-
-# chmod 775       /etc/service/*/run \
-#                 /etc/nginx/sites-*
 
 # chmod 664       /etc/nginx/fastcgi_params \
 #                 /etc/nginx/sites-available/default
