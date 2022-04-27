@@ -11,16 +11,15 @@ $config = [
     'loggingdir' => 'log/',
     'datadir' => 'data/',
     'tempdir' => '/tmp/simplesaml',
-
     'technicalcontact_name' => '{SAML_TECHC_NAME}',
     'technicalcontact_email' => '{SAML_TECHC_EMAIL}',
-
+    'timezone' => '{TZ}',
     'secretsalt' => '{SIMPLESAML_SALT}',
     'auth.adminpassword' => '{ADMIN_PSWD}',
     'admin.protectindexpage' => false,
     'admin.protectmetadata' => false,
     'admin.checkforupdates' => true,
-    'trusted.url.domains' => [],
+    'trusted.url.domains' => ['{FILESENDER_TRUSTED_DOMAINS}'],
     'trusted.url.regex' => false,
     'enable.http_post' => false,
     'assertion.allowed_clock_skew' => 180,
@@ -31,9 +30,18 @@ $config = [
     ],
     'showerrors' => true,
     'errorreporting' => true,
-    'logging.level' => SimpleSAML\Logger::NOTICE,
+    /*
+     * Define the minimum log level to log. Available levels:
+     * - SimpleSAML\Logger::ERR     No statistics, only errors
+     * - SimpleSAML\Logger::WARNING No statistics, only warnings/errors
+     * - SimpleSAML\Logger::NOTICE  Statistics and errors
+     * - SimpleSAML\Logger::INFO    Verbose logs
+     * - SimpleSAML\Logger::DEBUG   Full debug logs - not recommended for production
+     */
+    'logging.level' => SimpleSAML\Logger::DEBUG,
     'logging.handler' => 'stderr',
     'logging.processname' => 'simplesamlphp',
+    'logging.logfile' => 'log/simplesamlphp.log',
     'statistics.out' => [
         [
             'class' => 'core:Log',
@@ -49,7 +57,8 @@ $config = [
     'module.enable' => [
         'exampleauth' => false,
         'core' => true,
-        'saml' => true
+        'saml' => true,
+        'sqlauth' => true
     ],
 
     'session.duration' => 8 * (60 * 60), // 8 hours.
@@ -94,7 +103,7 @@ $config = [
         'et', 'he', 'id', 'sr', 'lv', 'ro', 'eu', 'el', 'af', 'zu', 'xh', 'st',
     ],
     'language.rtl' => ['ar', 'dv', 'fa', 'ur', 'he'],
-    'language.default' => 'en',
+    'language.default' => '{SIMPLESAML_LANGUAGE_DEFAULT}',
 
     'language.parameter.name' => 'language',
     'language.parameter.setcookie' => true,
@@ -224,7 +233,7 @@ $config = [
     'metadata.sign.certificate' => null,
 
     'store.type'                    => 'sql',
-    'store.sql.dsn'                 => 'sqlite:/opt/filesender/simplesamlphp/data/sqlite.db',
+    'store.sql.dsn'                 => 'sqlite:/opt/simplesamlphp/data/sqlite.db',
     'store.sql.username' => null,
     'store.sql.password' => null,
     'store.sql.prefix' => 'SimpleSAMLphp',
