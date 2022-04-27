@@ -28,6 +28,7 @@ FILESENDER_DIR="/opt/filesender"
 FILESENDER_CONFIG_DIR="/config/filesender"
 FILESENDER_SERIES=${FILESENDER_V%%.*}
 FILESENDER_AUTHTYPE=${FILESENDER_AUTHTYPE:-sqlauth}
+FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"filesender-dbauth"}
 FILESENDER_URL=${FILESENDER_URL:-"http://localhost"}
 FILESENDER_TRUSTED_DOMAINS=${FILESENDER_TRUSTED_DOMAINS:-"localhost.localdomain"}
 FILESENDER_LOGOUT_URL=${FILESENDER_LOGOUT_URL:-"$FILESENDER_URL/login.php"}
@@ -41,6 +42,22 @@ SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
 SIMPLESAML_MODULES="cas exampleauth sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-false}
 SIMPLESAML_LANGUAGE_DEFAULT=${SIMPLESAML_LANGUAGE_DEFAULT:-en}
+if [ "$FILESENDER_AUTHTYPE" = "shibboleth" ]; then
+    # Attributes passed via environment variables from shibboleth
+    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"HTTP_SHIB_MAIL"}
+    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"HTTP_SHIB_CN"}
+    SAML_UID_ATTR=${SAML_UID_ATTR:-"HTTP_SHIB_UID"}
+elif [ "$FILESENDER_AUTHTYPE" = "fake" ]; then
+    # Manually set attribute values for v2.0 "fake authentication"
+    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"fakeuser@abcde.edu"}
+    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"Fake User"}
+    SAML_UID_ATTR=${SAML_UID_ATTR:-"fakeuser"}
+else
+    # Attributes passed from simplesamlphp
+    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"mail"}
+    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"cn"}
+    SAML_UID_ATTR=${SAML_UID_ATTR:-"uid"}
+fi
 
 # fpm
 FPM_MIN_SPARE_SERVERS=${FPM_MIN_SPARE_SERVERS:-1}
@@ -160,26 +177,6 @@ if [ -f ${TEMPLATE_DIR}/filesender/www/login.php ]; then
     sed_file ${TEMPLATE_DIR}/filesender/www/login.php ${FILESENDER_CONFIG_DIR}/www/login.php
     chmod o+rwx ${FILESENDER_CONFIG_DIR}/www/login.php
     ln -s ${FILESENDER_CONFIG_DIR}/www/login.php ${FILESENDER_DIR}/www/login.php
-fi
-
-FILESENDER_AUTHTYPE=${FILESENDER_AUTHTYPE:-"saml"}
-
-if [ "$FILESENDER_AUTHTYPE" = "shibboleth" ]; then
-    # Attributes passed via environment variables from shibboleth
-    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"HTTP_SHIB_MAIL"}
-    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"HTTP_SHIB_CN"}
-    SAML_UID_ATTR=${SAML_UID_ATTR:-"HTTP_SHIB_UID"}
-elif [ "$FILESENDER_AUTHTYPE" = "fake" ]; then
-    # Manually set attribute values for v2.0 "fake authentication"
-    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"fakeuser@abcde.edu"}
-    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"Fake User"}
-    SAML_UID_ATTR=${SAML_UID_ATTR:-"fakeuser"}
-else
-    # Attributes passed from simplesamlphp
-    FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"filesender-dbauth"}
-    SAML_MAIL_ATTR=${SAML_MAIL_ATTR:-"mail"}
-    SAML_NAME_ATTR=${SAML_NAME_ATTR:-"cn"}
-    SAML_UID_ATTR=${SAML_UID_ATTR:-"uid"}
 fi
 
 sed_file ${TEMPLATE_DIR}/filesender/config/config.php ${FILESENDER_CONFIG_DIR}/config/config.php
