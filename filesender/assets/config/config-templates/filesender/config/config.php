@@ -88,7 +88,7 @@ $config['db_password'] ='{DB_PASSWORD}';
 $config['auth_sp_type'] = '{FILESENDER_AUTHTYPE}';
 
 # simplesamlphp configuration
-$config['auth_sp_saml_simplesamlphp_url'] = '/simplesamlphp/';     // Url of simplesamlphp
+$config['auth_sp_saml_simplesamlphp_url'] = 'simplesamlphp/';     // Url of simplesamlphp
 $config['auth_sp_saml_simplesamlphp_location'] = '/opt/simplesamlphp/';   // Location of simplesamlphp libraries
 $config['auth_sp_saml_authentication_source'] = '{FILESENDER_AUTHSAML}';
 $config['auth_sp_saml_email_attribute'] = '{SAML_MAIL_ATTR}';
