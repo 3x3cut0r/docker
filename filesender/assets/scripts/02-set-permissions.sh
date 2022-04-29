@@ -12,6 +12,7 @@ FILESENDER_CONFIG_DIR="/config/filesender"
 chown -R www-data:www-data  /data/* \
                             /opt/*
 
+chown -R root:www-data      /opt/simplesamlphp/data
 
 # chown -R root:root        /config/fpm/* \
 #                           /config/simplesamlphp/*
