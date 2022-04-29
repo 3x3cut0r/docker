@@ -12,10 +12,9 @@ FILESENDER_CONFIG_DIR="/config/filesender"
 chown -R www-data:www-data  /data/* \
                             /opt/*
 
-chown -R root:www-data      /opt/simplesamlphp/data
-
-# chown -R root:root        /config/fpm/* \
-#                           /config/simplesamlphp/*
+chown -R root:www-data      /opt/simplesamlphp/data \
+                            /config/filesender/config/config.php \
+                            /config/simplesamlphp/config/config.php
 
 chmod -R 775    /opt/* \
                 /config/* \
@@ -25,12 +24,5 @@ chmod -R 775    /opt/* \
                 /etc/nginx/sites-*
 
 chmod -R o-rwx  /data/* \
-                /config/filesender/config/*
-
-# chown -R root:www-data      /config/filesender
-
-# chmod 664       /etc/nginx/fastcgi_params \
-#                 /etc/nginx/sites-available/default
-
-# chmod -R 644    /config/fpm \
-#                 /config/simplesamlphp
+                /config/filesender/config/* \
+                /config/simplesamlphp/config/*
