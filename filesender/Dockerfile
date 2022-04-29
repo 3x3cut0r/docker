@@ -95,7 +95,9 @@ RUN mkdir -p /data && \
     rm -Rf files tmp log && \
     ln -s /data/files /opt/simplesamlphp/files && \
     ln -s /data/tmp /opt/simplesamlphp/tmp && \
-    ln -s /data/log /opt/simplesamlphp/log
+    ln -s /data/log /opt/simplesamlphp/log && \
+    rm -Rf /opt/simplesamlphp/data/sqlite.db && \
+    ln -s /data/sqlite.db /opt/simplesamlphp/data/sqlite.db
 
 # /etc/nginx
 RUN rm -rf /etc/nginx/sites-enabled/default && \
