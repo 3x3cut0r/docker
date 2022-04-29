@@ -97,6 +97,7 @@ RUN mkdir -p /data && \
     ln -s /data/tmp /opt/simplesamlphp/tmp && \
     ln -s /data/log /opt/simplesamlphp/log && \
     rm -Rf /opt/simplesamlphp/data/sqlite.db && \
+    touch /data/sqlite.db && \
     ln -s /data/sqlite.db /opt/simplesamlphp/data/sqlite.db
 
 # /etc/nginx
