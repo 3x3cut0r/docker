@@ -25,3 +25,5 @@ chmod -R 775    /opt/* \
 chmod -R o-rwx  /data/* \
                 /config/filesender/config/* \
                 /config/simplesamlphp/config/*
+
+chmod -R 777    /data/tmp
