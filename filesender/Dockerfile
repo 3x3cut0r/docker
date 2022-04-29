@@ -85,7 +85,7 @@ RUN mkdir -p /config/msmtp && \
 # /data
 RUN mkdir -p /data && \
     cd /data && \
-    mkdir -p files tmp log && \
+    mkdir -p files tmp log data && \
     cd /opt/filesender && \
     rm -Rf files tmp log && \
     ln -s /data/files /opt/filesender/files && \
@@ -96,9 +96,9 @@ RUN mkdir -p /data && \
     ln -s /data/files /opt/simplesamlphp/files && \
     ln -s /data/tmp /opt/simplesamlphp/tmp && \
     ln -s /data/log /opt/simplesamlphp/log && \
-    rm -Rf /opt/simplesamlphp/data/sqlite.db && \
-    touch /data/sqlite.db && \
-    ln -s /data/sqlite.db /opt/simplesamlphp/data/sqlite.db
+    rm -Rf /opt/simplesamlphp/data && \
+    touch /data/data/sqlite.db && \
+    ln -s /data/data /opt/simplesamlphp/data
 
 # /etc/nginx
 RUN rm -rf /etc/nginx/sites-enabled/default && \
