@@ -14,10 +14,10 @@ $config = [
         'saml:SP',
         'entityID' => null,
         'idp' => null,
-        'discoURL' => null
+        'discoURL' => null,
     ],
 
-    'filesender-dbauth' => [
+    'filesender-sqlauth' => [
         'sqlauth:PasswordVerify',
         'dsn' => '{DB_TYPE}:host={DB_HOST};dbname={DB_NAME}',
         'username' => '{DB_USER}',
@@ -29,15 +29,16 @@ $config = [
                             \'uid\'
                     AS      eduPersonTargetedID
 		            FROM    Authentications
-                    WHERE   saml_user_identification_uid = :username '
+                    WHERE   saml_user_identification_uid = :username ',
     ],
 
+    /*
     'example-cas' => [
         'cas:CAS',
         'cas' => [
             'login' => 'https://webauth.arizona.edu/webauth/login',
             'validate' => null,
-            'logout' => null
+            'logout' => null,
         ]
     ],
 
@@ -48,7 +49,8 @@ $config = [
         'searchattributes' => 'uid',
         'attributes' => array('uid','cn'),
         'priv_user_dn' => 'cn=simplesamlphp,ou=applications,dc=org,dc=com',
-        'priv_user_pw' => 'password'
-    ]
+        'priv_user_pw' => 'password',
+    ],
+    */
 
 ];
