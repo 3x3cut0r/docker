@@ -14,19 +14,22 @@ chown root:www-data         /config/filesender/config/*.php \
 
 chown -R www-data:www-data  /data/* \
                             /opt/filesender/www \
-                            /opt/simplesamlphp/www
+                            /opt/simplesamlphp/www \
+                            /opt/simplesamlphp/data
 
 
 # chown -R root:root        /config/fpm/* \
 #                           /config/simplesamlphp/*
 
-chmod 775       /etc/service/*/run \
-                /etc/nginx/sites-*
-
 chmod -R 755    /opt/* \
                 /config/* \
                 /data/* \
                 /usr/local/sbin/*
+
+chmod 775       /etc/service/*/run \
+                /etc/nginx/sites-*
+
+chmod 775       /opt/simplesamlphp/data/*.db
 
 chmod -R o-rwx  /data/* \
                 /config/filesender/config/*

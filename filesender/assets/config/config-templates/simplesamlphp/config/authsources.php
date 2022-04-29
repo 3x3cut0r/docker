@@ -54,3 +54,5 @@ $config = [
     */
 
 ];
+
+$config['default'] = &$config['admin'];
