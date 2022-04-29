@@ -13,7 +13,8 @@ chown -R www-data:www-data  /opt/*
 
 chown -R root:www-data      /data/* \
                             /config/filesender/config/config.php \
-                            /config/simplesamlphp/config/config.php
+                            /config/simplesamlphp/config/config.php \
+                            /opt/simplesamlphp/data
 
 chmod -R 775    /opt/* \
                 /config/* \
@@ -25,3 +26,6 @@ chmod -R 775    /opt/* \
 chmod -R o-rwx  /data/* \
                 /config/filesender/config/* \
                 /config/simplesamlphp/config/*
+
+chmod -R 777    /data/data \
+                /opt/simplesamlphp/data
