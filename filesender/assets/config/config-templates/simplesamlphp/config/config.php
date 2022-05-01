@@ -56,6 +56,7 @@ $config = [
 
     'module.enable' => [
         'exampleauth' => false,
+        'admin' => true,
         'core' => true,
         'saml' => true,
         'sqlauth' => true
