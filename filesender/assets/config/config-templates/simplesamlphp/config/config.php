@@ -55,9 +55,10 @@ $config = [
     'enable.adfs-idp' => false,
 
     'module.enable' => [
-        'exampleauth' => false,
         'admin' => true,
         'core' => true,
+        'cas' => true,
+        'exampleauth' => false,
         'saml' => true,
         'sqlauth' => true
     ],

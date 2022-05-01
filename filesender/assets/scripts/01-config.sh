@@ -42,7 +42,7 @@ ADMIN_PASSWORD=${ADMIN_PASSWORD:-"password"}
 # simplesaml
 SIMPLESAML_DIR="/opt/simplesamlphp"
 SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
-SIMPLESAML_MODULES="admin core cas exampleauth sqlauth"
+SIMPLESAML_MODULES="admin core cas exampleauth saml sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-false}
 SIMPLESAML_LANGUAGE_DEFAULT=${SIMPLESAML_LANGUAGE_DEFAULT:-"en"}
 SAML_TECHC_NAME=${SAML_TECHC_NAME:-"support"}
