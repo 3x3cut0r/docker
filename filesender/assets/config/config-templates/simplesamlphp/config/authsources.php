@@ -26,9 +26,8 @@ $config = [
                             saml_user_identification_uid AS email,
                             passwordhash,
                             created,
-                            \'uid\'
-                    AS      eduPersonTargetedID
-		            FROM    Authentications
+                            id AS eduPersonTargetedID
+                    FROM    Authentications
                     WHERE   saml_user_identification_uid = :username ',
     ],
 
