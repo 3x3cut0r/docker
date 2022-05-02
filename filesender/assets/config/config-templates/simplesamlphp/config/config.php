@@ -224,7 +224,7 @@ $config = [
      | METADATA CONFIGURATION |
      **************************/
 
-    'metadatadir' => 'metadata',
+    'metadatadir' => 'metadata/',
 
     'metadata.sources' => [
         ['type' => 'flatfile'],
