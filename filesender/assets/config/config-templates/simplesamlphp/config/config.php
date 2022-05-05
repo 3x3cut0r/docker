@@ -21,7 +21,7 @@ $config = [
     'admin.checkforupdates' => true,
     'trusted.url.domains' => ['{FILESENDER_TRUSTED_DOMAINS}'],
     'trusted.url.regex' => false,
-    'enable.http_post' => false,
+    'enable.http_post' => true,
     'assertion.allowed_clock_skew' => 180,
     'debug' => [
         'saml' => true,
@@ -38,7 +38,7 @@ $config = [
      * - SimpleSAML\Logger::INFO    Verbose logs
      * - SimpleSAML\Logger::DEBUG   Full debug logs - not recommended for production
      */
-    'logging.level' => SimpleSAML\Logger::DEBUG,
+    'logging.level' => SimpleSAML\Logger::{SIMPLESAML_LOGGING_LEVEL},
     'logging.handler' => 'stderr',
     'logging.processname' => 'simplesamlphp',
     'logging.logfile' => 'simplesamlphp.log',
@@ -74,7 +74,7 @@ $config = [
     'session.cookie.samesite' => \SimpleSAML\Utils\HTTP::canSetSameSiteNone() ? 'None' : 'Lax',
     'session.phpsession.cookiename' => 'SimpleSAML',
     'session.phpsession.savepath' => null,
-    'session.phpsession.httponly' => true,
+    'session.phpsession.httponly' => false,
     'session.authtoken.cookiename' => 'SimpleSAMLAuthToken',
     'session.rememberme.enable' => false,
     'session.rememberme.checked' => false,
