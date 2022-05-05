@@ -6,7 +6,7 @@ on:
       - 'pyload/**'
   schedule:
     # cron: 'min hour day month weekday'
-    - cron: '0 * * * *'
+    - cron: '0 4 * * 3' # every wednesday on 04:00
   workflow_dispatch:
     inputs:
       logLevel:
