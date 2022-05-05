@@ -42,7 +42,7 @@ ADMIN_PASSWORD=${ADMIN_PASSWORD:-"password"}
 # simplesaml
 SIMPLESAML_DIR="/opt/simplesamlphp"
 SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
-SIMPLESAML_MODULES="core cas exampleauth sqlauth"
+SIMPLESAML_MODULES="admin core cas exampleauth saml sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-false}
 SIMPLESAML_LANGUAGE_DEFAULT=${SIMPLESAML_LANGUAGE_DEFAULT:-"en"}
 SAML_TECHC_NAME=${SAML_TECHC_NAME:-"support"}
@@ -65,6 +65,7 @@ else
 fi
 
 # fpm
+PHP_FPM_PORT=${PHP_FPM_PORT:-9000}
 FPM_MIN_SPARE_SERVERS=${FPM_MIN_SPARE_SERVERS:-1}
 FPM_MAX_SPARE_SERVERS=${FPM_MAX_SPARE_SERVERS:-5}
 
@@ -142,6 +143,7 @@ function sed_file {
         -e "s|{SAML_TECHC_NAME}|${SAML_TECHC_NAME}|g" \
         -e "s|{SAML_TECHC_EMAIL}|${SAML_TECHC_EMAIL}|g" \
         \
+        -e "s|{PHP_FPM_PORT}|${PHP_FPM_PORT}|g" \
         -e "s|{FPM_MIN_SPARE_SERVERS}|${FPM_MIN_SPARE_SERVERS}|g" \
         -e "s|{FPM_MAX_SPARE_SERVERS}|${FPM_MAX_SPARE_SERVERS}|g" \
         \
@@ -168,6 +170,8 @@ function sed_file {
     > "$DSTFILE"
 }
 
+# reconfigure nginx/sites-available/default config
+sed_file ${TEMPLATE_DIR}/nginx/sites-available/default /etc/nginx/sites-available/default
 
 # reconfigure fpm config
 sed_file ${TEMPLATE_DIR}/fpm/filesender.conf /config/fpm/filesender.conf
