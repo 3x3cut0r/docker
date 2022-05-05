@@ -23,7 +23,7 @@ server {
         }
         location ^~ /simplesamlphp {
             alias /opt/simplesamlphp/www;
-            location ~ ^(?<prefix>/saml)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
+            location ~ ^(?<prefix>/simplesamlphp)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
                 include fastcgi_params;
                 fastcgi_pass  localhost:{PHP_FPM_PORT};
                 # fastcgi_pass    unix:/run/php/php7.4-fpm.sock;

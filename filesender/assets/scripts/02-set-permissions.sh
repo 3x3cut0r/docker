@@ -12,8 +12,8 @@ FILESENDER_CONFIG_DIR="/config/filesender"
 chown -R www-data:www-data  /opt/*
 
 chown -R root:www-data      /data/* \
-                            /config/filesender/config/config.php \
-                            /config/simplesamlphp/config/config.php
+                            /config/filesender/config \
+                            /config/simplesamlphp/config
 
 chmod -R 775    /opt/* \
                 /config/* \
