@@ -27,3 +27,5 @@ chmod -R o-rwx  /data/* \
                 /config/simplesamlphp/config/*
 
 chmod -R 777    /data/tmp
+
+chmod -R o+w    /data/log

@@ -7,7 +7,7 @@ server {
         error_page 500 502 503 504 /50x.html;
         root /opt/filesender/www;
         location = /50x.html {
-            root   /usr/share/nginx/html;
+            root   /var/lib/nginx/html;
         }
         location / {
             try_files $uri $uri/ /index.php?args;
@@ -23,7 +23,7 @@ server {
         }
         location ^~ /simplesamlphp {
             alias /opt/simplesamlphp/www;
-            location ~ ^(?<prefix>/saml)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
+            location ~ ^(?<prefix>/simplesamlphp)(?<phpfile>.+?\.php)(?<pathinfo>/.*)?$ {
                 include fastcgi_params;
                 fastcgi_pass  localhost:9000;
                 # fastcgi_pass    unix:/run/php/php7.4-fpm.sock;
