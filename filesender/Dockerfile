@@ -34,7 +34,8 @@ RUN cd /opt && \
     mv filesender-master-filesender-${FILESENDER_VERSION} filesender && \
     cd filesender && \
     mkdir -p files tmp log && \
-    cp config/config_sample.php config/config.php
+    cp config/config_sample.php config/config.php && \
+    cp config-templates/filesender-php.ini /usr/local/etc/php/php.ini
 
 # download simplesamlphp
 RUN cd /opt && \
@@ -85,7 +86,7 @@ RUN mkdir -p /config/msmtp && \
 # /data
 RUN mkdir -p /data && \
     cd /data && \
-    mkdir -p files tmp log data && \
+    mkdir -p files tmp/simplesamlphp log data && \
     cd /opt/filesender && \
     rm -Rf files tmp log && \
     ln -s /data/files /opt/filesender/files && \

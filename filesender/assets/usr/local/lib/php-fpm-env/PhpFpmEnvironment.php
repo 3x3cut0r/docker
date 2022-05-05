@@ -9,7 +9,7 @@ class PhpFpmEnvironment {
      * The temporary directory, used in TMP, TEMP and TMPDIR environment variables
      * @var string
      */
-    const TMP = '/tmp';
+    const TMP = '/data/tmp';
 
     /**
      * The path where to find executables, where sbin should be excluded if you don't run PHP as root.

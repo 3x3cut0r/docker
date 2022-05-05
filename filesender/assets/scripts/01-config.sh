@@ -173,6 +173,7 @@ function sed_file {
 # reconfigure nginx/sites-available/default config
 sed_file ${TEMPLATE_DIR}/nginx/sites-available/default /etc/nginx/sites-available/default
 
+
 # reconfigure fpm config
 sed_file ${TEMPLATE_DIR}/fpm/filesender.conf /config/fpm/filesender.conf
 
@@ -205,3 +206,15 @@ if [ -f ${TEMPLATE_DIR}/filesender/www/login.php ]; then
 fi
 
 sed_file ${TEMPLATE_DIR}/filesender/config/config.php ${FILESENDER_CONFIG_DIR}/config/config.php
+
+
+# reconfigure php config
+case $SIMPLESAML_SESSION_COOKIE_SECURE in
+  false | "false" | 0 | "0" | Off | "Off")
+    SIMPLESAML_SESSION_COOKIE_SECURE="Off"
+    ;;
+  *)
+    STATEMENTS
+    ;;
+esac
+sed_file ${TEMPLATE_DIR}/php/php.ini /usr/local/etc/php/php.ini
