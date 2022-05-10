@@ -72,7 +72,7 @@ $config = [
     'session.cookie.domain' => null,
     'session.cookie.secure' => {SIMPLESAML_SESSION_COOKIE_SECURE},
  // 'session.cookie.samesite' => \SimpleSAML\Utils\HTTP::canSetSameSiteNone() ? 'None' : 'Lax',
-    'session.cookie.samesite' => {SIMPLESAML_SESSION_COOKIE_SAMESITE},
+    'session.cookie.samesite' => '{SIMPLESAML_SESSION_COOKIE_SAMESITE}',
     'session.phpsession.cookiename' => 'SimpleSAML',
     'session.phpsession.savepath' => null,
     'session.phpsession.httponly' => false,
@@ -129,7 +129,6 @@ $config = [
             'etag' => false,
         ],
     ],
-
 
     'idpdisco.enableremember' => true,
     'idpdisco.rememberchecked' => true,
@@ -218,8 +217,6 @@ $config = [
         // Adopts language from attribute to use in UI
         90 => 'core:LanguageAdaptor',
     ],
-
-
 
     /**************************
      | METADATA CONFIGURATION |
