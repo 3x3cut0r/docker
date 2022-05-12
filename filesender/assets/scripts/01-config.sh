@@ -10,7 +10,7 @@ USER_UID=${USER_UID:-$USER_ID}
 USER_GID=${USER_GID:-$GROUP_ID}
 
 # database
-DB_HOST=${DB_HOST:-"localhost"}
+DB_HOST=${DB_HOST:-"none"}
 DB_NAME=${DB_NAME:-"filesender"}
 DB_USER=${DB_USER:-"filesender"}
 DB_PASSWORD=${DB_PASSWORD:-"filesender"}
@@ -71,7 +71,7 @@ FPM_MIN_SPARE_SERVERS=${FPM_MIN_SPARE_SERVERS:-1}
 FPM_MAX_SPARE_SERVERS=${FPM_MAX_SPARE_SERVERS:-5}
 
 # smtp
-EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS:-"filesender@your.org"}
+EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS:-"filesender@abcde.edu"}
 EMAIL_FROM_NAME=${EMAIL_FROM_NAME:-"{cfg:site_name} - {cfg:site_url}"}
 SMTP_SERVER=${SMTP_SERVER:-"localhost"}
 SMTP_PORT=${SMTP_PORT:-"25"}
