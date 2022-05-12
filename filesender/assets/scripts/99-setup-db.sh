@@ -27,7 +27,7 @@ TEMPLATE_DIR="/config/config-templates"
 
 
 # setup database
-if [ ! -f ${DB_STATUS_FILE} ] && [ ${DB_HOST} -ne "none" ]; then
+if [ ! -f ${DB_STATUS_FILE} ] && ([ ${DB_HOST} -ne "none" ] && [ ${DB_HOST} -ne "" ]); then
 
     if [ "`which nc`" != "" ]; then
 
