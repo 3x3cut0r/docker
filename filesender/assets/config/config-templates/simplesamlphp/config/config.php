@@ -56,6 +56,7 @@ $config = [
 
     'module.enable' => [
         'admin' => true,
+        'authcrypt' => true,
         'core' => true,
         'cas' => true,
         'exampleauth' => false,

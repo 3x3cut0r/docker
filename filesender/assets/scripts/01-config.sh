@@ -28,22 +28,18 @@ FILESENDER_DIR="/opt/filesender"
 FILESENDER_CONFIG_DIR="/config/filesender"
 FILESENDER_SERIES=${FILESENDER_V%%.*}
 FILESENDER_AUTHTYPE=${FILESENDER_AUTHTYPE:-"saml"}
-FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"admin"}
+FILESENDER_AUTHSAML=${FILESENDER_AUTHSAML:-"crypto-hash"}
 FILESENDER_URL=${FILESENDER_URL:-"http://localhost"}
 FILESENDER_TRUSTED_DOMAINS=${FILESENDER_TRUSTED_DOMAINS:-"localhost.localdomain"}
 FILESENDER_LOGOUT_URL=${FILESENDER_LOGOUT_URL:-"$FILESENDER_URL/login.php"}
 FILESENDER_STORAGE=${FILESENDER_STORAGE:-"filesystem"}
 FILESENDER_FORCE_SSL=${FILESENDER_FORCE_SSL:-"false"}
 
-ADMIN_USERS=${ADMIN_USERS:-"admin"}
-ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@abcde.edu"}
-ADMIN_PASSWORD=${ADMIN_PASSWORD:-"password"}
-
 # simplesamlphp
 SIMPLESAML_DIR="/opt/simplesamlphp"
 SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
 SIMPLESAML_LOGGING_LEVEL=${SIMPLESAML_LOGGING_LEVEL:-"NOTICE"}
-SIMPLESAML_MODULES="admin core cas exampleauth saml sqlauth"
+SIMPLESAML_MODULES="admin authcrypt core cas exampleauth saml sqlauth"
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-"false"}
 SIMPLESAML_SESSION_COOKIE_SAMESITE=${SIMPLESAML_SESSION_COOKIE_SAMESITE:-"Lax"}
 if [ "$SIMPLESAML_SESSION_COOKIE_SECURE" = "false" ]; then
@@ -89,6 +85,15 @@ SMTP_FROM=${SMTP_FROM:-${EMAIL_FROM_ADDRESS}}
 REDIS_HOST=${REDIS_HOST:-"localhost"}
 REDIS_PORT=${REDIS_PORT:-"6379"}
 
+# admin
+ADMIN_USER=${ADMIN_USER:-"admin"}
+ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@abcde.edu"}
+ADMIN_PASSWORD=${ADMIN_PASSWORD:-"password"}
+ADMIN_PASSWORD_HASH_ALG=${ADMIN_PWD_HASH_ALG:-"SSHA256"}
+echo "${ADMIN_PASSWORD}" | $SIMPLESAML_DIR/bin/pwgen.php > /tmp/ADMIN_PASSWORD_HASH
+ADMIN_PASSWORD_HASH=$(cat /tmp/ADMIN_PASSWORD_HASH | head -n2 | tail -n1 | sed 's/ //g')
+rm -f /tmp/ADMIN_PASSWORD_HASH
+
 # misc
 DB_STATUS_FILE=${FILESENDER_CONFIG_DIR}/.setup-db
 LOG_DETAIL=${LOG_DETAIL:-"info"}
@@ -132,10 +137,6 @@ function sed_file {
         -e "s|{FILESENDER_STORAGE}|${FILESENDER_STORAGE}|g" \
         -e "s|{FILESENDER_FORCE_SSL}|${FILESENDER_FORCE_SSL}|g" \
         \
-        -e "s|{ADMIN_USERS}|${ADMIN_USERS:-admin}|g" \
-        -e "s|{ADMIN_EMAIL}|${ADMIN_EMAIL}|g" \
-        -e "s|{ADMIN_PASSWORD}|${ADMIN_PASSWORD}|g" \
-        \
         -e "s|{SIMPLESAML_DIR}|${SIMPLESAML_DIR}|g" \
         -e "s|{SIMPLESAML_CONFIG_DIR}|${SIMPLESAML_CONFIG_DIR}|g" \
         -e "s|{SIMPLESAML_LOGGING_LEVEL}|${SIMPLESAML_LOGGING_LEVEL}|g" \
@@ -167,6 +168,12 @@ function sed_file {
         \
         -e "s|{REDIS_HOST}|${REDIS_HOST}|g" \
         -e "s|{REDIS_PORT}|${REDIS_PORT}|g" \
+        \
+        -e "s|{ADMIN_USER}|${ADMIN_USER:-admin}|g" \
+        -e "s|{ADMIN_EMAIL}|${ADMIN_EMAIL}|g" \
+        -e "s|{ADMIN_PASSWORD}|${ADMIN_PASSWORD}|g" \
+        -e "s|{ADMIN_PASSWORD_HASH_ALG}|${ADMIN_PWD_HASH_ALG}|g" \
+        -e "s|{ADMIN_PASSWORD_HASH}|${ADMIN_PASSWORD_HASH}|g" \
         \
         -e "s|{LOG_DETAIL}|${LOG_DETAIL}|g" \
         -e "s|{TEMPLATE_DIR}|${TEMPLATE_DIR}|g" \
