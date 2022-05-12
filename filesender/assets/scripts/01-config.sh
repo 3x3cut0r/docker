@@ -89,7 +89,7 @@ REDIS_PORT=${REDIS_PORT:-"6379"}
 ADMIN_USER=${ADMIN_USER:-"admin"}
 ADMIN_EMAIL=${ADMIN_EMAIL:-"admin@abcde.edu"}
 ADMIN_PASSWORD=${ADMIN_PASSWORD:-"password"}
-ADMIN_PASSWORD_HASH_ALG=${ADMIN_PWD_HASH_ALG:-"SSHA256"}
+ADMIN_PASSWORD_HASH_ALG=${ADMIN_PASSWORD_HASH_ALG:-"SSHA256"}
 echo "${ADMIN_PASSWORD}" | $SIMPLESAML_DIR/bin/pwgen.php > /tmp/ADMIN_PASSWORD_HASH
 ADMIN_PASSWORD_HASH=$(cat /tmp/ADMIN_PASSWORD_HASH | head -n2 | tail -n1 | sed 's/ //g')
 rm -f /tmp/ADMIN_PASSWORD_HASH
@@ -172,7 +172,7 @@ function sed_file {
         -e "s|{ADMIN_USER}|${ADMIN_USER:-admin}|g" \
         -e "s|{ADMIN_EMAIL}|${ADMIN_EMAIL}|g" \
         -e "s|{ADMIN_PASSWORD}|${ADMIN_PASSWORD}|g" \
-        -e "s|{ADMIN_PASSWORD_HASH_ALG}|${ADMIN_PWD_HASH_ALG}|g" \
+        -e "s|{ADMIN_PASSWORD_HASH_ALG}|{${ADMIN_PASSWORD_HASH_ALG}}|g" \
         -e "s|{ADMIN_PASSWORD_HASH}|${ADMIN_PASSWORD_HASH}|g" \
         \
         -e "s|{LOG_DETAIL}|${LOG_DETAIL}|g" \

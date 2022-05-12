@@ -117,7 +117,7 @@ $config = [
     'crypto-hash' => [
         'authcrypt:Hash',
         // hashed version of 'verysecret', made with bin/pwgen.php
-        '{ADMIN_USER}:{{ADMIN_PASSWORD_HASH_ALG}}{ADMIN_PASSWORD_HASH}' => [
+        '{ADMIN_USER}:{ADMIN_PASSWORD_HASH_ALG}{ADMIN_PASSWORD_HASH}' => [
             'uid' => ['{ADMIN_USER}'],
             'eduPersonAffiliation' => ['member', 'employee', 'board'],
             'email' => ['{ADMIN_EMAIL}'],
