@@ -10,10 +10,11 @@ USER_UID=${USER_UID:-$USER_ID}
 USER_GID=${USER_GID:-$GROUP_ID}
 
 # database
-DB_HOST=${DB_HOST:-"none"}
+DB_HOST=${DB_HOST:-"localhost"}
 DB_NAME=${DB_NAME:-"filesender"}
 DB_USER=${DB_USER:-"filesender"}
 DB_PASSWORD=${DB_PASSWORD:-"filesender"}
+DB_DATASET_FILE=${DB_DATASET_FILE:-"filesender-2.2.pg.bz2"}
 DB_TYPE=${DB_TYPE:-"mysql"}
 if [ "$DB_TYPE" = "mysql" ]; then
   # default port for mysql

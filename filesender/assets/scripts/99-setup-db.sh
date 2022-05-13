@@ -7,10 +7,11 @@ FILESENDER_DIR="/opt/filesender"
 FILESENDER_CONFIG_DIR="/config/filesender"
 
 # database
-DB_HOST=${DB_HOST:-"none"}
+DB_HOST=${DB_HOST:-"localhost"}
 DB_NAME=${DB_NAME:-"filesender"}
 DB_USER=${DB_USER:-"filesender"}
 DB_PASSWORD=${DB_PASSWORD:-"filesender"}
+DB_DATASET_FILE=${DB_DATASET_FILE:-"filesender-2.2.pg.bz2"}
 DB_TYPE=${DB_TYPE:-"mysql"}
 if [ "$DB_TYPE" = "mysql" ]; then
   # default port for mysql
@@ -27,7 +28,7 @@ TEMPLATE_DIR="/config/config-templates"
 
 
 # setup database
-if [ ! -f ${DB_STATUS_FILE} ] && ( [ "${DB_HOST}" != "none" ] && [ "${DB_HOST}" != "" ] ); then
+if [ ! -f ${DB_STATUS_FILE} ]; then
 
     if [ "`which nc`" != "" ]; then
 
@@ -44,7 +45,7 @@ if [ ! -f ${DB_STATUS_FILE} ] && ( [ "${DB_HOST}" != "none" ] && [ "${DB_HOST}" 
         if [ "xx$SELENIUM_HOST" != "xx" ]; then
             export PGPASSWORD=$DB_PASSWORD
             psql -c 'create database filesenderdataset;' -h $DB_HOST -U $DB_USER
-            bzcat ${FILESENDER_DIR}/scripts/dataset/dumps/filesender-2.0beta1.pg.bz2 | psql -h $DB_HOST -U $DB_USER -d filesenderdataset
+            bzcat ${FILESENDER_DIR}/scripts/dataset/dumps/$DB_DATASET_FILE | psql -h $DB_HOST -U $DB_USER -d filesenderdataset
         fi
 
         touch "$DB_STATUS_FILE"
