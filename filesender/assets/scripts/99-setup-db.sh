@@ -7,17 +7,17 @@ FILESENDER_DIR="/opt/filesender"
 FILESENDER_CONFIG_DIR="/config/filesender"
 
 # database
-DB_HOST=${DB_HOST:-localhost}
-DB_TYPE=${DB_TYPE:-mysql}
-DB_NAME=${DB_NAME:-filesender}
-DB_USER=${DB_USER:-filesender}
-DB_PASSWORD=${DB_PASSWORD:-filesender}
+DB_HOST=${DB_HOST:-"none"}
+DB_NAME=${DB_NAME:-"filesender"}
+DB_USER=${DB_USER:-"filesender"}
+DB_PASSWORD=${DB_PASSWORD:-"filesender"}
+DB_TYPE=${DB_TYPE:-"mysql"}
 if [ "$DB_TYPE" = "mysql" ]; then
-    # default port for mysql
-    DB_PORT=${DB_PORT:-3306}
+  # default port for mysql
+  DB_PORT=${DB_PORT:-3306}
 else
-    # default port for postgresql
-    DB_PORT=${DB_PORT:-5432}
+  # default port for postgresql
+  DB_PORT=${DB_PORT:-5432}
 fi
 
 # misc
@@ -27,7 +27,7 @@ TEMPLATE_DIR="/config/config-templates"
 
 
 # setup database
-if [ ! -f ${DB_STATUS_FILE} ] && ([ ${DB_HOST} -ne "none" ] && [ ${DB_HOST} -ne "" ]); then
+if [ ! -f ${DB_STATUS_FILE} ] && ( [ "${DB_HOST}" != "none" ] && [ "${DB_HOST}" != "" ] ); then
 
     if [ "`which nc`" != "" ]; then
 
