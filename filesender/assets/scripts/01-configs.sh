@@ -82,6 +82,7 @@ SMTP_AUTH=${SMTP_AUTH:-"on"}
 SMTP_USER=${SMTP_USER:-"missing"}
 SMTP_PASSWORD=${SMTP_PASSWORD:-"secret"}
 SMTP_FROM=${SMTP_FROM:-${EMAIL_FROM_ADDRESS}}
+TLS_TRUST_FILE=${TLS_TRUST_FILE:-"ca-certificates.crt"}
 
 # redis
 REDIS_HOST=${REDIS_HOST:-"localhost"}
@@ -177,6 +178,7 @@ function sed_file {
         -e "s|{SMTP_USER}|${SMTP_USER}|g" \
         -e "s|{SMTP_PASSWORD}|${SMTP_PASSWORD}|g" \
         -e "s|{SMTP_FROM}|${SMTP_FROM}|g" \
+        -e "s|{TLS_TRUST_FILE}|${TLS_TRUST_FILE}|g" \
         \
         -e "s|{REDIS_HOST}|${REDIS_HOST}|g" \
         -e "s|{REDIS_PORT}|${REDIS_PORT}|g" \

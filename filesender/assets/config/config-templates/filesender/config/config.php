@@ -286,7 +286,7 @@ $config['log_facilities'] = array(
 
   'file-output' => array(
     'type' => 'file',
-    'path' => '/opt/filesender/log',
+    'path' => '/opt/filesender/log/',
     'rotate' => 'daily',
     'level' => '{LOG_DETAIL}'
   )

@@ -7,7 +7,7 @@
 $config = [
 
     'baseurlpath' => 'simplesamlphp/',
-    'certdir' => 'cert/',
+    'certdir' => 'certs/',
     'loggingdir' => 'log/',
     'datadir' => 'data/',
     'tempdir' => 'tmp/simplesamlphp',
