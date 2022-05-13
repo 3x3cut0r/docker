@@ -94,6 +94,15 @@ echo "${ADMIN_PASSWORD}" | $SIMPLESAML_DIR/bin/pwgen.php > /tmp/ADMIN_PASSWORD_H
 ADMIN_PASSWORD_HASH=$(cat /tmp/ADMIN_PASSWORD_HASH | head -n2 | tail -n1 | sed 's/ //g')
 rm -f /tmp/ADMIN_PASSWORD_HASH
 
+# guest
+GUEST_USER=${GUEST_USER:-"guest"}
+GUEST_EMAIL=${GUEST_EMAIL:-"guest@abcde.edu"}
+GUEST_PASSWORD=${GUEST_PASSWORD:-"guest"}
+GUEST_PASSWORD_HASH_ALG=${GUEST_PASSWORD_HASH_ALG:-"SSHA256"}
+echo "${GUEST_PASSWORD}" | $SIMPLESAML_DIR/bin/pwgen.php > /tmp/GUEST_PASSWORD_HASH
+GUEST_PASSWORD_HASH=$(cat /tmp/GUEST_PASSWORD_HASH | head -n2 | tail -n1 | sed 's/ //g')
+rm -f /tmp/GUEST_PASSWORD_HASH
+
 # misc
 DB_STATUS_FILE=${FILESENDER_CONFIG_DIR}/.setup-db
 LOG_DETAIL=${LOG_DETAIL:-"info"}
@@ -197,8 +206,13 @@ sed_file ${TEMPLATE_DIR}/msmtp/msmtprc /etc/msmtprc
 
 
 # reconfigure simplesamlphp config
-if [ "$SIMPLESAML_SALT" = "" ]; then
+SIMPLESAML_SALT=$(cat "$TEMPLATE_DIR/simplesamlphp/config/config.php" | grep secretsalt | cut -d "'" -f 4)
+if [ "$SIMPLESAML_SALT" = "{SIMPLESAML_SALT}" ]; then
     SIMPLESAML_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
+    # make SIMPLESAML_SALT permanent
+    cat "$TEMPLATE_DIR/simplesamlphp/config/config.php" | sed \
+        -e "s|{SIMPLESAML_SALT}|${SIMPLESAML_SALT}|g" \
+        > "$TEMPLATE_DIR/simplesamlphp/config/config.php"
 fi
 
 sed_file "${TEMPLATE_DIR}/simplesamlphp/config/acl.php" "${SIMPLESAML_CONFIG_DIR}/config/acl.php"
@@ -228,7 +242,7 @@ case $SIMPLESAML_SESSION_COOKIE_SECURE in
     SIMPLESAML_SESSION_COOKIE_SECURE="Off"
     ;;
   *)
-    STATEMENTS
     ;;
 esac
+
 sed_file ${TEMPLATE_DIR}/php/php.ini /usr/local/etc/php/php.ini
