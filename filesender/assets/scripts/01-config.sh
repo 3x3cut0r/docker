@@ -214,13 +214,16 @@ sed_file ${TEMPLATE_DIR}/msmtp/msmtprc /etc/msmtprc
 
 
 # reconfigure simplesamlphp config
-SIMPLESAML_SALT=$(cat "$TEMPLATE_DIR/simplesamlphp/config/config.php" | grep secretsalt | cut -d "'" -f 4)
+SIMPLESAML_TEMPLATE_CONFIG_FILE="$TEMPLATE_DIR/simplesamlphp/config/config.php"
+SIMPLESAML_SALT=$(cat "$SIMPLESAML_TEMPLATE_CONFIG_FILE" | grep secretsalt | cut -d "'" -f 4)
 if [ "$SIMPLESAML_SALT" = "{SIMPLESAML_SALT}" ]; then
     SIMPLESAML_SALT=`tr -c -d '0123456789abcdefghijklmnopqrstuvwxyz' </dev/urandom | dd bs=32 count=1 2>/dev/null;echo`
     # make SIMPLESAML_SALT permanent
-    cat "$TEMPLATE_DIR/simplesamlphp/config/config.php" | sed \
+    cat "$SIMPLESAML_TEMPLATE_CONFIG_FILE" | sed \
         -e "s|{SIMPLESAML_SALT}|${SIMPLESAML_SALT}|g" \
-        > "$TEMPLATE_DIR/simplesamlphp/config/config.php"
+        > "$SIMPLESAML_TEMPLATE_CONFIG_FILE.new"
+    rm -rf "$SIMPLESAML_TEMPLATE_CONFIG_FILE"
+    mv "$SIMPLESAML_TEMPLATE_CONFIG_FILE.new" "$SIMPLESAML_TEMPLATE_CONFIG_FILE"
 fi
 
 sed_file "${TEMPLATE_DIR}/simplesamlphp/config/acl.php" "${SIMPLESAML_CONFIG_DIR}/config/acl.php"
