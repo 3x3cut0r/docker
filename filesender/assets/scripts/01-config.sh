@@ -39,7 +39,7 @@ FILESENDER_FORCE_SSL=${FILESENDER_FORCE_SSL:-"false"}
 SIMPLESAML_DIR="/opt/simplesamlphp"
 SIMPLESAML_CONFIG_DIR="/config/simplesamlphp"
 SIMPLESAML_LOGGING_LEVEL=${SIMPLESAML_LOGGING_LEVEL:-"NOTICE"}
-SIMPLESAML_MODULES="admin authcrypt core cas exampleauth saml sqlauth"
+SIMPLESAML_MODULES=${SIMPLESAML_MODULES:-"admin authcrypt core cas exampleauth saml sqlauth"}
 SIMPLESAML_SESSION_COOKIE_SECURE=${SIMPLESAML_SESSION_COOKIE_SECURE:-"false"}
 SIMPLESAML_SESSION_COOKIE_SAMESITE=${SIMPLESAML_SESSION_COOKIE_SAMESITE:-"Lax"}
 if [ "$SIMPLESAML_SESSION_COOKIE_SECURE" = "false" ]; then
@@ -73,6 +73,7 @@ FPM_MAX_SPARE_SERVERS=${FPM_MAX_SPARE_SERVERS:-5}
 # smtp
 EMAIL_FROM_ADDRESS=${EMAIL_FROM_ADDRESS:-"filesender@abcde.edu"}
 EMAIL_FROM_NAME=${EMAIL_FROM_NAME:-"{cfg:site_name} - {cfg:site_url}"}
+SMTP_CONFIG_DIR=${SMTP_CONFIG_DIR:-"/config/msmtp"}
 SMTP_SERVER=${SMTP_SERVER:-"localhost"}
 SMTP_PORT=${SMTP_PORT:-"25"}
 SMTP_TLS=${SMTP_TLS:-"on"}
@@ -166,6 +167,7 @@ function sed_file {
         \
         -e "s|{EMAIL_FROM_ADDRESS}|${EMAIL_FROM_ADDRESS}|g" \
         -e "s|{EMAIL_FROM_NAME}|${EMAIL_FROM_NAME}|g" \
+        -e "s|{SMTP_CONFIG_DIR}|${SMTP_CONFIG_DIR}|g" \
         -e "s|{SMTP_SERVER}|${SMTP_SERVER}|g" \
         -e "s|{SMTP_HOST}|${SMTP_SERVER}|g" \
         -e "s|{SMTP_PORT}|${SMTP_PORT}|g" \
@@ -178,11 +180,17 @@ function sed_file {
         -e "s|{REDIS_HOST}|${REDIS_HOST}|g" \
         -e "s|{REDIS_PORT}|${REDIS_PORT}|g" \
         \
-        -e "s|{ADMIN_USER}|${ADMIN_USER:-admin}|g" \
+        -e "s|{ADMIN_USER}|${ADMIN_USER}|g" \
         -e "s|{ADMIN_EMAIL}|${ADMIN_EMAIL}|g" \
         -e "s|{ADMIN_PASSWORD}|${ADMIN_PASSWORD}|g" \
         -e "s|{ADMIN_PASSWORD_HASH_ALG}|{${ADMIN_PASSWORD_HASH_ALG}}|g" \
         -e "s|{ADMIN_PASSWORD_HASH}|${ADMIN_PASSWORD_HASH}|g" \
+        \
+        -e "s|{GUEST_USER}|${GUEST_USER}|g" \
+        -e "s|{GUEST_EMAIL}|${GUEST_EMAIL}|g" \
+        -e "s|{GUEST_PASSWORD}|${GUEST_PASSWORD}|g" \
+        -e "s|{GUEST_PASSWORD_HASH_ALG}|{${GUEST_PASSWORD_HASH_ALG}}|g" \
+        -e "s|{GUEST_PASSWORD_HASH}|${GUEST_PASSWORD_HASH}|g" \
         \
         -e "s|{LOG_DETAIL}|${LOG_DETAIL}|g" \
         -e "s|{TEMPLATE_DIR}|${TEMPLATE_DIR}|g" \
