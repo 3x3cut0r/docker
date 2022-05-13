@@ -79,7 +79,7 @@ RUN mkdir -p /config/fpm /run/php && \
     echo "include=/config/fpm/*.conf" >> /usr/local/etc/php-fpm.conf
 
 # /config/msmtp
-RUN mkdir -p /config/msmtp && \
+RUN mkdir -p /config/msmtp/ssl/certs && \
     cd /config/msmtp && \
     cp /config/config-templates/msmtp/msmtprc .
 
