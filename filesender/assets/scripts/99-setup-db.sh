@@ -50,6 +50,8 @@ if [ ! -f ${DB_STATUS_FILE} ]; then
 
         touch "$DB_STATUS_FILE"
 
+        echo " ... setup database done"
+
     fi
 
 fi
