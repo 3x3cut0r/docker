@@ -86,14 +86,16 @@ RUN mkdir -p /config/msmtp/ssl/certs && \
 # /data
 RUN mkdir -p /data && \
     cd /data && \
-    mkdir -p files tmp/simplesamlphp log data && \
+    mkdir -p certs files tmp/simplesamlphp log data && \
     cd /opt/filesender && \
-    rm -Rf files tmp log && \
+    rm -Rf certs files tmp log && \
+    ln -s /data/certs /opt/filesender/certs && \
     ln -s /data/files /opt/filesender/files && \
     ln -s /data/tmp /opt/filesender/tmp && \
     ln -s /data/log /opt/filesender/log && \
     cd /opt/simplesamlphp && \
-    rm -Rf files tmp log && \
+    rm -Rf certs files tmp log && \
+    ln -s /data/certs /opt/simplesamlphp/certs && \
     ln -s /data/files /opt/simplesamlphp/files && \
     ln -s /data/tmp /opt/simplesamlphp/tmp && \
     ln -s /data/log /opt/simplesamlphp/log && \
