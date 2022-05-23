@@ -218,6 +218,13 @@ $config['transfer_options'] = array(
     'available' => true,
     'advanced' => false,
     'default' => false
+  ),
+	
+  // enable web notifications when upload is complete
+  'web_notification_when_upload_is_complete' => array(
+      'available' => true,
+      'advanced' => false,
+      'default' => true
   )
 );
 
