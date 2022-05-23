@@ -3,7 +3,7 @@ LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="FileSender: send large files securely and encrypted (on alpine)"
 
 # build args
-ARG REF=2.31
+ARG REF=2.32
 ARG REF_SUM=""
 ARG SSP_REF=1.19.5
 ARG SSP_SUM="ab1a71a4eed2c086774829d47ce72137e4d1a7bd6b8a2535b4a1ddfd6e7da51f"
