@@ -19,7 +19,7 @@ VOLUME /syslinux
 VOLUME /etc/dhcpd
 
 # add dhcpd-pxe.conf
-mkdir /etc/dhcpd
+RUN mkdir /etc/dhcpd
 COPY ./etc/dhcpd/dhcpd-pxe.conf /etc/dhcpd/
 
 # add docker-entrypoint.sh
