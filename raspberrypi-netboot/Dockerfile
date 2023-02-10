@@ -1,4 +1,4 @@
-FROM alpine:3.15.4
+FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="extract files from a RaspiOS.img into the tftpboot and nfsroot directory for RPi pxe-boot"
 

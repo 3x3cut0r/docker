@@ -1,4 +1,4 @@
-FROM alpine:3.13.1
+FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="download syslinux files for pxe boot"
 
