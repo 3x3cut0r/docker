@@ -1,9 +1,9 @@
-FROM alpine:3.14.6
+FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="official alpine linux with gosu, libcap installed"
 
 # add gosu
-ENV GOSU_VERSION 1.14
+ENV GOSU_VERSION 1.16
 RUN set -eux; \
     \
     apk add --no-cache --virtual .gosu-deps \
