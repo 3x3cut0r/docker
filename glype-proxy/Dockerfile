@@ -16,9 +16,8 @@ RUN apk add --no-cache --virtual .git-deps \
 # clone app
 RUN git clone https://github.com/vincentclee/glype.git .
 
-
 # copy app into container
-FROM webdevops/php-nginx:7.4-alpine
+FROM webdevops/php-nginx:8.0-alpine
 WORKDIR /app
 COPY --from=build /app/ /app/
 RUN chown -R 1000:1000 /app
