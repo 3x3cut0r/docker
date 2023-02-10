@@ -1,4 +1,4 @@
-FROM composer:2.5.1
+FROM alpine:latest
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 
 USER root
