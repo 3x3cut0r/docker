@@ -1,6 +1,6 @@
-# alpine (FROM alpine:3.14.6)
+# alpine (FROM alpine:latest)
 
-**official alpine:3.14.6 base-image with gosu, libcap, tzdata**
+**official alpine:latest base-image with gosu, libcap, tzdata**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/alpine)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/alpine)
@@ -8,22 +8,23 @@
 ![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20alpine)
 
 `GitHub` - 3x3cut0r/alpine - https://github.com/3x3cut0r/docker/tree/main/alpine  
-`DockerHub` - 3x3cut0r/alpine - https://hub.docker.com/r/3x3cut0r/alpine  
+`DockerHub` - 3x3cut0r/alpine - https://hub.docker.com/r/3x3cut0r/alpine
 
 ## Usage
 
 ### Dockerfile
 
 ```shell
-FROM 3x3cut0r/alpine:3.14.6
+FROM 3x3cut0r/alpine:latest
 ...
 ```
 
 ## Find Me
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
-* [GitHub](https://github.com/3x3cut0r)
-* [DockerHub](https://hub.docker.com/u/3x3cut0r)
+
+- [GitHub](https://github.com/3x3cut0r)
+- [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
 ## License
 
