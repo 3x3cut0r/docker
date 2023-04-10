@@ -5,7 +5,7 @@
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/404)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/404)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/404)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20404)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/404.yml?branch=main)
 
 `GitHub` - 3x3cut0r/404 - https://github.com/3x3cut0r/docker/tree/main/404  
 `DockerHub` - 3x3cut0r/404 - https://hub.docker.com/r/3x3cut0r/404
