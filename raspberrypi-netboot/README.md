@@ -1,11 +1,11 @@
 # raspberrypi-netboot
 
-**extract files from a RaspiOS.img into the tftpboot and nfsroot directory for RPi pxe-boot**  
+**extract files from a RaspiOS.img into the tftpboot and nfsroot directory for RPi pxe-boot**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/raspberrypi-netboot)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/raspberrypi-netboot)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/raspberrypi-netboot)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20raspberrypi-netboot)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/raspberrypi-netboot.yml?branch=main)
 
 `GitHub` - 3x3cut0r/raspberrypi-netboot - https://github.com/3x3cut0r/docker/tree/main/raspberrypi-netboot  
 `DockerHub` - 3x3cut0r/raspberrypi-netboot - https://hub.docker.com/r/3x3cut0r/raspberrypi-netboot
@@ -15,7 +15,8 @@
 ### docker run
 
 **Example 1 - without mounting a custom RaspiOS.img**  
-**(image will be downloaded from given url)**  
+**(image will be downloaded from given url)**
+
 ```shell
 docker container run --rm \
     --privileged \
@@ -31,7 +32,8 @@ docker container run --rm \
 
 **Example 2 - with mounting a custom RaspiOS.img**  
 **download your image from https://downloads.raspberrypi.org**  
-**(this will perform a lot faster !!!)**  
+**(this will perform a lot faster !!!)**
+
 ```shell
 docker container run --rm \
     --privileged \
@@ -66,20 +68,21 @@ services:
 
 ### Environment Variables
 
-* `NFS_IP` - NFS-Server IP-Address to be written in the boot/cmdline.txt  
-* `NFS_ROOT` - NFS-Root-Directory to be written in the boot/cmdline.txt and /etc/fstab  
-* `NFS_VERSION` - NFS-Version to be written in the boot/cmdline.txt
+- `NFS_IP` - NFS-Server IP-Address to be written in the boot/cmdline.txt
+- `NFS_ROOT` - NFS-Root-Directory to be written in the boot/cmdline.txt and /etc/fstab
+- `NFS_VERSION` - NFS-Version to be written in the boot/cmdline.txt
 
 ### Volumes
 
-* `/netboot/nfsroot` - nfsroot directory. should be mapped or copied to your nfs-servers nfsroot directory
-* `/netboot/tftpboot`  - tftpboot directory. should be mapped or copied to your tftp-servers tftproot directory.
+- `/netboot/nfsroot` - nfsroot directory. should be mapped or copied to your nfs-servers nfsroot directory
+- `/netboot/tftpboot` - tftpboot directory. should be mapped or copied to your tftp-servers tftproot directory.
 
 ## Find Me
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
-* [GitHub](https://github.com/3x3cut0r)
-* [DockerHub](https://hub.docker.com/u/3x3cut0r)
+
+- [GitHub](https://github.com/3x3cut0r)
+- [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
 ## License <a name="license"></a>
 

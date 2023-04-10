@@ -5,7 +5,7 @@
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/alpine)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/alpine)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/alpine)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20alpine)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/alpine.yml?branch=main)
 
 `GitHub` - 3x3cut0r/alpine - https://github.com/3x3cut0r/docker/tree/main/alpine  
 `DockerHub` - 3x3cut0r/alpine - https://hub.docker.com/r/3x3cut0r/alpine

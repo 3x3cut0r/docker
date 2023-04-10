@@ -5,15 +5,15 @@
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tvheadend-sundtek)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tvheadend-sundtek)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tvheadend-sundtek)
-![GitHub Workflow Status](https://img.shields.io/github/workflow/status/3x3cut0r/docker/build%20tvheadend-sundtek)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/tvheadend-sundtek.yml?branch=main)
 
 `GitHub` - 3x3cut0r/tvheadend-sundtek - https://github.com/3x3cut0r/docker/tree/main/tvheadend-sundtek  
-`DockerHub` - 3x3cut0r/tvheadend-sundtek - https://hub.docker.com/r/3x3cut0r/tvheadend-sundtek  
+`DockerHub` - 3x3cut0r/tvheadend-sundtek - https://hub.docker.com/r/3x3cut0r/tvheadend-sundtek
 
 ## Documentation
 
 `GitHub` - linuxserver/docker-tvheadend - https://github.com/linuxserver/docker-tvheadend  
-`DockerHub` - linuxserver/tvheadend - https://hub.docker.com/r/linuxserver/tvheadend  
+`DockerHub` - linuxserver/tvheadend - https://hub.docker.com/r/linuxserver/tvheadend
 
 ## Usage for Synology Users
 
@@ -39,7 +39,9 @@ docker container run -d --restart unless-stopped \
 ```
 
 ### docker compose
-**check volumes! these must exist!**  
+
+**check volumes! these must exist!**
+
 ```shell
 version: "3.9"
 
@@ -90,5 +92,6 @@ networks:
 ## Find Me <a name="findme"></a>
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-executor55%40gmx.de-red)
-* [GitHub](https://github.com/3x3cut0r)
-* [DockerHub](https://hub.docker.com/u/3x3cut0r)
+
+- [GitHub](https://github.com/3x3cut0r)
+- [DockerHub](https://hub.docker.com/u/3x3cut0r)
