@@ -5,7 +5,7 @@
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/tftpd-hpa)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/tftpd-hpa)
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/tftpd-hpa)
-![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/tftp-hpa.yml?branch=main)
+![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/tftpd-hpa.yml?branch=main)
 
 `GitHub` - 3x3cut0r/tftpd-hpa - https://github.com/3x3cut0r/docker/tree/main/tftpd-hpa  
 `DockerHub` - 3x3cut0r/tftpd-hpa - https://hub.docker.com/r/3x3cut0r/tftpd-hpa
