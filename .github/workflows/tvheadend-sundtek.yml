@@ -55,6 +55,6 @@ jobs:
         with:
           context: ./tvheadend-sundtek
           file: ./tvheadend-sundtek/Dockerfile
-          platforms: linux/amd64,linux/arm/v7,linux/arm64/v8
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: 3x3cut0r/tvheadend-sundtek:latest
