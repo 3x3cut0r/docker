@@ -66,7 +66,7 @@ services:
   404:
     image: 3x3cut0r/404:latest
     environment:
-        TZ: Europe/Berlin
+        TZ: "Europe/Berlin"
         TITLE: "404 Not Found"
     ports:
       - 80:80
