@@ -12,39 +12,33 @@ on:
   workflow_dispatch:
     inputs:
       logLevel:
-        description: 'Log level'     
+        description: 'Log level'
         required: true
         default: 'warning'
       tags:
         description: 'run action manually'
-        
+
 jobs:
   multi:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
-        uses: actions/checkout@v2
-      -
-        name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
-      -
-        name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
-      -
-        name: Login to DockerHub
-        uses: docker/login-action@v1
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      -
-        name: Build and push
-        uses: docker/build-push-action@v2
+      - name: Build and push
+        uses: docker/build-push-action@v4
         with:
           context: ./raspberrypi-netboot
           file: ./raspberrypi-netboot/Dockerfile
           platforms: linux/amd64,linux/386,linux/arm/v6,linux/arm/v7,linux/arm64
           push: true
           tags: |
-              3x3cut0r/raspberrypi-netboot:3.15.4,
-              3x3cut0r/raspberrypi-netboot:latest
+            3x3cut0r/raspberrypi-netboot:latest
