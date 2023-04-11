@@ -11,10 +11,10 @@ cp /usr/share/nginx/template/index.html /usr/share/nginx/html/index.html
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # TITLE
-sed -i "s/<title>.*<\/title>/<title>${TITLE}<\/title>/g" /usr/share/nginx/html/index.html
+sed -i "10s/.*/    <title>${TITLE}<\/title>/" /usr/share/nginx/html/index.html
 
 # LINK
-sed -i "13s#https://www.enationalelectronics.com#${LINK}#" /usr/share/nginx/html/css/styles.css
+sed -i "13s/https:\/\/www\.enationalelectronics\.com/${LINK}/" /usr/share/nginx/html/css/styles.css
 
 ##############
 # set colors #
