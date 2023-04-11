@@ -62,7 +62,7 @@ docker run -d \
 ```shell
 docker run -d \
     --name 404 \
-    -e BG-PRIMARY="red" \
+    -e BG_PRIMARY="red" \
     -p 80:80 \
     3x3cut0r/404:latest
 ```
@@ -90,69 +90,69 @@ services:
 - `TITLE` - Specifies the website title - **Default: 404 Not Found**
 - `LINK` - Hyper-Link to a Website on click **Default: https://404.3x3cut0r.de**
 - `BG` - Background Color, has no effect by default - **Default: #141019**
-- `BG-PRIMARY` - Color - **Default: #908392**
-- `BG-SECONDARY` - Color - **Default: #0d060e**
-- `GROUND-TOP` - Color - **Default: #2F1829**
-- `GROUND-BOTTOM` - Color - **Default: #2F1829**
-- `GROUND-RIGHT` - Color - **Default: #2F1829**
-- `GROUND-LEFT` - Color - **Default: #2F1829**
-- `NUMBER-LEFT-TOP` - Color - **Default: #3B223C**
-- `NUMBER-LEFT-BOTTOM` - Color - **Default: #2F1829**
-- `NUMBER-LEFT-REFLECTION` - Color - **Default: white**
-- `NUMBER-MIDDLE-TOP` - Color - **Default: #3B223C**
-- `NUMBER-MIDDLE-BOTTOM` - Color - **Default: #2F1829**
-- `NUMBER-MIDDLE-LEAF-TOP` - Color - **Default: #2F1829**
-- `NUMBER-MIDDLE-LEAF-BOTTOM` - Color - **Default: #3B223C**
-- `NUMBER-RIGHT-TOP` - Color - **Default: #3B223C**
-- `NUMBER-RIGHT-BOTTOM` - Color - **Default: #2F1829**
-- `NUMBER-RIGHT-REFLECTION` - Color - **Default: white**
-- `SHRUB-MIDDLE` - Color - **Default: #982245**
-- `SHRUB-RIGHT` - Color - **Default: #982245**
-- `SHRUB-LEFT` - Color - **Default: #982245**
-- `LEAF-1` - Color - **Default: #FFADAE**
-- `LEAF-2` - Color - **Default: #F3475C**
-- `LEAF-3` - Color - **Default: #FFCA51**
-- `LEAF-RIGHT` - Color - **Default: #2F1829**
-- `LEAF-MIDDLE` - Color - **Default: #black**
-- `LEAF-MIDDLE-RIGHT` - Color - **Default: #2F1829**
-- `LEAF-MIDDLE-LEFT` - Color - **Default: #2F1829**
-- `LEAF-LEFT` - Color - **Default: #black**
-- `CLOUD-BG-TOP` - Color - **Default: #FEF5DA**
-- `CLOUD-BG-BOTTOM` - Color - **Default: #E8D197**
-- `CLOUD-BG-RIGHT` - Color - **Default: #FEF5DA**
-- `CLOUD-BG-RIGHT-SHADOW` - Color - **Default: #E8D197**
-- `CLOUD-BG-LEFT` - Color - **Default: #FEF5DA**
-- `CLOUD-BG-LEFT-SHADOW` - Color - **Default: #E8D197**
-- `CLOUD-RIGHT-TOP` - Color - **Default: white**
-- `CLOUD-RIGHT-BOTTOM` - Color - **Default: white**
-- `CLOUD-RIGHT-TOP-SHADOW` - Color - **Default: white**
-- `CLOUD-LEFT-TOP` - Color - **Default: white**
-- `CLOUD-LEFT-BOTTOM` - Color - **Default: white**
-- `CLOUD-LEFT-TOP-SHADOW` - Color - **Default: white**
-- `MAN-HAIR` - Color - **Default: #2F172B**
-- `MAN-SHIRT` - Color - **Default: #FFCA51**
-- `MAN-SLEEVE-LEFT` - Color - **Default: #2F1829**
-- `MAN-SLEEVE-RIGHT` - Color - **Default: #2F1829**
-- `MAN-PANTS` - Color - **Default: #2F1829**
-- `MAN-PANTS-LEFT` - Color - **Default: #4C3146**
-- `MAN-PANTS-RIGHT` - Color - **Default: #4C3146**
-- `MAN-SHOE-LEFT` - Color - **Default: #1F3247**
-- `MAN-SHOE-LEFT-TOP` - Color - **Default: #122230**
-- `MAN-SHOE-RIGHT` - Color - **Default: #1F3247**
-- `MAN-FLASHLIGHT` - Color - **Default: #2F1829**
-- `MAN-FLASHLIGHT-NEAR` - Color - **Default: white**
-- `MAN-FLASHLIGHT-FAR` - Color - **Default: white**
-- `MAN-FLASHLIGHT-SHADOW` - Color - **Default: white**
-- `WOMAN-HAIR` - Color - **Default: #2F1829**
-- `WOMAN-PONY` - Color - **Default: #2F1829**
-- `WOMAN-SHIRT` - Color - **Default: #F5B539**
-- `WOMAN-PANTS` - Color - **Default: #2F1829**
-- `WOMAN-SHOE-LEFT` - Color - **Default: #1F3247**
-- `WOMAN-SHOE-RIGHT` - Color - **Default: #1F3247**
-- `WOMAN-SHOE-RIGHT-TOP` - Color - **Default: white**
-- `WOMAN-FLASHLIGHT` - Color - **Default: #2F1829**
-- `WOMAN-FLASHLIGHT-NEAR` - Color - **Default: white**
-- `WOMAN-FLASHLIGHT-FAR` - Color - **Default: white**
+- `BG_PRIMARY` - Color - **Default: #908392**
+- `BG_SECONDARY` - Color - **Default: #0d060e**
+- `GROUND_TOP` - Color - **Default: #2F1829**
+- `GROUND_BOTTOM` - Color - **Default: #2F1829**
+- `GROUND_RIGHT` - Color - **Default: #2F1829**
+- `GROUND_LEFT` - Color - **Default: #2F1829**
+- `NUMBER_LEFT_TOP` - Color - **Default: #3B223C**
+- `NUMBER_LEFT_BOTTOM` - Color - **Default: #2F1829**
+- `NUMBER_LEFT_REFLECTION` - Color - **Default: white**
+- `NUMBER_MIDDLE_TOP` - Color - **Default: #3B223C**
+- `NUMBER_MIDDLE_BOTTOM` - Color - **Default: #2F1829**
+- `NUMBER_MIDDLE_LEAF_TOP` - Color - **Default: #2F1829**
+- `NUMBER_MIDDLE_LEAF_BOTTOM` - Color - **Default: #3B223C**
+- `NUMBER_RIGHT_TOP` - Color - **Default: #3B223C**
+- `NUMBER_RIGHT_BOTTOM` - Color - **Default: #2F1829**
+- `NUMBER_RIGHT_REFLECTION` - Color - **Default: white**
+- `SHRUB_MIDDLE` - Color - **Default: #982245**
+- `SHRUB_RIGHT` - Color - **Default: #982245**
+- `SHRUB_LEFT` - Color - **Default: #982245**
+- `LEAF_1` - Color - **Default: #FFADAE**
+- `LEAF_2` - Color - **Default: #F3475C**
+- `LEAF_3` - Color - **Default: #FFCA51**
+- `LEAF_RIGHT` - Color - **Default: #2F1829**
+- `LEAF_MIDDLE` - Color - **Default: #black**
+- `LEAF_MIDDLE_RIGHT` - Color - **Default: #2F1829**
+- `LEAF_MIDDLE_LEFT` - Color - **Default: #2F1829**
+- `LEAF_LEFT` - Color - **Default: #black**
+- `CLOUD_BG_TOP` - Color - **Default: #FEF5DA**
+- `CLOUD_BG_BOTTOM` - Color - **Default: #E8D197**
+- `CLOUD_BG_RIGHT` - Color - **Default: #FEF5DA**
+- `CLOUD_BG_RIGHT_SHADOW` - Color - **Default: #E8D197**
+- `CLOUD_BG_LEFT` - Color - **Default: #FEF5DA**
+- `CLOUD_BG_LEFT_SHADOW` - Color - **Default: #E8D197**
+- `CLOUD_RIGHT_TOP` - Color - **Default: white**
+- `CLOUD_RIGHT_BOTTOM` - Color - **Default: white**
+- `CLOUD_RIGHT_TOP-SHADOW` - Color - **Default: white**
+- `CLOUD_LEFT_TOP` - Color - **Default: white**
+- `CLOUD_LEFT_BOTTOM` - Color - **Default: white**
+- `CLOUD_LEFT_TOP-SHADOW` - Color - **Default: white**
+- `MAN_HAIR` - Color - **Default: #2F172B**
+- `MAN_SHIRT` - Color - **Default: #FFCA51**
+- `MAN_SLEEVE-LEFT` - Color - **Default: #2F1829**
+- `MAN_SLEEVE-RIGHT` - Color - **Default: #2F1829**
+- `MAN_PANTS` - Color - **Default: #2F1829**
+- `MAN_PANTS-LEFT` - Color - **Default: #4C3146**
+- `MAN_PANTS-RIGHT` - Color - **Default: #4C3146**
+- `MAN_SHOE_LEFT` - Color - **Default: #1F3247**
+- `MAN_SHOE_LEFT_TOP` - Color - **Default: #122230**
+- `MAN_SHOE_RIGHT` - Color - **Default: #1F3247**
+- `MAN_FLASHLIGHT` - Color - **Default: #2F1829**
+- `MAN_FLASHLIGHT_NEAR` - Color - **Default: white**
+- `MAN_FLASHLIGHT_FAR` - Color - **Default: white**
+- `MAN_FLASHLIGHT_SHADOW` - Color - **Default: white**
+- `WOMAN_HAIR` - Color - **Default: #2F1829**
+- `WOMAN_PONY` - Color - **Default: #2F1829**
+- `WOMAN_SHIRT` - Color - **Default: #F5B539**
+- `WOMAN_PANTS` - Color - **Default: #2F1829**
+- `WOMAN_SHOE_LEFT` - Color - **Default: #1F3247**
+- `WOMAN_SHOE_RIGHT` - Color - **Default: #1F3247**
+- `WOMAN_SHOE_RIGHT_TOP` - Color - **Default: white**
+- `WOMAN_FLASHLIGHT` - Color - **Default: #2F1829**
+- `WOMAN_FLASHLIGHT_NEAR` - Color - **Default: white**
+- `WOMAN_FLASHLIGHT_FAR` - Color - **Default: white**
 
 ### 3 Volumes <a name="volumes"></a>
 
