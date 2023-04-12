@@ -4,8 +4,7 @@ LABEL description="404 error page - based on nginx"
 
 # copy html content
 COPY html /usr/share/nginx/html
-RUN mkdir -p /usr/share/nginx/template && \
-    cp /usr/share/nginx/html/index.html /usr/share/nginx/template/index.html
+COPY html /usr/share/nginx/template
 
 WORKDIR /usr/share/nginx/html
 
