@@ -40,13 +40,13 @@ docker run -d \
     3x3cut0r/404:latest
 ```
 
-**Example 2 - specify timezone and title:**
+**Example 2 - specify title and link:**
 
 ```shell
 docker run -d \
     --name 404 \
-    -e TZ="Europe/Berlin" \
     -e TITLE="404 Not Found" \
+    -e LINK="https://404.example.com" \
     -p 80:80 \
     3x3cut0r/404:latest
 ```
@@ -56,8 +56,6 @@ docker run -d \
 ```shell
 docker run -d \
     --name 404 \
-    -e TZ="Europe/Berlin" \
-    -e TITLE="404 Not Found" \
     -p 80:80 \
     -v /path/to/your/favicon.ico:/usr/share/nginx/html/logo/favicon.ico \
     3x3cut0r/404:latest
@@ -79,11 +77,12 @@ docker run -d \
 version: '3'
 
 services:
-  404:
+  '404':
     image: 3x3cut0r/404:latest
     environment:
         TZ: "Europe/Berlin"
         TITLE: "404 Not Found"
+        LINK: "https://404.example.com"
     ports:
       - 80:80
 ```
