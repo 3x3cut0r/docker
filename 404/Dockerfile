@@ -1,6 +1,6 @@
 FROM nginx:stable-alpine
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="404 error page - based on nginx"
+LABEL description="404 error page - based on https://codepen.io/uiswarup/pen/dyoyLOp"
 
 # copy html content
 COPY html /usr/share/nginx/html
