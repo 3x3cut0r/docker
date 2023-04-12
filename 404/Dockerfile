@@ -78,7 +78,7 @@ ENV TZ="UTC" \
 VOLUME /usr/share/nginx/html
 WORKDIR /usr/share/nginx/html
 
-# add docker-entrypoint.sh
+# add and start docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
