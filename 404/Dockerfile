@@ -6,8 +6,6 @@ LABEL description="404 error page - based on nginx"
 COPY html /usr/share/nginx/html
 COPY html /usr/share/nginx/template
 
-WORKDIR /usr/share/nginx/html
-
 # set environment variables
 ENV TZ="UTC" \
     TITLE="404 Not Found" \
@@ -78,12 +76,15 @@ ENV TZ="UTC" \
     WOMAN_FLASHLIGHT_FAR="white" 
 
 VOLUME /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
 
 # add docker-entrypoint.sh
 COPY ./docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# start nginx
+CMD ["nginx", "-g", "daemon off;"]
 
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD curl --fail http://localhost:80 || exit 1
