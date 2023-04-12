@@ -89,8 +89,6 @@ services:
 
 ### 2 Environment Variables <a name="environment-variables"></a>
 
-**for more information, see https://manpages.debian.org/testing/404/tftpd.8.en.html**
-
 - `TZ` - Specifies the server timezone - **Default: UTC**
 - `TITLE` - Specifies the website title - **Default: 404 Not Found**
 - `LINK` - Hyper-Link to a Website on click **Default: https://404.3x3cut0r.de**
