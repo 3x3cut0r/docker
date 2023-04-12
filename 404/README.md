@@ -1,6 +1,6 @@
 # 404 Not Found
 
-**a nginx based 404 Not Found error page**
+**a nginx based 404 Not Found error page - based on https://codepen.io/uiswarup/pen/dyoyLOp**
 
 ![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/404)
 ![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/404)
@@ -9,6 +9,8 @@
 
 `GitHub` - 3x3cut0r/404 - https://github.com/3x3cut0r/docker/tree/main/404  
 `DockerHub` - 3x3cut0r/404 - https://hub.docker.com/r/3x3cut0r/404
+
+`CodePen` - uiswarup/pen/dyoyLOp - https://codepen.io/uiswarup/pen/dyoyLOp
 
 ## Index
 
