@@ -6,6 +6,8 @@ set -e
 
 # copy from template
 cp /usr/share/nginx/template/index.html /usr/share/nginx/html/index.html
+cp /usr/share/nginx/template/css/styles.css /usr/share/nginx/html/css/styles.css
+cp /usr/share/nginx/template/js/script.js /usr/share/nginx/html/js/script.js
 
 # TIMEZONE
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
