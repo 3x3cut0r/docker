@@ -14,7 +14,7 @@
 
 ## Example
 
-![404.png](https://github.com/3x3cut0r/docker/raw/main/404/404.png)
+![404.gif](https://github.com/3x3cut0r/docker/raw/main/404/404.gif)
 
 ## Index
 
