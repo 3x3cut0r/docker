@@ -116,3 +116,6 @@ sed -i "658s/white/${WOMAN_SHOE_RIGHT_TOP}/" /usr/share/nginx/html/index.html
 sed -i "568s/#2F1829/${WOMAN_FLASHLIGHT}/" /usr/share/nginx/html/index.html
 sed -i "1004s/white/${WOMAN_FLASHLIGHT_NEAR}/" /usr/share/nginx/html/index.html
 sed -i "1005s/white/${WOMAN_FLASHLIGHT_FAR}/" /usr/share/nginx/html/index.html
+
+# start nginx
+exec nginx -g 'daemon off;'
