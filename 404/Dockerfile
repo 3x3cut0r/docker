@@ -83,8 +83,5 @@ COPY ./docker-entrypoint.sh /
 RUN ["chmod", "+x", "/docker-entrypoint.sh"]
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
-# start nginx
-CMD ["nginx", "-g", "daemon off;"]
-
 HEALTHCHECK --interval=30s --timeout=10s --retries=3 \
   CMD curl --fail http://localhost:80 || exit 1
