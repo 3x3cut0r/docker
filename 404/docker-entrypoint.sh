@@ -24,7 +24,7 @@ sed -i '13s|https://www\.enationalelectronics\.com|'"$LINK"'|g' /usr/share/nginx
 
 # BG
 sed -i "2s/.*/  background-color: ${BG};/" /usr/share/nginx/html/css/styles.css
-sed -i "3s/.*/  background: radial-gradient(at 50% -20%, ${BG-PRIMARY}, ${BG-SECONDARY}) fixed;/" /usr/share/nginx/html/css/styles.css
+sed -i "3s/.*/  background: radial-gradient(at 50% -20%, ${BG_PRIMARY}, ${BG_SECONDARY}) fixed;/" /usr/share/nginx/html/css/styles.css
 
 # GROUND
 sed -i "49s/#2F1829/${GROUND_TOP}/" /usr/share/nginx/html/index.html
