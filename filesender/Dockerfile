@@ -30,7 +30,7 @@ RUN apk -U upgrade && \
 
 # download filesender
 RUN cd /opt && \
-    curl -kL https://github.com/filesender/filesender/releases/download/filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
+    curl -kL https://github.com/filesender/filesender/archive/master-filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
     mv filesender-* filesender && \
     cd filesender && \
     mkdir -p files tmp log && \
