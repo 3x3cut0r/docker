@@ -1,4 +1,4 @@
-FROM php:7.4-fpm-alpine3.15
+FROM php:7.4-fpm-alpine3.16
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="FileSender: send large files securely and encrypted (on alpine)"
 
@@ -30,7 +30,7 @@ RUN apk -U upgrade && \
 
 # download filesender
 RUN cd /opt && \
-    curl -kL https://github.com/filesender/filesender/archive/master-filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
+    curl -kL https://github.com/filesender/filesender/archive/refs/tags/filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
     mv filesender-master-filesender-${FILESENDER_VERSION} filesender && \
     cd filesender && \
     mkdir -p files tmp log && \
