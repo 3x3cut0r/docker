@@ -42,5 +42,4 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: |
-            3x3cut0r/filesender:2.31-alpine,
             3x3cut0r/filesender:latest
