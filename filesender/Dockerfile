@@ -5,7 +5,7 @@ LABEL description="FileSender: send large files securely and encrypted (on alpin
 # build args
 ARG REF=2.40
 ARG REF_SUM=""
-ARG SSP_REF=2.0.3
+ARG SSP_REF=1.19.7
 ARG SSP_SUM="ca06d22d265fb75ee0f91d1e013db167dcc33ee449d03a81bd20160f899273cf"
 
 ENV FILESENDER_VERSION=$REF \
