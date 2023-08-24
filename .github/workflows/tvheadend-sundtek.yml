@@ -61,21 +61,40 @@ jobs:
           file: ./tvheadend-sundtek/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: false
-          load: true # Das Image wird in den Docker Daemon geladen
           tags: 3x3cut0r/tvheadend-sundtek:latest
 
-      - name: Get new image ID
-        id: new_image_id
-        run: echo "::set-output name=id::$(docker images --format '{{.ID}}' 3x3cut0r/tvheadend-sundtek:latest)"
+      - name: Pull existing image
+        run: docker pull 3x3cut0r/tvheadend-sundtek:latest || echo "Image not found"
 
-      - name: Get existing image ID
-        id: existing_image_id
-        run: echo "::set-output name=id::$(docker pull 3x3cut0r/tvheadend-sundtek:latest && docker images --format '{{.ID}}' 3x3cut0r/tvheadend-sundtek:latest)"
-
-      - name: Compare and push if different
+      - name: Get existing image digest
+        id: get_existing_digest
         run: |
-          if [ "${{ steps.new_image_id.outputs.id }}" != "${{ steps.existing_image_id.outputs.id }}" ]; then
-            docker push 3x3cut0r/tvheadend-sundtek:latest
+          DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' 3x3cut0r/tvheadend-sundtek:latest | sed 's/.*@//')
+          echo "::set-output name=digest::$DIGEST"
+
+      - name: Get new image digest
+        id: get_new_digest
+        run: |
+          docker tag 3x3cut0r/tvheadend-sundtek:latest 3x3cut0r/tvheadend-sundtek:temp_compare
+          DIGEST=$(docker push 3x3cut0r/tvheadend-sundtek:temp_compare | sed -n '/digest: sha256:/p' | sed 's/digest: sha256://')
+          echo "::set-output name=digest::$DIGEST"
+          docker rmi 3x3cut0r/tvheadend-sundtek:temp_compare
+
+      - name: Compare digests
+        id: compare_digests
+        run: |
+          if [ "${{ steps.get_existing_digest.outputs.digest }}" != "${{ steps.get_new_digest.outputs.digest }}" ]; then
+            echo "::set-output name=result::different"
           else
-            echo "Image has not changed. Not pushing."
+            echo "::set-output name=result::same"
           fi
+
+      - name: Push if different
+        uses: docker/build-push-action@v4
+        with:
+          context: ./tvheadend-sundtek
+          file: ./tvheadend-sundtek/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: 3x3cut0r/tvheadend-sundtek:latest
+        if: steps.compare_digests.outputs.result == 'different'
