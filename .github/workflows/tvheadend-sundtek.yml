@@ -70,23 +70,27 @@ jobs:
         id: get_existing_digest
         run: |
           DIGEST=$(docker inspect --format='{{index .RepoDigests 0}}' 3x3cut0r/tvheadend-sundtek:latest | sed 's/.*@//')
-          echo "::set-output name=digest::$DIGEST"
+          echo "DIGEST=$DIGEST" >> $GITHUB_ENV
 
       - name: Get new image digest
         id: get_new_digest
         run: |
           docker tag 3x3cut0r/tvheadend-sundtek:latest 3x3cut0r/tvheadend-sundtek:temp_compare
           DIGEST=$(docker push 3x3cut0r/tvheadend-sundtek:temp_compare | sed -n '/digest: sha256:/p' | sed 's/digest: sha256://')
-          echo "::set-output name=digest::$DIGEST"
-          docker rmi 3x3cut0r/tvheadend-sundtek:temp_compare
+          echo "NEW_DIGEST=$DIGEST" >> $GITHUB_ENV
+          docker rmi 3x3cut0r/tvheadend-sundtek:temp_compare || true
+          IMAGE_ID=$(docker images -q 3x3cut0r/tvheadend-sundtek:temp_compare)
+          if [ "$IMAGE_ID" != "" ]; then
+            docker rmi $IMAGE_ID || true
+          fi
 
       - name: Compare digests
         id: compare_digests
         run: |
-          if [ "${{ steps.get_existing_digest.outputs.digest }}" != "${{ steps.get_new_digest.outputs.digest }}" ]; then
-            echo "::set-output name=result::different"
+          if [ "$DIGEST" != "$NEW_DIGEST" ]; then
+            echo "RESULT=different" >> $GITHUB_ENV
           else
-            echo "::set-output name=result::same"
+            echo "RESULT=same" >> $GITHUB_ENV
           fi
 
       - name: Push if different
@@ -97,4 +101,4 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: 3x3cut0r/tvheadend-sundtek:latest
-        if: steps.compare_digests.outputs.result == 'different'
+        if: env.RESULT == 'different'
