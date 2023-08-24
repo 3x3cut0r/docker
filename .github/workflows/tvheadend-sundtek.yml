@@ -41,20 +41,41 @@ jobs:
           git add -A
           git diff --quiet && git diff --staged --quiet || git commit -m "version updated ($VERSION)"
           git push
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       - name: Login to DockerHub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-      - name: Build and push
+
+      - name: Build without pushing
         uses: docker/build-push-action@v4
         with:
           context: ./tvheadend-sundtek
           file: ./tvheadend-sundtek/Dockerfile
           platforms: linux/amd64,linux/arm64
-          push: true
+          push: false
+          load: true # Das Image wird in den Docker Daemon geladen
           tags: 3x3cut0r/tvheadend-sundtek:latest
+
+      - name: Get new image ID
+        id: new_image_id
+        run: echo "::set-output name=id::$(docker images --format '{{.ID}}' 3x3cut0r/tvheadend-sundtek:latest)"
+
+      - name: Get existing image ID
+        id: existing_image_id
+        run: echo "::set-output name=id::$(docker pull 3x3cut0r/tvheadend-sundtek:latest && docker images --format '{{.ID}}' 3x3cut0r/tvheadend-sundtek:latest)"
+
+      - name: Compare and push if different
+        run: |
+          if [ "${{ steps.new_image_id.outputs.id }}" != "${{ steps.existing_image_id.outputs.id }}" ]; then
+            docker push 3x3cut0r/tvheadend-sundtek:latest
+          else
+            echo "Image has not changed. Not pushing."
+          fi
