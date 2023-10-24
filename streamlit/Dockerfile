@@ -25,8 +25,7 @@ COPY docker-entrypoint.sh /
 
 RUN chmod +x /docker-entrypoint.sh && \
     apt update && \
-    apt install -y tzdata && \
-    /venv/bin/pip install --no-cache-dir -r requirements.txt
+    apt install -y tzdata
 
 ENV TZ="Europe/Berlin"
 
