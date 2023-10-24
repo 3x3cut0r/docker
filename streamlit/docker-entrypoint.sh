@@ -1,6 +1,10 @@
 #!/bin/sh
 set -e
 
+############################
+# setup global environment #
+############################
+
 # Set PATH for the virtual environment
 export PATH="/venv/bin:$PATH"
 
@@ -10,9 +14,13 @@ chown -R root:root /app
 # Set permissions
 chmod -R 644 /app
 
-#####################
-# setup environment #
-#####################
+# Set STREAMLIT_VERSION
+STREAMLIT_VERSION=$(streamlit --version | awk '{print $3}')
+export STREAMLIT_VERSION
+
+############################
+# setup user environment   #
+############################
 
 # install python requirements
 if [ -s /app/requirements.txt ]; then
@@ -21,6 +29,10 @@ fi
 
 # TIMEZONE
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+############################
+# run app                  #
+############################
 
 # print streamlit version
 streamlit --version
