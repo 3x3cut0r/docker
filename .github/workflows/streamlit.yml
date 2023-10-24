@@ -59,4 +59,4 @@ jobs:
           push: true
           tags: |
             3x3cut0r/streamlit:latest
-            3x3cut0r/streamlit:env.VERSION
+            3x3cut0r/streamlit:$VERSION
