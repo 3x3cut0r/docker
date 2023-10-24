@@ -47,13 +47,10 @@ jobs:
           tags: |
             3x3cut0r/streamlit:latest
 
-      - name: Run Docker Container to extract version
+      - name: Tag and push specific version
         id: docker_version
         run: |
+          docker pull 3x3cut0r/streamlit:latest
           STREAMLIT_VERSION=$(docker run --rm 3x3cut0r/streamlit:latest sh -c "echo \$STREAMLIT_VERSION")
-          echo "STREAMLIT_VERSION=$STREAMLIT_VERSION" >> $GITHUB_OUTPUT
-
-      - name: Push Docker image with tag
-        run: |
-          docker tag streamlit 3x3cut0r/streamlit:${{ steps.docker_version.outputs.STREAMLIT_VERSION }}
-          docker push 3x3cut0r/streamlit:${{ steps.docker_version.outputs.STREAMLIT_VERSION }}
+          docker tag 3x3cut0r/streamlit:latest 3x3cut0r/streamlit:$STREAMLIT_VERSION
+          docker push 3x3cut0r/streamlit:$STREAMLIT_VERSION
