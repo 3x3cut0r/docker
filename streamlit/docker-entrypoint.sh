@@ -15,8 +15,7 @@ chown -R root:root /app
 chmod -R 644 /app
 
 # Set STREAMLIT_VERSION
-STREAMLIT_VERSION=$(streamlit --version | awk '{print $3}')
-export STREAMLIT_VERSION
+export STREAMLIT_VERSION=$(streamlit --version | awk '{print $3}')
 
 ############################
 # setup user environment   #
@@ -24,7 +23,7 @@ export STREAMLIT_VERSION
 
 # install python requirements
 if [ -s /app/requirements.txt ]; then
-    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt > /dev/null 2>&1
 fi
 
 # TIMEZONE
@@ -34,8 +33,16 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # run app                  #
 ############################
 
-# print streamlit version
-streamlit --version
+# if started without args, run streamlit_app.py
+if [ "$#" = "0" ]; then
+    # print streamlit version
+    streamlit --version
 
-# run streamlit
-streamlit run /app/streamlit_app.py --server.port=${PORT:-8501} --server.address=0.0.0.0
+    # run streamlit
+    streamlit run /app/streamlit_app.py --server.port=${PORT:-8501} --server.address=0.0.0.0
+
+# if started with args, run args instead
+else
+    exec "$@"
+fi
+
