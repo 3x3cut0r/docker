@@ -23,9 +23,7 @@ COPY --from=builder /venv /venv
 COPY app/ ./
 COPY docker-entrypoint.sh /
 
-RUN chmod +x /docker-entrypoint.sh && \
-    apt update && \
-    apt install -y tzdata
+RUN chmod +x /docker-entrypoint.sh
 
 ENV TZ="UTC"
 
