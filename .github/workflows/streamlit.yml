@@ -51,9 +51,9 @@ jobs:
         id: docker_version
         run: |
           STREAMLIT_VERSION=$(docker run --rm 3x3cut0r/streamlit:latest sh -c "echo \$STREAMLIT_VERSION")
-          echo "::set-output name=streamlit_version::$STREAMLIT_VERSION"
+          echo "STREAMLIT_VERSION=$STREAMLIT_VERSION" >> $GITHUB_OUTPUT
 
       - name: Push Docker image with tag
         run: |
-          docker tag streamlit 3x3cut0r/streamlit:${{ steps.docker_build.outputs.streamlit_version }}
-          docker push 3x3cut0r/streamlit:${{ steps.docker_build.outputs.streamlit_version }}
+          docker tag streamlit 3x3cut0r/streamlit:${{ steps.docker_version.outputs.STREAMLIT_VERSION }}
+          docker push 3x3cut0r/streamlit:${{ steps.docker_version.outputs.STREAMLIT_VERSION }}
