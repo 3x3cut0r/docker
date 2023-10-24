@@ -14,8 +14,8 @@ chown -R root:root /app
 # Set permissions
 chmod -R 644 /app
 
-# Set STREAMLIT_VERSION
-export STREAMLIT_VERSION=$(streamlit --version | awk '{print $3}')
+# export streamlit version
+export VERSION=$(streamlit --version | cut -d' ' -f3)
 
 ############################
 # setup user environment   #
