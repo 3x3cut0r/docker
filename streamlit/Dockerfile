@@ -27,7 +27,7 @@ RUN chmod +x /docker-entrypoint.sh && \
     apt update && \
     apt install -y tzdata
 
-ENV TZ="Europe/Berlin"
+ENV TZ="UTC"
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
