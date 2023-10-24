@@ -47,7 +47,7 @@ jobs:
         run: |
           docker build -t 3x3cut0r/streamlit:latest ./streamlit
           STREAMLIT_VERSION=$(docker run --rm 3x3cut0r/streamlit:latest sh -c "echo \$STREAMLIT_VERSION")
-          echo "STREAMLIT_VERSION=$STREAMLIT_VERSION" >> $GITHUB_OUTPUT
+          echo "STREAMLIT_VERSION=$STREAMLIT_VERSION" >> $GITHUB_ENV
 
       # https://github.com/docker/build-push-action
       - name: Build and push
@@ -59,4 +59,4 @@ jobs:
           push: true
           tags: |
             3x3cut0r/streamlit:latest
-            3x3cut0r/streamlit:${{ steps.tag.outputs.STREAMLIT_VERSION }}
+            3x3cut0r/streamlit:env.STREAMLIT_VERSION
