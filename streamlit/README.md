@@ -18,7 +18,7 @@
    1.3 [.streamlit/config.toml](#config.toml)
 2. [Usage](#usage)  
    2.1 [docker run](#dockerrun)  
-   2.2 [docker-compose.yaml](#dockercompose)
+   2.2 [docker-compose.yaml](#docker-compose)
 3. [Environment Variables](#environment-variables)
 4. [Volumes](#volumes)
 5. [Ports](#ports)
@@ -77,7 +77,7 @@ gatherUsageStats = false
 docker run -d \
     --name streamlit \
     -e TZ="Europe/Berlin" \
-    -v /path/of/your/streamlit/app:/app \
+    -v /path/of/your/streamlit/app/*:/app \
     -p 8501:8501/tcp \
     3x3cut0r/streamlit:latest
 ```
@@ -95,7 +95,7 @@ services:
     environment:
         TZ: Europe/Berlin
     volumes:
-      - /path/of/your/streamlit/app:/app
+      - /path/of/your/streamlit/app/*:/app
     ports:
       - 8501:8501/tcp
 ```
