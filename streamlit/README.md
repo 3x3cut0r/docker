@@ -77,7 +77,7 @@ gatherUsageStats = false
 docker run -d \
     --name streamlit \
     -e TZ="Europe/Berlin" \
-    -v /path/of/your/streamlit/app/*:/app \
+    -v /path/of/your/streamlit/app:/app \
     -p 8501:8501/tcp \
     3x3cut0r/streamlit:latest
 ```
@@ -95,7 +95,7 @@ services:
     environment:
         TZ: Europe/Berlin
     volumes:
-      - /path/of/your/streamlit/app/*:/app
+      - /path/of/your/streamlit/app:/app
     ports:
       - 8501:8501/tcp
 ```
