@@ -1,0 +1,68 @@
+# Build-Stage
+FROM python:3.12-alpine
+LABEL maintainer="Julian Reith <julianreith@gmx.de>"
+LABEL description="Docker container for llama-cpp-python"
+
+WORKDIR /
+
+VOLUME /model
+EXPOSE 8000/tcp
+
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
+
+RUN apk add --no-cache build-base cmake curl ninja-build openblas-dev runit tzdata && \
+    rm -rf /var/lib/apt/lists/* && \
+    python -m venv /venv && \
+    /venv/bin/pip install --upgrade pip anyio pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context && \
+    LLAMA_OPENBLAS=1 && \
+    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" && \
+    /venv/bin/pip install --no-cache-dir llama-cpp-python && \
+    apk del build-base cmake ninja-build && \
+    mkdir -p \
+        /runit-services \
+        /runit-services/llama-cpp-python \
+        /runit-services/syslogd && \
+    echo -e "#!/bin/sh\nbusybox syslogd -n -O /dev/stdout" > \
+        /runit-services/syslogd/run && \
+    echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server --model /model/model.bin" > \
+        /runit-services/llama-cpp-python/run && \
+    chmod +x /runit-services/syslogd/run \
+        /runit-services/llama-cpp-python/run
+
+ENV TZ="UTC" \
+    DOWNLOAD_DEFAULT_MODEL=False \
+    MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
+    MODEL_ALIAS="llama-2-7b-chat" \
+    SEED=4294967295 \
+    N_CTX=1024 \
+    N_BATCH=512 \
+    N_GPU_LAYERS=0 \
+    MAIN_GPU=0 \
+    ROPE_FREQ_BASE=0.0 \
+    ROPE_FREQ_SCALE=0.0 \
+    MUL_MAT_Q=True \
+    F16_KV=True \
+    LOGITS_ALL=True \
+    VOCAB_ONLY=False \
+    USE_MMAP=True \
+    USE_MLOCK=True \
+    EMBEDDING=True \
+    N_THREADS=4 \
+    LAST_N_TOKENS_SIZE=64 \
+    LORA_BASE="" \
+    LORA_PATH="" \
+    NUMA=False \
+    CHAT_FORMAT="llama-2" \
+    CACHE=False \
+    CACHE_TYPE="ram" \
+    CACHE_SIZE=2147483648 \
+    VERBOSE=True \
+    HOST="0.0.0.0" \
+    PORT=8000 \
+    INTERRUPT_REQUESTS=True
+
+ENTRYPOINT ["/docker-entrypoint.sh"]
+
+HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
+    CMD sv status /runit-services/llama-cpp-python || exit 1
