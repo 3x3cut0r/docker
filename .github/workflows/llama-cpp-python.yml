@@ -1,0 +1,62 @@
+name: build llama-cpp-python
+
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - 'llama-cpp-python/**'
+  schedule:
+    # cron: 'min hour day month weekday'
+    - cron: '0 4 * * 3' # every wednesday on 04:00
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'
+        required: true
+        default: 'warning'
+      tags:
+        description: 'run action manually'
+
+jobs:
+  multi:
+    runs-on: ubuntu-latest
+
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # https://github.com/docker/setup-qemu-action
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      # https://github.com/docker/setup-buildx-action
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      # https://github.com/docker/login-action
+      - name: Login to DockerHub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and Tag
+        id: tag
+        run: |
+          docker build -t 3x3cut0r/llama-cpp-python:latest ./llama-cpp-python
+          VERSION=$(docker run --rm 3x3cut0r/llama-cpp-python:latest sh -c "echo \$VERSION")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
+      # https://github.com/docker/build-push-action
+      - name: Build and push
+        uses: docker/build-push-action@v5
+        with:
+          context: ./llama-cpp-python
+          file: ./llama-cpp-python/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: |
+            3x3cut0r/llama-cpp-python:latest
+            3x3cut0r/llama-cpp-python:${{ steps.tag.outputs.VERSION }}
