@@ -28,7 +28,7 @@ else
     # if the first arg is "in.tftpd" ...
     elif [ "$1" = "in.tftpd" ]; then
         echo -e "\nINFO: /usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp $@\n"
-        echo -e "#!/bin/sh\n/usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp ${@:9}" > /runit-services/tftpd-hpa/run
+        echo -e "#!/bin/sh\n/usr/sbin/in.tftpd --foreground --address 0.0.0.0:69 --user tftp ${@}" > /runit-services/tftpd-hpa/run
     # if first arg doesn't looks like a flag
     else
         printf "\nINFO: $@\n\n"
