@@ -14,7 +14,7 @@
 
 1. [Usage](#usage)  
    1.1 [docker run](#dockerrun)  
-   2.2 [docker-compose.yaml](#dockercompose)
+   1.2 [docker-compose.yaml](#docker-compose)
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
 4. [Ports](#ports)
@@ -53,7 +53,7 @@ docker run -d \
 ```
 
 **Example 3 - run with arguments (environment variables will be ignored):**  
-**in.tftpd --foreground --address 0.0.0.0:69 --user tftp <your arguments>**
+**in.tftpd --foreground --address 0.0.0.0:69 --user tftp \<your arguments\>**
 
 ```shell
 docker run -d \
@@ -66,7 +66,7 @@ docker run -d \
 ```
 
 **Example 4 - run with arguments with optional 'in.tftpd' as first argument:**  
-**in.tftpd --foreground --address 0.0.0.0:69 --user tftp <your arguments>**
+**in.tftpd --foreground --address 0.0.0.0:69 --user tftp \<your arguments\>**
 
 ```shell
 docker run -d \
