@@ -1,5 +1,8 @@
+ARG IMAGE=python:3.12-alpine
+
 # Build-Stage
-FROM python:3.12-alpine
+FROM ${IMAGE}
+ARG IMAGE
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for llama-cpp-python"
 
@@ -8,19 +11,26 @@ WORKDIR /
 VOLUME /model
 EXPOSE 8000/tcp
 
-COPY docker-entrypoint.sh /
-RUN chmod +x /docker-entrypoint.sh
-
-RUN apk add --no-cache build-base cmake curl ninja-build openblas-dev runit tzdata && \
+# setup
+RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
+    apk add --no-cache curl openblas-dev runit tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
-    /venv/bin/pip install --upgrade pip anyio pytest cmake scikit-build setuptools fastapi uvicorn sse-starlette pydantic-settings starlette-context && \
+    /venv/bin/pip install --upgrade pip \
+        anyio \
+        pytest \
+        scikit-build \
+        setuptools \
+        fastapi \
+        uvicorn \
+        sse-starlette \
+        pydantic-settings \
+        starlette-context && \
     LLAMA_OPENBLAS=1 && \
     CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" && \
     /venv/bin/pip install --no-cache-dir llama-cpp-python && \
-    apk del build-base cmake ninja-build && \
+    apk del --no-network .build-deps && \
     mkdir -p \
-        /runit-services \
         /runit-services/llama-cpp-python \
         /runit-services/syslogd && \
     echo -e "#!/bin/sh\nbusybox syslogd -n -O /dev/stdout" > \
@@ -29,6 +39,13 @@ RUN apk add --no-cache build-base cmake curl ninja-build openblas-dev runit tzda
         /runit-services/llama-cpp-python/run && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/llama-cpp-python/run
+
+# export versions in /VERSION
+RUN touch /VERSION && \
+    echo "alpine=$(cat /etc/alpine-release)" > /VERSION && \
+    echo "python=$(/venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
+    echo "pip=$(/venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
+    echo "llama-cpp-python=$(/venv/bin/pip freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION
 
 ENV TZ="UTC" \
     DOWNLOAD_DEFAULT_MODEL=False \
@@ -61,6 +78,9 @@ ENV TZ="UTC" \
     HOST="0.0.0.0" \
     PORT=8000 \
     INTERRUPT_REQUESTS=True
+
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
 

@@ -8,11 +8,8 @@ set -e
 # Set PATH for the virtual environment
 export PATH="/venv/bin:$PATH"
 
-# export llama-cpp-python version
-export VERSION=$(pip freeze | grep llama_cpp_python | cut -d= -f3)
-
-# For mlock support
-ulimit -l unlimited
+# For mlock support (--cap-add SYS_RESOURCE must be added to docker in order to do this)
+ulimit -l unlimited 2>/dev/null || true
 
 ############################
 # setup user environment   #
@@ -25,9 +22,6 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # run app                  #
 ############################
 
-# print llama-cpp-python version
-pip freeze | grep llama_cpp_python
-
 # download default model
 if [ "$DOWNLOAD_DEFAULT_MODEL" = "True" ] || [ "$DOWNLOAD_DEFAULT_MODEL" = "true" ]; then
     echo -e "\nINFO: start downloading default model:\nhttps://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q2_K.gguf\n"
@@ -38,6 +32,7 @@ fi
 
 # if started without args, run app.py
 if [ "$#" = "0" ]; then
+
     # set parameters
     param=""
     param="${param} --model ${MODEL:-'/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf'}"
@@ -70,23 +65,33 @@ if [ "$#" = "0" ]; then
     param="${param} --port ${PORT:-8000}"
     param="${param} --interrupt_requests ${INTERRUPT_REQUESTS:-True}"
 
+    # print llama-cpp-python version
+    pip freeze | grep llama_cpp_python
+
     echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
     echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server ${param}" > /runit-services/llama-cpp-python/run
 
 # if started with args, run args instead
 else
+    # if first arg is --help, assume we want to run python3 -B -m llama_cpp.server --help
+    if [ "$1" = "--help" ] || [ "$1" = "-h" ]; then
+        /venv/bin/python3 -B -m llama_cpp.server --help
+        exit 0
+
     # if first arg looks like a flag, assume we want to run python3 -B -m llama_cpp.server
-    if [ "$( echo "$1" | cut -c1 )" = "-" ]; then
+    elif [ "$( echo '$1' | cut -c1 )" = "-" ]; then
         echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server --host ${HOST:-'0.0.0.0'} $@\n\n"
         echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server $@" > /runit-services/llama-cpp-python/run
+
     # if the first arg is "python" or "python3" ...
     elif [ "$1" = "python" ] || [ "$1" = "python3" ]; then
         echo -e "\nINFO: /venv/bin/python3 $@\n\n"
         echo -e "#!/bin/sh\n/venv/bin/python3 ${@}" > /runit-services/llama-cpp-python/run
-    # if first arg doesn't looks like a flag or python
+
+    # if first arg doesn't looks like a flag or python, we just run the command
     else
-        printf "\nINFO: $@\n\n"
-        echo -e "#!/bin/sh\n$@" > /runit-services/llama-cpp-python/run
+        exec "$@"
+        exit 0
     fi
 fi
 
