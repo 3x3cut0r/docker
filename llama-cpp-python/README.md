@@ -12,8 +12,8 @@
 
 ## Index
 
-1. [Usage](#usage)
-   1.1 [docker run](#docker-run)
+1. [Usage](#usage)  
+   1.1 [docker run](#docker-run)  
    1.2 [docker-compose.yml](#docker-compose)
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
@@ -156,6 +156,7 @@ services:
 
 ### 5 API Endpoints <a name="endpoints"></a>
 
+**visit [abetlen's documentation](https://abetlen.github.io/llama-cpp-python/) or**  
 **see [http://llama-cpp-python:8000/docs](http://localhost:8000/docs) for more information**
 
 - `/v1/engines/copilot-codex/completions` - POST - Create Completion
