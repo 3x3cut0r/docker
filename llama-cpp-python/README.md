@@ -111,10 +111,6 @@ services:
       - 8000:8000/tcp
 ```
 
-### 1.3 API <a name="api"></a>
-
-**visit [http://llama-cpp-python:8000/docs](http://localhost:8000/docs) for api documentation**
-
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `TZ` - Specifies the server timezone - **default: UTC**
