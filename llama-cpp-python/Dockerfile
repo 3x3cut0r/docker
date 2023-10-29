@@ -35,7 +35,7 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         /runit-services/syslogd && \
     echo -e "#!/bin/sh\nbusybox syslogd -n -O /dev/stdout" > \
         /runit-services/syslogd/run && \
-    echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server --model /model/model.bin" > \
+    echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server --model /model/model.gguf" > \
         /runit-services/llama-cpp-python/run && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/llama-cpp-python/run
