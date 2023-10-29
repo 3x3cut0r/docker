@@ -7,13 +7,13 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/llama-cpp-python)  
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/llama-cpp-python.yml?branch=main)
 
-`GitHub` - 3x3cut0r/llama-cpp-python - https://github.com/3x3cut0r/docker/tree/main/llama-cpp-python  
-`DockerHub` - 3x3cut0r/llama-cpp-python - https://hub.docker.com/r/3x3cut0r/llama-cpp-python
+`GitHub` - [3x3cut0r/llama-cpp-python](https://github.com/3x3cut0r/docker/tree/main/llama-cpp-python)  
+`DockerHub` - [3x3cut0r/llama-cpp-python](https://hub.docker.com/r/3x3cut0r/llama-cpp-python)
 
 ## Index
 
-1. [Usage](#usage)  
-   1.1 [docker run](#dockerrun)  
+1. [Usage](#usage)
+   1.1 [docker run](#docker-run)
    1.2 [docker-compose.yml](#docker-compose)
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
@@ -22,7 +22,7 @@
 6. [Find Me](#findme)
 7. [License](#license)
 
-## 1 Usage <a name="usage"></a>
+## 1 Usage {#usage}
 
 **IMPORTANT: you need to add SYS_RESOURCE capability to be able to run this container properly**
 
@@ -40,7 +40,7 @@ services:
     ...
 ```
 
-### 1.1 docker run <a name="dockerrun"></a>
+### 1.1 docker run <a name="docker-run"></a>
 
 **Example 1 - run without arguments and use own model:**  
 **This is the recommended way to use this container !!!**
