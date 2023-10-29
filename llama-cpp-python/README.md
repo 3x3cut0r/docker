@@ -1,18 +1,10 @@
-cd /Users/julian/github/docker/llama-cpp-python
-docker container rm -f llama-cpp-python
-docker image rm -f llama-cpp-python
-docker build -t llama-cpp-python .
-docker run -d -p 8000:8000 -v ./model:/model --cap-add SYS_RESOURCE --name llama-cpp-python llama-cpp-python
-
-cap_add: - SYS_RESOURCE
-
 # llama-cpp-python
 
 **Docker container for llama-cpp-python - a python binding for [llama.cpp](https://github.com/ggerganov/llama.cpp).**
 
-![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/llama-cpp-python
-![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/llama-cpp-python
-![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/llama-cpp-python
+![Docker Image Version (latest by date)](https://img.shields.io/docker/v/3x3cut0r/llama-cpp-python)  
+![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/3x3cut0r/llama-cpp-python)  
+![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/llama-cpp-python)  
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/llama-cpp-python.yml?branch=main)
 
 `GitHub` - 3x3cut0r/llama-cpp-python - https://github.com/3x3cut0r/docker/tree/main/llama-cpp-python  
@@ -26,12 +18,13 @@ cap_add: - SYS_RESOURCE
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
 4. [Ports](#ports)
-5. [Find Me](#findme)
-6. [License](#license)
+5. [API Endpoints](#endpoints)
+6. [Find Me](#findme)
+7. [License](#license)
 
 ## 1 Usage <a name="usage"></a>
 
-**IMPORTANT: you need to add SYS_RESOURCE capability to be able to run this container proberly**
+**IMPORTANT: you need to add SYS_RESOURCE capability to be able to run this container properly**
 
 ```shell
 # for docker run:
@@ -52,7 +45,7 @@ services:
 **Example 1 - run without arguments and use own model:**  
 **This is the recommended way to use this container !!!**
 
-````shell
+```shell
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
@@ -60,7 +53,7 @@ docker run -d \
     -v /path/to/your/llama/model:/model \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest
-```-
+```
 
 **Example 2 - run without arguments and use default model:**
 **this method downloads a default model from huggingface.co**
@@ -72,9 +65,10 @@ docker run -d \
     -e DOWNLOAD_DEFAULT_MODEL="True" \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest
-````
+```
 
 **Example 3 - run with arguments (most environment variables will be ignored):**  
+**arguments will be executed like this:**  
 **/venv/bin/python3 -B -m llama_cpp.server --host 0.0.0.0 \<your arguments\>**
 
 ```shell
@@ -94,7 +88,6 @@ docker run -d \
 ```shell
 docker run --rm \
     --name llama-cpp-python \
-    --cap-add SYS_RESOURCE \
     3x3cut0r/llama-cpp-python:latest \
     --help
 ```
@@ -111,7 +104,6 @@ services:
     cap_add:
       - SYS_RESOURCE
     environment:
-        DOWNLOAD_DEFAULT_MODEL: False
         MODEL: "/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf"
     volumes:
       - /path/to/your/llama/model:/model
@@ -126,7 +118,7 @@ services:
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `TZ` - Specifies the server timezone - **default: UTC**
-- `DOWNLOAD_DEFAULT_MODEL` - if True, download Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf from Huggingface - **default: False**
+- `DOWNLOAD_DEFAULT_MODEL` - if True, downloads [Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main) from Huggingface - **default: False**
 - `MODEL` - **MANDATORY**: The path to the model to use for generating completions - **default: /model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf**
 - `MODEL_ALIAS` - The alias of the model to use for generating completions.
 - `SEED` - Random seed. -1 for random - **default: 4294967295**
@@ -166,13 +158,77 @@ services:
 
 - `8000/tcp` - API Port
 
-### 5 Find Me <a name="findme"></a>
+### 5 API Endpoints <a name="endpoints"></a>
+
+**see [http://llama-cpp-python:8000/docs](http://localhost:8000/docs) for more information**
+
+- `/v1/engines/copilot-codex/completions` - POST - Create Completion
+
+```json
+{
+  "prompt": "\n\n### Instructions:\nWhat is the capital of France?\n\n### Response:\n",
+  "stop": ["\n", "###"]
+}
+```
+
+- `/v1/completions` - POST - Create Completion
+
+```json
+{
+  "prompt": "\n\n### Instructions:\nWhat is the capital of France?\n\n### Response:\n",
+  "stop": ["\n", "###"]
+}
+```
+
+- `/v1/embeddings` - POST - Create Embedding
+
+```json
+{
+  "input": "The food was delicious and the waiter..."
+}
+```
+
+- `/v1/chat/completions` - POST - Create Chat Completion
+
+```json
+{
+  "messages": [
+    {
+      "content": "You are a helpful assistant.",
+      "role": "system"
+    },
+    {
+      "content": "What is the capital of France?",
+      "role": "user"
+    }
+  ]
+}
+```
+
+- `/v1/models` - GET - Get Models
+  **response:**
+
+```json
+{
+  "object": "list",
+  "data": [
+    {
+      "id": "llama-2-7b-chat",
+      "object": "model",
+      "owned_by": "me",
+      "permissions": []
+    }
+  ]
+}
+```
+
+### 6 Find Me <a name="findme"></a>
 
 ![E-Mail](https://img.shields.io/badge/E--Mail-julianreith%40gmx.de-red)
 
 - [GitHub](https://github.com/3x3cut0r)
 - [DockerHub](https://hub.docker.com/u/3x3cut0r)
 
-### 6 License <a name="license"></a>
+### 7 License <a name="license"></a>
 
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0) - This project is licensed under the GNU General Public License - see the [gpl-3.0](https://www.gnu.org/licenses/gpl-3.0.en.html) for details.
