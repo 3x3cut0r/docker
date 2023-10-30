@@ -24,7 +24,7 @@
 
 ## 1 Usage {#usage}
 
-**IMPORTANT: you need to add SYS_RESOURCE capability to be able to run this container properly**
+**IMPORTANT: you need to add SYS_RESOURCE capability to enable MLOCK support**
 
 ```shell
 # for docker run:
