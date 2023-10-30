@@ -1,8 +1,9 @@
 ARG IMAGE=python:3.12-alpine
 
-# Build-Stage
+# App-Stage
 FROM ${IMAGE}
 ARG IMAGE
+
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for llama-cpp-python"
 
@@ -11,7 +12,7 @@ WORKDIR /
 VOLUME /model
 EXPOSE 8000/tcp
 
-# setup
+# Setup llama-cpp-python
 RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
     apk add --no-cache curl openblas-dev runit tzdata && \
     rm -rf /var/lib/apt/lists/* && \
@@ -40,13 +41,14 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/llama-cpp-python/run
 
-# export versions in /VERSION
+# Store versions in /VERSION
 RUN touch /VERSION && \
     echo "alpine=$(cat /etc/alpine-release)" > /VERSION && \
     echo "python=$(/venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
     echo "pip=$(/venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
     echo "llama-cpp-python=$(/venv/bin/pip freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION
 
+# Setup environment
 ENV TZ="UTC" \
     MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
     DEFAULT_MODEL="llama-2-7b-chat.Q2_K.gguf" \
@@ -80,9 +82,9 @@ ENV TZ="UTC" \
     PORT=8000 \
     INTERRUPT_REQUESTS=True
 
+# Setup entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
-
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
