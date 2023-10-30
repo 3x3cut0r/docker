@@ -3,9 +3,8 @@ ARG IMAGE=python:3.11-slim
 # Build-Stage
 FROM ${IMAGE} as builder
 ARG IMAGE
-LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="Docker container for Streamlit - an open-source app framework for Machine Learning and Data Science teams"
 
+# Setup and build streamlit
 WORKDIR /build
 RUN apt update && \
     apt install -y build-essential cmake curl software-properties-common && \
@@ -18,28 +17,34 @@ RUN apt update && \
 FROM ${IMAGE}
 ARG IMAGE
 
+LABEL maintainer="Julian Reith <julianreith@gmx.de>"
+LABEL description="Docker container for Streamlit - an open-source app framework for Machine Learning and Data Science teams"
+
 WORKDIR /app
 
 VOLUME /app
 EXPOSE 8501/tcp
 
+# Copy streamlit from builder
 COPY --from=builder /venv /venv
 COPY app/ ./
-COPY docker-entrypoint.sh /
 
-RUN chmod +x /docker-entrypoint.sh && \
-    apt update && \
+RUN apt update && \
     apt install -y curl tzdata
 
-# export versions in /VERSION
+# Store versions in /VERSION
 RUN touch /VERSION && \
     echo "debian=$(cat /etc/issue | cut -d' ' -f3)" > /VERSION && \
     echo "python=$(/venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
     echo "pip=$(/venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
     echo "streamlit=$(/venv/bin/streamlit --version | cut -d' ' -f3)" >> /VERSION
 
+# Setup environment
 ENV TZ="UTC"
 
+# Setup entrypoint
+COPY docker-entrypoint.sh /
+RUN chmod +x /docker-entrypoint.sh
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
