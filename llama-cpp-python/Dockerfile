@@ -48,8 +48,9 @@ RUN touch /VERSION && \
     echo "llama-cpp-python=$(/venv/bin/pip freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION
 
 ENV TZ="UTC" \
-    DOWNLOAD_DEFAULT_MODEL=False \
     MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
+    DEFAULT_MODEL="llama-2-7b-chat.Q2_K.gguf" \
+    DOWNLOAD_DEFAULT_MODEL=False \
     MODEL_ALIAS="llama-2-7b-chat" \
     SEED=4294967295 \
     N_CTX=1024 \

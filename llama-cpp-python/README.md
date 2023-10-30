@@ -114,8 +114,9 @@ services:
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `TZ` - Specifies the server timezone - **default: UTC**
-- `DOWNLOAD_DEFAULT_MODEL` - if True, downloads [Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main) from Huggingface - **default: False**
 - `MODEL` - **MANDATORY**: The path to the model to use for generating completions - **default: /model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf**
+- `DEFAULT_MODEL` - the default model, which will be downloaded, if DOWNLOAD_DEFAULT_MODEL is set to true. you can choose a model from [here](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main)- **default: llama-2-7b-chat.Q2_K.gguf**
+- `DOWNLOAD_DEFAULT_MODEL` - if True, downloads [Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main) from Huggingface - **default: False**
 - `MODEL_ALIAS` - The alias of the model to use for generating completions.
 - `SEED` - Random seed. -1 for random - **default: 4294967295**
 - `N_CTX` - The context size - **default: 2048**

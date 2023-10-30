@@ -24,10 +24,15 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # download default model
 if [ "$DOWNLOAD_DEFAULT_MODEL" = "True" ] || [ "$DOWNLOAD_DEFAULT_MODEL" = "true" ]; then
-    echo -e "\nINFO: start downloading default model:\nhttps://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q2_K.gguf\n"
-    mkdir -p /model/Llama-2-7b-Chat-GGUF
-    curl -L https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/llama-2-7b-chat.Q2_K.gguf \
-        --output /model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf
+    # download DEFAULT_MODEL only, if not exist
+    if [ ! -e "/model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}" ], then
+        echo -e "\nINFO: start downloading default model:\nhttps://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/${DEFAULT_MODEL}\n"
+        mkdir -p /model/Llama-2-7b-Chat-GGUF
+        curl -L "https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/${DEFAULT_MODEL}" \
+            --output "/model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}"
+    else
+        echo -e "file exists: /model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}: skip"
+    fi
 fi
 
 # if started without args, run app.py
