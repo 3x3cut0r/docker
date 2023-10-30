@@ -87,11 +87,11 @@ docker run -d \
 **your streamlit app folder must contain a 'streamlit_app.py' as the main streamlit app**
 
 ```shell
-version: '3'
-
+version: '3.9'
 services:
+  # https://hub.docker.com/r/3x3cut0r/streamlit
   streamlit:
-    image: 3x3cut0r/streamlit
+    image: 3x3cut0r/streamlit:latest
     environment:
         TZ: Europe/Berlin
     volumes:
