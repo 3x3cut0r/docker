@@ -1,5 +1,8 @@
+ARG IMAGE=python:3.11-slim
+
 # Build-Stage
-FROM python:3.10-slim as builder
+FROM ${IMAGE} as builder
+ARG IMAGE
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for Streamlit - an open-source app framework for Machine Learning and Data Science teams"
 
@@ -9,10 +12,11 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
-    /venv/bin/pip install --no-cache-dir streamlit
+    /venv/bin/pip install --no-cache-dir streamlit streamlit-extras
 
 # App-Stage
-FROM python:3.10-slim
+FROM ${IMAGE}
+ARG IMAGE
 
 WORKDIR /app
 
@@ -26,6 +30,13 @@ COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh && \
     apt update && \
     apt install -y curl tzdata
+
+# export versions in /VERSION
+RUN touch /VERSION && \
+    echo "debian=$(cat /etc/issue | cut -d' ' -f3)" > /VERSION && \
+    echo "python=$(/venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
+    echo "pip=$(/venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
+    echo "streamlit=$(/venv/bin/streamlit --version | cut -d' ' -f3)" >> /VERSION
 
 ENV TZ="UTC"
 
