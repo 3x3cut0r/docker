@@ -8,9 +8,6 @@ set -e
 # Set PATH for the virtual environment
 export PATH="/venv/bin:$PATH"
 
-# Set ownership
-chown -R root:root /app
-
 # Set permissions
 chmod -R 644 /app
 
