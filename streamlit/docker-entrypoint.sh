@@ -18,7 +18,7 @@ chmod -R 755 /app
 install_complete="/app/requirements.complete"
 if [ -s /app/requirements.txt ]; then
     if [ ! -f $install_complete ]; then
-        /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+        /venv/bin/pip install --no-cache-dir -r /app/requirements.txt 2>/dev/null
         touch $install_complete
     fi
 fi
