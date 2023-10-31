@@ -18,7 +18,6 @@ RUN addgroup -g $GID -S tftp && \
 # add tftp-hpa
 RUN apk add --no-cache tftp-hpa runit tzdata && \
     mkdir -p /tftpboot \
-        /runit-services \
         /runit-services/tftpd-hpa \
         /runit-services/syslogd && \
     echo -e "#!/bin/sh\nbusybox syslogd -n -O /dev/stdout" > \
@@ -28,6 +27,11 @@ RUN apk add --no-cache tftp-hpa runit tzdata && \
         /runit-services/tftpd-hpa/run && \
     chmod +x /runit-services/syslogd/run \
         /runit-services/tftpd-hpa/run
+
+# store versions in /VERSION
+RUN touch /VERSION && \
+    echo "alpine=$(cat /etc/alpine-release)" > /VERSION && \
+    echo "tftpd-hpa=$(/usr/sbin/in.tftpd --version | cut -d, -f1 | cut -d' ' -f2)" >> /VERSION
 
 # tftpd-hpa environment variables
 # (see: https://manpages.debian.org/testing/tftpd-hpa/tftpd.8.en.html)
