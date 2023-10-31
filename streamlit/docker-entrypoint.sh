@@ -14,9 +14,13 @@ chmod -R 755 /app
 # setup user environment   #
 ############################
 
-# install python requirements
+# install python requirements (only once)
+install_complete="/app/requirements.complete"
 if [ -s /app/requirements.txt ]; then
-    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+    if [ ! -f $install_complete ]; then
+        /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
+        touch $install_complete
+    fi
 fi
 
 # TIMEZONE
