@@ -1,8 +1,15 @@
-FROM alpine:latest
+ARG IMAGE=alpine:latest
+
+# App-Stage
+FROM ${IMAGE}
+ARG IMAGE
+
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="official alpine linux with gosu, libcap installed"
 
-# add gosu
+WORKDIR /
+
+# Add gosu
 ENV GOSU_VERSION 1.16
 RUN set -eux; \
     \
@@ -16,21 +23,26 @@ RUN set -eux; \
     wget -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch"; \
     wget -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$dpkgArch.asc"; \
     \
-# verify the signature
+# Verify the signature
     export GNUPGHOME="$(mktemp -d)"; \
     gpg --batch --keyserver hkps://keys.openpgp.org --recv-keys B42F6819007F00F88E364FD4036A9C25BF357DD4; \
     gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu; \
     command -v gpgconf && gpgconf --kill all || :; \
     rm -rf "$GNUPGHOME" /usr/local/bin/gosu.asc; \
     \
-# clean up fetch dependencies
+# Clean up fetch dependencies
     apk del --no-network .gosu-deps; \
     \
     chmod +x /usr/local/bin/gosu; \
-# verify that the binary works
+# Verify that the binary works
     gosu --version; \
     gosu nobody true
 
-# add dependencies for all images
+# Add dependencies for all images
 RUN apk add --no-cache tzdata \
     libcap
+
+# Store versions in /VERSION
+RUN touch /VERSION && \
+    echo "alpine=$(cat /etc/alpine-release)" > /VERSION && \
+    echo "gosu=$GOSU_VERSION" >> /VERSION
