@@ -1,5 +1,4 @@
 #!/bin/sh
-set -e
 
 ############################
 # setup global environment #
@@ -9,7 +8,7 @@ set -e
 export PATH="/venv/bin:$PATH"
 
 # Set permissions
-chmod -R 644 /app
+chmod -R 755 /app
 
 ############################
 # setup user environment   #
@@ -17,7 +16,7 @@ chmod -R 644 /app
 
 # install python requirements
 if [ -s /app/requirements.txt ]; then
-    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt > /dev/null 2>&1
+    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt
 fi
 
 # TIMEZONE
@@ -38,5 +37,6 @@ if [ "$#" = "0" ]; then
 # if started with args, run args instead
 else
     exec "$@"
+    exit 0
 fi
 
