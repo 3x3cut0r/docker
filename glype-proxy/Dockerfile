@@ -1,6 +1,6 @@
 FROM alpine:latest as build
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
-LABEL description="glype - a web-based proxy on webdevops/php-nginx:7.4-alpine"
+LABEL description="glype - a web-based proxy on webdevops/php-nginx:8.0-alpine"
 
 WORKDIR /app
 

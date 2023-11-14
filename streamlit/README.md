@@ -88,10 +88,12 @@ docker run -d \
 
 ```shell
 version: '3.9'
+
 services:
   # https://hub.docker.com/r/3x3cut0r/streamlit
   streamlit:
     image: 3x3cut0r/streamlit:latest
+    container_name: streamlit
     environment:
         TZ: Europe/Berlin
     volumes:

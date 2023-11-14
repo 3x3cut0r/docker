@@ -8,19 +8,20 @@ set -e
 # Set PATH for the virtual environment
 export PATH="/venv/bin:$PATH"
 
-# Set ownership
-chown -R root:root /app
-
 # Set permissions
-chmod -R 644 /app
+chmod -R 755 /app
 
 ############################
 # setup user environment   #
 ############################
 
-# install python requirements
+# install python requirements (only once)
+install_complete="/app/requirements.complete"
 if [ -s /app/requirements.txt ]; then
-    /venv/bin/pip install --no-cache-dir -r /app/requirements.txt > /dev/null 2>&1
+    if [ ! -f $install_complete ]; then
+        /venv/bin/pip install --no-cache-dir --disable-pip-version-check --quiet -r /app/requirements.txt
+        touch $install_complete
+    fi
 fi
 
 # TIMEZONE
@@ -41,5 +42,6 @@ if [ "$#" = "0" ]; then
 # if started with args, run args instead
 else
     exec "$@"
+    exit 0
 fi
 

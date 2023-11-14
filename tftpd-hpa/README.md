@@ -95,7 +95,7 @@ docker run -d \
 ### 1.2 docker-compose.yaml <a name="docker-compose"></a>
 
 ```shell
-version: '3'
+version: '3.9'
 
 services:
   tftpd-hpa:
