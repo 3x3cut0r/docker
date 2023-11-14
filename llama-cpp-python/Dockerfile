@@ -28,7 +28,7 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         pydantic-settings \
         starlette-context && \
     LLAMA_OPENBLAS=1 && \
-    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS" && \
+    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF" && \
     /venv/bin/pip install --no-cache-dir llama-cpp-python && \
     apk del --no-network .build-deps && \
     mkdir -p \
