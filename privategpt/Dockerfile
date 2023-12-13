@@ -9,14 +9,16 @@ ENV PATH="/root/.local/bin:$PATH"
 
 # Dependencies to build llama-cpp
 RUN apt update && apt install -y \
-  libopenblas-dev \
-  ninja-build \
-  build-essential \
-  pkg-config \
-  wget \
-  curl \
-  git \
-  jq
+        libopenblas-dev \
+        ninja-build \
+        build-essential \
+        pkg-config \
+        wget \
+        curl \
+        git \
+        jq && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
