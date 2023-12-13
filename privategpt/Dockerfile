@@ -14,7 +14,9 @@ RUN apt update && apt install -y \
   build-essential \
   pkg-config \
   wget \
-  git
+  curl \
+  git \
+  jq
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
@@ -44,11 +46,7 @@ WORKDIR /home/worker/app
 # Copy from dependencies
 RUN mkdir local_data; chown worker local_data
 RUN mkdir models; chown worker models
-COPY --chown=worker --from=dependencies /home/worker/app/.venv/ .venv
-COPY --chown=worker --from=dependencies /home/worker/app/fern/ fern
-COPY --chown=worker --from=dependencies /home/worker/app/models/ models
-COPY --chown=worker --from=dependencies /home/worker/app/private_gpt/ private_gpt
-COPY --chown=worker --from=dependencies /home/worker/app/*.yaml /home/worker/app/*.md ./
+COPY --chown=worker --from=dependencies /home/worker/app/ /home/worker/app
 
 # Store versions in /VERSION
 RUN touch /VERSION && \
@@ -69,8 +67,9 @@ VOLUME /home/worker/app/local_data
 # Setup entrypoint
 COPY docker-entrypoint.sh /
 RUN chmod +x /docker-entrypoint.sh
+
 USER worker
 ENTRYPOINT ["/docker-entrypoint.sh"]
 
 HEALTHCHECK --interval=5s --timeout=10s --retries=3 \
-    CMD curl -f http://localhost:8080/health | jq --exit-status '.status == "ok"' || exit 1
+    CMD curl --fail http://localhost:8080/health | jq --exit-status '.status == "ok"' || exit 1
