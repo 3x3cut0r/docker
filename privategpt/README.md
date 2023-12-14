@@ -41,8 +41,6 @@ docker run -d \
 
 ### 1.2 docker-compose.yml <a name="docker-compose"></a>
 
-**your privategpt app folder must contain a 'privategpt_app.py' as the main privategpt app**
-
 ```shell
 version: '3.9'
 
