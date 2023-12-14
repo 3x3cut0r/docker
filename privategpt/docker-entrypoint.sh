@@ -5,9 +5,6 @@ set -e
 # setup user environment   #
 ############################
 
-# TIMEZONE
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
-
 # HEADER_BG_COLOR
 sed -i "s|background-color: #C7BAFF;|background-color: ${LOGO_BG_COLOR:-#C7BAFF};|" /home/worker/app/private_gpt/ui/ui.py
 
@@ -26,15 +23,13 @@ fi
 # run app                  #
 ############################
 
-.venv/bin/python -m private_gpt
-
 # if started without args, run streamlit_app.py
 if [ "$#" = "0" ]; then
     # print privategpt version
     echo "privategpt version: $(cat cat /home/worker/app/version.txt)"
 
     # run privategpt
-    .venv/bin/python -m private_gpt
+    /home/worker/app/.venv/bin/python -m private_gpt
 
 # if started with args, run args instead
 else

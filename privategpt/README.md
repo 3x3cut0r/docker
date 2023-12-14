@@ -53,7 +53,6 @@ services:
 
 ### 2 Environment Variables <a name="environment-variables"></a>
 
-- `TZ` - Specifies the server timezone - **Default: UTC**
 - `KEEP_FILES` - Specifies if the server should keep uploaded files after restarting the container - **True /False, Default: False**
 - `LOGO_BG_COLOR` - Specifies the logo background color - **Default: #C7BAFF**
 - `LOGO_HEIGHT` - Specifies the logo height - **Default: 50%**
