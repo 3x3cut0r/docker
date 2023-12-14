@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'pyload/**'
+      - '!pyload/README.md'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 4 * * 3' # every wednesday on 04:00

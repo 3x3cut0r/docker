@@ -6,6 +6,7 @@ on:
       - 'main'
     paths:
       - '404/**'
+      - '!404/README.md'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 4 * * 3' # every wednesday on 04:00
