@@ -35,7 +35,6 @@
 ```shell
 docker run -d \
     --name privategpt \
-    -e TZ="Europe/Berlin" \
     -p 8080:8080/tcp \
     3x3cut0r/privategpt:latest
 ```
@@ -52,8 +51,6 @@ services:
   privategpt:
     image: 3x3cut0r/privategpt:latest
     container_name: privategpt
-    environment:
-        TZ: Europe/Berlin
     ports:
       - 8080:8080/tcp
 ```
