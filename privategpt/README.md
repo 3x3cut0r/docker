@@ -13,6 +13,7 @@
 ## Documentation
 
 `GitHub` - imartinez/privateGPT - https://github.com/imartinez/privateGPT  
+`Docs` - docs.privategpt.dev - https://docs.privategpt.dev/ 
 
 ## Index
 
