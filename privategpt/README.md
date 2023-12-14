@@ -10,6 +10,8 @@
 `GitHub` - 3x3cut0r/privategpt - https://github.com/3x3cut0r/docker/tree/main/privategpt  
 `DockerHub` - 3x3cut0r/privategpt - https://hub.docker.com/r/3x3cut0r/privategpt
 
+![privategpt](https://github.com/3x3cut0r/docker/assets/1408580/39d4e5ed-4a5c-4ea5-8b78-83a8c4c2df9b)
+
 ## Documentation
 
 `GitHub` - imartinez/privateGPT - https://github.com/imartinez/privateGPT  
