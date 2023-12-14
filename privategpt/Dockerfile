@@ -41,6 +41,13 @@ ENV PYTHONUNBUFFERED=1
 ENV PORT=8080
 EXPOSE 8080
 
+# Dependencies to check health
+RUN apt update && apt install -y \
+        curl \
+        jq && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Prepare a non-root user "worker"
 RUN adduser --system worker
 WORKDIR /home/worker/app
@@ -48,13 +55,18 @@ WORKDIR /home/worker/app
 # Copy from dependencies
 RUN mkdir local_data; chown worker local_data
 RUN mkdir models; chown worker models
-COPY --chown=worker --from=dependencies /home/worker/app/ /home/worker/app
+COPY --chown=worker --from=dependencies /home/worker/app/.venv/ .venv
+COPY --chown=worker --from=dependencies /home/worker/app/models models
+COPY --chown=worker private_gpt/ private_gpt
+COPY --chown=worker *.yaml *.md ./
+COPY --chown=worker version.txt version.txt
 
 # Store versions in /VERSION
 RUN touch /VERSION && \
     echo "debian=$(cat /etc/issue | cut -d' ' -f3)" > /VERSION && \
     echo "python=$(/home/worker/app/.venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
     echo "pip=$(/home/worker/app/.venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
+    echo "llama-cpp-python=$(/home/worker/app/.venv/bin/pip3 freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION \
     echo "privategpt=$(cat /home/worker/app/version.txt)" >> /VERSION
 
 # Setup environment
