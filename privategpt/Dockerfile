@@ -57,9 +57,9 @@ RUN mkdir local_data; chown worker local_data
 RUN mkdir models; chown worker models
 COPY --chown=worker --from=dependencies /home/worker/app/.venv/ .venv
 COPY --chown=worker --from=dependencies /home/worker/app/models models
-COPY --chown=worker private_gpt/ private_gpt
-COPY --chown=worker *.yaml *.md ./
-COPY --chown=worker version.txt version.txt
+COPY --chown=worker /home/worker/app/private_gpt/ private_gpt
+COPY --chown=worker /home/worker/app/*.yaml /home/worker/app/*.md ./
+COPY --chown=worker /home/worker/app/version.txt version.txt
 
 # Store versions in /VERSION
 RUN touch /VERSION && \
