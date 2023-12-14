@@ -66,6 +66,23 @@ jobs:
           VERSION=$(docker run --rm 3x3cut0r/privategpt:latest sh -c "cat /VERSION | grep privategpt | cut -d= -f2")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      # https://github.com/marketplace/actions/free-disk-space-ubuntu
+      - name: Free Disk Space (Docker)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: false
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: false
+          dotnet: false
+          haskell: false
+          large-packages: false
+          docker-images: true
+          swap-storage: false
+          
       # https://github.com/docker/build-push-action
       - name: Build and push
         uses: docker/build-push-action@v5
