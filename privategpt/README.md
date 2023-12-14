@@ -10,6 +10,10 @@
 `GitHub` - 3x3cut0r/privategpt - https://github.com/3x3cut0r/docker/tree/main/privategpt  
 `DockerHub` - 3x3cut0r/privategpt - https://hub.docker.com/r/3x3cut0r/privategpt
 
+## Documentation
+
+`GitHub` - imartinez/privateGPT - https://github.com/imartinez/privateGPT  
+
 ## Index
 
 1. [Usage](#usage)  
