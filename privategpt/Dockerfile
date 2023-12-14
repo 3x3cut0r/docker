@@ -59,7 +59,7 @@ RUN touch /VERSION && \
     echo "debian=$(cat /etc/issue | cut -d' ' -f3)" > /VERSION && \
     echo "python=$(/home/worker/app/.venv/bin/python3 --version | cut -d' ' -f2)" >> /VERSION && \
     echo "pip=$(/home/worker/app/.venv/bin/pip3 --version| cut -d' ' -f2)" >> /VERSION && \
-    echo "llama-cpp-python=$(/home/worker/app/.venv/bin/pip3 freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION \
+    echo "llama-cpp-python=$(/home/worker/app/.venv/bin/pip3 freeze | grep llama_cpp_python | cut -d= -f3)" >> /VERSION && \
     echo "privategpt=$(cat /home/worker/app/version.txt)" >> /VERSION
 
 # Setup environment
