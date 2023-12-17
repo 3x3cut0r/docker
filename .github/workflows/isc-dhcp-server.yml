@@ -5,7 +5,8 @@ on:
     branches:
       - 'main'
     paths:
-      - '/isc-dhcp-server/**'
+      - 'isc-dhcp-server/**'
+      - '!isc-dhcp-server/README.md'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 4 * * 3' # every wednesday on 04:00

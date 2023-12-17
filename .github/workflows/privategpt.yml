@@ -6,6 +6,7 @@ on:
       - 'main'
     paths:
       - 'privategpt/**'
+      - '!privategpt/README.md'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 4 * * 3' # every wednesday on 04:00
@@ -42,13 +43,23 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Free Disk Space
-        run: |
-          sudo swapoff -a
-          sudo rm -f /swapfile
-          sudo apt clean
-          df -h
-        
+      # https://github.com/marketplace/actions/free-disk-space-ubuntu
+      - name: Free Disk Space (Ubuntu)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: false
+          swap-storage: true
+
       - name: Build and Tag
         id: tag
         run: |
@@ -56,13 +67,30 @@ jobs:
           VERSION=$(docker run --rm 3x3cut0r/privategpt:latest sh -c "cat /VERSION | grep privategpt | cut -d= -f2")
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
+      # https://github.com/marketplace/actions/free-disk-space-ubuntu
+      - name: Free Disk Space (Docker)
+        uses: jlumbroso/free-disk-space@main
+        with:
+          # this might remove tools that are actually needed,
+          # if set to "true" but frees about 6 GB
+          tool-cache: true
+
+          # all of these default to true, but feel free to set to
+          # "false" if necessary for your workflow
+          android: true
+          dotnet: true
+          haskell: true
+          large-packages: true
+          docker-images: true
+          swap-storage: true
+
       # https://github.com/docker/build-push-action
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
           context: ./privategpt
           file: ./privategpt/Dockerfile
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: |
             3x3cut0r/privategpt:latest

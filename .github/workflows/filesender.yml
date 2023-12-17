@@ -6,6 +6,7 @@ on:
       - 'main'
     paths:
       - 'filesender/**'
+      - '!filesender/README.md'
   schedule:
     # cron: 'min hour day month weekday'
     - cron: '0 4 * * 3'
