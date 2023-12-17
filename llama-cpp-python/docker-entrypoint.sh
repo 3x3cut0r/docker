@@ -84,12 +84,13 @@ else
         exit 0
 
     # if first arg looks like a flag, assume we want to run python3 -B -m llama_cpp.server
-    elif [ "$( echo '$1' | cut -c1 )" = "-" ]; then
+    elif [ "$( echo "$1" | cut -c1 )" = "-" ]; then
         echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server --host ${HOST:-'0.0.0.0'} $@\n\n"
         echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server $@" > /runit-services/llama-cpp-python/run
 
     # if the first arg is "python" or "python3" ...
     elif [ "$1" = "python" ] || [ "$1" = "python3" ]; then
+        shift # remove first argument (python or python3)
         echo -e "\nINFO: /venv/bin/python3 $@\n\n"
         echo -e "#!/bin/sh\n/venv/bin/python3 ${@}" > /runit-services/llama-cpp-python/run
 
