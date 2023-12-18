@@ -90,7 +90,7 @@ jobs:
         with:
           context: ./privategpt
           file: ./privategpt/Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             3x3cut0r/privategpt:latest
