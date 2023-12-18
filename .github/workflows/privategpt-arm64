@@ -1,4 +1,4 @@
-name: build privategpt
+name: build privategpt-arm64
 
 on:
   push:
