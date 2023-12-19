@@ -50,9 +50,10 @@ WORKDIR /home/worker/app
 RUN mkdir local_data; chown worker local_data
 RUN mkdir models; chown worker models
 COPY --chown=worker --from=dependencies /home/worker/app/.venv/ .venv
+COPY --chown=worker --from=dependencies /home/worker/app/*.yaml /home/worker/app/*.md ./
+COPY --chown=worker --from=dependencies /home/worker/app/fern fern
 COPY --chown=worker --from=dependencies /home/worker/app/models models
 COPY --chown=worker --from=dependencies /home/worker/app/private_gpt/ private_gpt
-COPY --chown=worker --from=dependencies /home/worker/app/*.yaml /home/worker/app/*.md ./
 COPY --chown=worker --from=dependencies /home/worker/app/version.txt version.txt
 
 # Store versions in /VERSION
