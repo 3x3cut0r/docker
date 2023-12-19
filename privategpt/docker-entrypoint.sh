@@ -26,7 +26,7 @@ fi
 # if started without args, run streamlit_app.py
 if [ "$#" = "0" ]; then
     # print privategpt version
-    echo "privategpt version: $(cat cat /home/worker/app/version.txt)"
+    echo "privategpt version: $(cat /home/worker/app/version.txt)"
 
     # run privategpt
     /home/worker/app/.venv/bin/python -m private_gpt
