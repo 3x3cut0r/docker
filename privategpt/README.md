@@ -21,7 +21,7 @@
 
 1. [Usage](#usage)  
    1.1 [docker run](#dockerrun)  
-   1.2 [docker-compose.yaml](#docker-compose)
+   1.2 [docker-compose.yaml](#docker-compose)  
    1.3 [docker-compose.yaml with custom model](#docker-compose-custom)
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
