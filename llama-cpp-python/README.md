@@ -133,7 +133,7 @@ services:
 - `USE_MMAP` - Use mmap - **default: True**
 - `USE_MLOCK` - Use mlock - **default: True**
 - `EMBEDDING` - Whether to use embeddings - **default: True**
-- `N_THREADS` - The number of threads to use - **default: 6**
+- `N_THREADS` - The number of threads to use - **default: 4**
 - `LAST_N_TOKENS_SIZE` - Last n tokens to keep for repeat penalty calculation - **default: 64**
 - `LORA_BASE` - Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model.
 - `LORA_PATH` - Path to a LoRA file to apply to the model.
