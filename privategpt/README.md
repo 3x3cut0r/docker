@@ -15,13 +15,14 @@
 ## Documentation
 
 `GitHub` - imartinez/privateGPT - https://github.com/imartinez/privateGPT  
-`Docs` - docs.privategpt.dev - https://docs.privategpt.dev/ 
+`Docs` - docs.privategpt.dev - https://docs.privategpt.dev/
 
 ## Index
 
 1. [Usage](#usage)  
    1.1 [docker run](#dockerrun)  
    1.2 [docker-compose.yaml](#docker-compose)
+   1.3 [docker-compose.yaml with custom model](#docker-compose-custom)
 2. [Environment Variables](#environment-variables)
 3. [Volumes](#volumes)
 4. [Ports](#ports)
@@ -53,16 +54,36 @@ services:
       - 8080:8080/tcp
 ```
 
+### 1.3 docker-compose.yml with custom model <a name="docker-compose-custom"></a>
+
+```shell
+version: '3.9'
+
+services:
+  # https://hub.docker.com/r/3x3cut0r/privategpt
+  privategpt:
+    image: 3x3cut0r/privategpt:latest
+    container_name: privategpt
+    environment:
+      PGPT_HF_MODEL_FILE: "dolphin-2.2.1-mistral-7b.Q4_K_M.gguf"
+    volumes:
+      - /path/to/your/model/dolphin-2.2.1-mistral-7b.Q4_K_M.gguf:/home/worker/app/models/dolphin-2.2.1-mistral-7b.Q4_K_M.gguf
+    ports:
+      - 8080:8080/tcp
+```
+
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `KEEP_FILES` - Specifies if the server should keep uploaded files after restarting the container - **True /False, Default: False**
+- `PGPT_HF_MODEL_FILE` - Specifies the llm model. If set, you need to mount your own llm to /home/worker/app/models - **Default: mistral-7b-instruct-v0.2.Q4_K_M.gguf**
 - `LOGO_BG_COLOR` - Specifies the logo background color - **Default: #C7BAFF**
-- `LOGO_HEIGHT` - Specifies the logo height - **Default: 50%**
+- `LOGO_HEIGHT` - Specifies the logo height - **Default: 25%**
 - `LOGO_SVG_BASE64` - Specifies the logo file (.svg) in base64 format. Provide your own file (.svg) in base64 format using an [image to base64 converter](https://base64.guru/converter/encode/image) - **Default: \<privategpt svg logo\>**
 
 ### 3 Volumes <a name="volumes"></a>
 
 - `/home/worker/app/local_data` - directory for uploaded files. contains private data! will be deleted if KEEP_FILES=False
+- `/home/worker/app/models` - directory for custom llm models. mount your own model here and set environment variable PGPT_HF_MODEL_FILE
 
 ### 4 Ports <a name="ports"></a>
 
