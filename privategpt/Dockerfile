@@ -1,5 +1,5 @@
 # Base-Stage
-FROM python:3.11.6-slim-bookworm as base
+FROM python:3.11.7-slim-bookworm as base
 
 # Install poetry
 RUN pip install pipx
