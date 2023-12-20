@@ -1,4 +1,5 @@
 ARG IMAGE=python:3.12-alpine
+ARG CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF"
 
 # App-Stage
 FROM ${IMAGE}
@@ -14,7 +15,7 @@ EXPOSE 8000/tcp
 
 # Setup llama-cpp-python
 RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
-    apk add --no-cache curl openblas-dev runit tzdata && \
+    apk add --no-cache curl gfortran openblas-dev runit tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip \
@@ -27,8 +28,8 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         sse-starlette \
         pydantic-settings \
         starlette-context && \
-    LLAMA_OPENBLAS=1 && \
-    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF" && \
+    LLAMA_OPENBLAS=ON \
+    CMAKE_ARGS=$CMAKE_ARGS \
     /venv/bin/pip install --no-cache-dir llama-cpp-python && \
     apk del --no-network .build-deps && \
     mkdir -p \
@@ -62,7 +63,6 @@ ENV TZ="UTC" \
     ROPE_FREQ_BASE=0.0 \
     ROPE_FREQ_SCALE=0.0 \
     MUL_MAT_Q=True \
-    F16_KV=True \
     LOGITS_ALL=True \
     VOCAB_ONLY=False \
     USE_MMAP=True \

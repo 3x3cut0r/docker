@@ -127,7 +127,6 @@ services:
 - `ROPE_FREQ_BASE` - RoPE base frequency - **default: 0.0**
 - `ROPE_FREQ_SCALE` - RoPE frequency scaling factor - **default: 0.0**
 - `MUL_MAT_Q` - if true, use experimental mul_mat_q kernels - **default: True**
-- `F16_KV` - Whether to use f16 key/value - **default: True**
 - `LOGITS_ALL` - Whether to return logits - **default: True**
 - `VOCAB_ONLY` - Whether to only return the vocabulary - **default: False**
 - `USE_MMAP` - Use mmap - **default: True**

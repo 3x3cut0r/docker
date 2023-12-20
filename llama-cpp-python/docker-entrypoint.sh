@@ -50,7 +50,6 @@ if [ "$#" = "0" ]; then
     param="${param} --rope_freq_base ${ROPE_FREQ_BASE:-0.0}"
     param="${param} --rope_freq_scale ${ROPE_FREQ_SCALE:-0.0}"
     param="${param} --mul_mat_q ${MUL_MAT_Q:-True}"
-    param="${param} --f16_kv ${F16_KV:-True}"
     param="${param} --logits_all ${LOGITS_ALL:-True}"
     param="${param} --vocab_only ${VOCAB_ONLY:-False}"
     param="${param} --use_mmap ${USE_MMAP:-True}"
