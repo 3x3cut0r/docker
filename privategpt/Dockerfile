@@ -31,7 +31,8 @@ RUN git clone https://github.com/imartinez/privateGPT.git .
 RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF" && \
     poetry install --with local && \
     poetry install --with ui && \
-    poetry run python scripts/setup
+    poetry run python scripts/setup && \
+    pip install docx2txt EbookLib html2text
 
 # App-Stage
 FROM base as app
