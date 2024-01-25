@@ -32,7 +32,7 @@ RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DL
     poetry install --with local && \
     poetry install --with ui && \
     poetry run python scripts/setup && \
-    pip install docx2txt EbookLib html2text
+    pip install doc2txt docx2txt EbookLib html2text
 
 # App-Stage
 FROM base as app
