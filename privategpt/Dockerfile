@@ -31,15 +31,15 @@ RUN git clone https://github.com/imartinez/privateGPT.git .
 RUN CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF" && \
     poetry install --with local && \
     poetry install --with ui && \
-    poetry run python scripts/setup && \
-    pip install doc2text docx2txt EbookLib html2text
+    poetry run python scripts/setup
 
 # App-Stage
 FROM base as app
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for privateGPT - a production-ready AI project that allows you to ask questions about your documents using the power of Large Language Models (LLMs)."
 
-ENV MPLCONFIGDIR="/home/worker/app/models/.config/matplotlib" \
+ENV PATH="/home/worker/app/.venv/bin:$PATH" \
+    MPLCONFIGDIR="/home/worker/app/models/.config/matplotlib" \
     HF_HOME="/home/worker/app/models/cache" \
     PYTHONUNBUFFERED=1 \
     PORT=8080
@@ -60,7 +60,8 @@ RUN chown -R worker:nogroup /home/worker/app && \
         Dockerfile* \
         local_data/.gitignore \
         settings-* \
-        tests*
+        tests* && \
+    pip install doc2text docx2txt EbookLib html2text
 
 # Store versions in /VERSION
 RUN touch /VERSION && \
