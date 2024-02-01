@@ -12,7 +12,7 @@ sed -i "s|background-color: #C7BAFF;|background-color: ${LOGO_BG_COLOR:-#C7BAFF}
 sed -i "s|logo_svg = \"data:image/svg+xml;base64,.*\"|logo_svg = \"data:image/svg+xml;base64,${LOGO_SVG_BASE64}\"|g" /home/worker/app/private_gpt/ui/images.py
 
 # LOGO_HEIGHT
-sed -i "s|\.logo img { height: 25% }|\.logo img { height: ${LOGO_HEIGHT:-50%} }|g" /home/worker/app/private_gpt/ui/ui.py
+sed -i "s|\.logo img { height: 25% }|\.logo img { height: ${LOGO_HEIGHT:-25%} }|g" /home/worker/app/private_gpt/ui/ui.py
 
 # PGPT_HF_MODEL_FILE
 if [ "${PGPT_HF_MODEL_FILE}" != "" ]; then
