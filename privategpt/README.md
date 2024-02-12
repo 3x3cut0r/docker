@@ -75,7 +75,12 @@ services:
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `KEEP_FILES` - Specifies if the server should keep uploaded files after restarting the container - **True /False, Default: False**
+- `PROMPT_STYLE` - Specifies which prompt style is being used - **Default: mistral**
 - `PGPT_HF_MODEL_FILE` - Specifies the llm model. If set, you need to mount your own llm to /home/worker/app/models - **Default: mistral-7b-instruct-v0.2.Q4_K_M.gguf**
+- `EMBEDDING_HF_MODEL_NAME` - Specifies the embedding model from Huggingface.co - **Default: BAAI/bge-small-en-v1.5**
+- `TOKENIZER` - Specifies the model from Huggingface.co which is used as tokenizer - **Default: mistralai/Mistral-7B-Instruct-v0.2**
+- `MAX_NEW_TOKENS` - Specifies the maximum count of new tokens that are generated - **Default: 512**
+- `CONTEXT_WINDOW` - Specifies the context window of the model - **Default: 3900**
 - `LOGO_BG_COLOR` - Specifies the logo background color - **Default: #C7BAFF**
 - `LOGO_HEIGHT` - Specifies the logo height - **Default: 25%**
 - `LOGO_SVG_BASE64` - Specifies the logo file (.svg) in base64 format. Provide your own file (.svg) in base64 format using an [image to base64 converter](https://base64.guru/converter/encode/image) - **Default: \<privategpt svg logo\>**
