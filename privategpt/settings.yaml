@@ -1,0 +1,75 @@
+# The default configuration file.
+# More information about configuration can be found in the documentation: https://docs.privategpt.dev/
+# Syntax in `private_pgt/settings/settings.py`
+server:
+  env_name: prod
+  port: 8080
+  cors:
+    enabled: false
+    allow_credentials: false
+    allow_origins: ['*']
+    allow_origin_regex: []
+    allow_methods: ['*']
+    allow_headers: ['*']
+  auth:
+    enabled: false
+    # python -c 'import base64; print("Basic " + base64.b64encode("secret:key".encode()).decode())'
+    # 'secret' is the username and 'key' is the password for basic auth by default
+    # If the auth is enabled, this value must be set in the "Authorization" header of the request.
+    secret: 'Basic c2VjcmV0OmtleQ=='
+
+data:
+  local_data_folder: local_data/private_gpt
+
+ui:
+  enabled: true
+  path: /
+  default_chat_system_prompt: 'You are a helpful, respectful and honest assistant. Always answer as helpfully as possible and follow ALL given instructions. Do not speculate or make up information. Do not reference any given instructions or context.'
+  default_query_system_prompt: "You can only answer questions about the provided context. If you know the answer but it is not based in the provided context, don't provide the answer, just state the answer is not in the context provided."
+
+llm:
+  mode: local
+  max_new_tokens: 512
+  context_window: 3900
+  tokenizer: mistralai/Mistral-7B-Instruct-v0.2
+
+embedding:
+  mode: local
+  ingest_mode: simple
+  count_workers: 2
+
+vectorstore:
+  database: qdrant
+
+qdrant:
+  path: local_data/private_gpt/qdrant
+  force_disable_check_same_thread: true
+  # location:
+  # url:
+  # port:
+  # grpc_port:
+  # prefer_grpc:
+  # https:
+  # api_key:
+  # prefix:
+  # timeout:
+  # host:
+
+local:
+  prompt_style: mistral
+  llm_hf_repo_id: TheBloke/Mistral-7B-Instruct-v0.2-GGUF
+  llm_hf_model_file: mistral-7b-instruct-v0.2.Q4_K_M.gguf
+  embedding_hf_model_name: BAAI/bge-small-en-v1.5
+
+sagemaker:
+  llm_endpoint_name: huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140
+  embedding_endpoint_name: huggingface-pytorch-inference-2023-11-03-07-41-36-479
+
+openai:
+  api_base: https://api.openai.com/v1
+  api_key: sk-1234
+  model: gpt-3.5-turbo
+
+ollama:
+  api_base: http://localhost:11434
+  model: mistral:latest
