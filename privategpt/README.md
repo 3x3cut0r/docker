@@ -65,9 +65,10 @@ services:
     image: 3x3cut0r/privategpt:latest
     container_name: privategpt
     environment:
-      KEEP_FILES="true"
+      KEEP_FILES: "true"
       LOCAL_LLM_HF_REPO_ID: "TheBloke/dolphin-2.6-mistral-7B-GGUF"
       LOCAL_LLM_HF_MODEL_FILE: "dolphin-2.6-mistral-7b.Q4_K_M.gguf"
+      LOCAL_EMBEDDING_HF_MODEL_NAME: "BAAI/bge-large-en-v1.5"
       EMBEDDING_INGEST_MODE: "parallel"
       EMBEDDING_COUNT_WORKERS: "4"
     volumes:

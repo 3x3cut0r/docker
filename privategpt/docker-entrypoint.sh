@@ -133,7 +133,10 @@ sed -i "75s|^.*$|  model: ${OLLAMA_MODEL:-"mistral:latest"}|" /home/worker/app/s
 # run app                  #
 ############################
 
-# if started without args, run streamlit_app.py
+# run privategpt setup to download models
+/home/worker/app/.venv/bin/python scripts/setup
+
+# if started without args, run privategpt
 if [ "$#" = "0" ]; then
     # print privategpt version
     echo "privategpt version: $(cat /home/worker/app/version.txt)"
