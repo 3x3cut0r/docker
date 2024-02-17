@@ -41,7 +41,7 @@ RUN cp settings.yaml settings_template.yaml && \
     FORCE_CMAKE=1 CMAKE_ARGS="-DLLAMA_BLAS=${LLAMA_BLAS} -DLLAMA_BLAS_VENDOR=${LLAMA_BLAS_VENDOR} -DLLAMA_AVX=${LLAMA_AVX} -DLLAMA_AVX2=${LLAMA_AVX2} -DLLAMA_F16C=${LLAMA_F16C} -DLLAMA_FMA=${LLAMA_FMA}" \
     poetry install --with local && \
     poetry install --with ui && \
-    poetry run python scripts/setup >> "$GITHUB_OUTPUT" && \
+    poetry run python scripts/setup && \
     rm -rf \
         .git* \
         .docker* \
