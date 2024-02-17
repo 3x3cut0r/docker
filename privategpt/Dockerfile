@@ -19,7 +19,8 @@ RUN apt update && apt install -y \
         git \
         jq && \
     apt clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    python -m pip install --upgrade pip
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
@@ -40,7 +41,7 @@ RUN cp settings.yaml settings_template.yaml && \
     FORCE_CMAKE=1 CMAKE_ARGS="-DLLAMA_BLAS=${LLAMA_BLAS} -DLLAMA_BLAS_VENDOR=${LLAMA_BLAS_VENDOR} -DLLAMA_AVX=${LLAMA_AVX} -DLLAMA_AVX2=${LLAMA_AVX2} -DLLAMA_F16C=${LLAMA_F16C} -DLLAMA_FMA=${LLAMA_FMA}" \
     poetry install --with local && \
     poetry install --with ui && \
-    poetry run python scripts/setup > /dev/null 2>&1 && \
+    poetry run python scripts/setup >> "$GITHUB_OUTPUT" && \
     rm -rf \
         .git* \
         .docker* \
