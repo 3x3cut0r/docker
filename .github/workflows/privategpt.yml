@@ -65,7 +65,9 @@ jobs:
         run: |
           docker build -t 3x3cut0r/privategpt:latest ./privategpt
           VERSION=$(docker run --rm 3x3cut0r/privategpt:latest sh -c "cat /VERSION | grep privategpt | cut -d= -f2")
-          echo -e "VERSION=<<EOF$VERSIONEOF" >> $GITHUB_OUTPUT
+          cat <<EOF >> $GITHUB_OUTPUT
+          VERSION=$VERSION
+          EOF
 
       # https://github.com/marketplace/actions/free-disk-space-ubuntu
       - name: Free Disk Space (Docker)
