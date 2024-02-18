@@ -134,7 +134,12 @@ sed -i "75s|^.*$|  model: ${OLLAMA_MODEL:-"mistral:latest"}|" /home/worker/app/s
 ############################
 
 # run privategpt setup to download models
-/home/worker/app/.venv/bin/python scripts/setup
+if [ "$QUIET" = "true" ]; then
+  /home/worker/app/.venv/bin/python scripts/setup > /dev/null 2>&1
+else
+  /home/worker/app/.venv/bin/python scripts/setup
+fi
+
 
 # if started without args, run privategpt
 if [ "$#" = "0" ]; then

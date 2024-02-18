@@ -122,7 +122,8 @@ ENV ENV_NAME="prod" \
     CORS_ALLOW_HEADERS="*" \
     AUTH_ENABLED="false" \
     AUTH_USERNAME="secret" \
-    AUTH_SECRET="Basic c2VjcmV0OmtleQ=="
+    AUTH_SECRET="Basic c2VjcmV0OmtleQ==" \
+    QUIET="false"
 
 VOLUME /home/worker/app/local_data
 VOLUME /home/worker/app/models
