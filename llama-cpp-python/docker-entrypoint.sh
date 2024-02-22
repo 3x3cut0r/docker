@@ -65,11 +65,11 @@ if [ "$#" = "0" ]; then
     param="${param} --port ${PORT:-8000}"
     param="${param} --interrupt_requests ${INTERRUPT_REQUESTS:-True}"
 
-    # print llama-cpp-python version
-    pip freeze | grep llama_cpp_python
-
     if [ "$QUIET" != "true" ]; then
-      echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
+        # print llama-cpp-python version
+        pip freeze | grep llama_cpp_python
+
+        echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
     fi
     echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server ${param}" > /runit-services/llama-cpp-python/run
 
