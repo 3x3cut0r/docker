@@ -22,17 +22,11 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # run app                  #
 ############################
 
-# download default model
-if [ "$DOWNLOAD_DEFAULT_MODEL" = "True" ] || [ "$DOWNLOAD_DEFAULT_MODEL" = "true" ] || [ "$DOWNLOAD_DEFAULT_MODEL" = "TRUE" ]; then
-    # download DEFAULT_MODEL only, if not exist
-    if [ ! -e "/model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}" ]; then
-        echo -e "\nINFO: start downloading default model:\nhttps://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/${DEFAULT_MODEL}\n"
-        mkdir -p /model/Llama-2-7b-Chat-GGUF
-        curl -L "https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/resolve/main/${DEFAULT_MODEL}" \
-            --output "/model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}"
-    else
-        echo -e "file exists: /model/Llama-2-7b-Chat-GGUF/${DEFAULT_MODEL}: skip"
-    fi
+# download model
+if [ "$MODEL_REPO" != "local" ] && { [ "$MODEL_DOWNLOAD" = "True" ] || [ "$MODEL_DOWNLOAD" = "true" ] || [ "$MODEL_DOWNLOAD" = "TRUE" ]; }; then
+    echo -e "\nINFO: downloading model from repository ${MODEL_REPO}:\n"
+    mkdir -p "${MODEL_PATH}"
+    /venv/bin/huggingface-cli download --repo-type model --local-dir="${MODEL_PATH}" --local-dir-use-symlinks=False --resume-download --token="${HF_TOKEN:-''}" "${MODEL_REPO}" "${MODEL}"
 fi
 
 # if started without args, run app.py
@@ -40,7 +34,7 @@ if [ "$#" = "0" ]; then
 
     # set parameters
     param=""
-    param="${param} --model ${MODEL:-'/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf'}"
+    param="${param} --model '${MODEL_PATH:-"/model"}/${MODEL:-"llama-2-7b-chat.Q4_K_M.gguf"}'"
     param="${param} --model_alias ${MODEL_ALIAS:-'llama-2-7b-chat'}"
     param="${param} --seed ${SEED:-4294967295}"
     param="${param} --n_ctx ${N_CTX:-2048}"

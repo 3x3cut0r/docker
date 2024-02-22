@@ -27,7 +27,9 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         uvicorn \
         sse-starlette \
         pydantic-settings \
-        starlette-context && \
+        starlette-context \
+        huggingface-hub \
+        huggingface_hub[cli] && \
     LLAMA_OPENBLAS=ON \
     CMAKE_ARGS=$CMAKE_ARGS \
     /venv/bin/pip install --no-cache-dir llama-cpp-python && \
@@ -51,9 +53,10 @@ RUN touch /VERSION && \
 
 # Setup environment
 ENV TZ="UTC" \
-    MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
-    DEFAULT_MODEL="llama-2-7b-chat.Q2_K.gguf" \
-    DOWNLOAD_DEFAULT_MODEL=False \
+    MODEL_DOWNLOAD="True" \
+    MODEL_REPO="TheBloke/Llama-2-7B-Chat-GGUF" \
+    MODEL="llama-2-7b-chat.Q4_K_M.gguf" \
+    MODEL_PATH="/model" \
     MODEL_ALIAS="llama-2-7b-chat" \
     SEED=4294967295 \
     N_CTX=1024 \
