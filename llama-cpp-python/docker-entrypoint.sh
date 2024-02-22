@@ -24,7 +24,7 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # download model
 if [ "$MODEL_REPO" != "local" ] && { [ "$MODEL_DOWNLOAD" = "True" ] || [ "$MODEL_DOWNLOAD" = "true" ] || [ "$MODEL_DOWNLOAD" = "TRUE" ]; }; then
-    if [ "$QUIET" != "True" ]; then
+    if [ "$QUIET" != "true" ]; then
         echo -e "\nINFO: downloading model from repository ${MODEL_REPO:-'TheBloke/Llama-2-7B-Chat-GGUF'}\n"
     fi
     mkdir -p "${MODEL_PATH}"
@@ -68,7 +68,7 @@ if [ "$#" = "0" ]; then
     # print llama-cpp-python version
     pip freeze | grep llama_cpp_python
 
-    if [ "$QUIET" != "True" ]; then
+    if [ "$QUIET" != "true" ]; then
       echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
     fi
     echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server ${param}" > /runit-services/llama-cpp-python/run
@@ -82,7 +82,7 @@ else
 
     # if first arg looks like a flag, assume we want to run python3 -B -m llama_cpp.server
     elif [ "$( echo "$1" | cut -c1 )" = "-" ]; then
-        if [ "$QUIET" != "True" ]; then
+        if [ "$QUIET" != "true" ]; then
             echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server --host ${HOST:-'0.0.0.0'} $@\n\n"
         fi
         echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server $@" > /runit-services/llama-cpp-python/run
@@ -90,7 +90,7 @@ else
     # if the first arg is "python" or "python3" ...
     elif [ "$1" = "python" ] || [ "$1" = "python3" ]; then
         shift # remove first argument (python or python3)
-        if [ "$QUIET" != "True" ]; then
+        if [ "$QUIET" != "true" ]; then
             echo -e "\nINFO: /venv/bin/python3 $@\n\n"
         fi
         echo -e "#!/bin/sh\n/venv/bin/python3 ${@}" > /runit-services/llama-cpp-python/run
