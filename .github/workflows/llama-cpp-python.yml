@@ -49,7 +49,7 @@ jobs:
           docker build -t 3x3cut0r/llama-cpp-python:latest ./llama-cpp-python
           CONTAINER_ID=$(docker create 3x3cut0r/llama-cpp-python:latest)
           docker cp "${CONTAINER_ID}:/VERSION" VERSION
-          VERSION=$(cat /VERSION | grep llama-cpp-python | cut -d= -f2 | head -n 1)
+          VERSION=$(cat VERSION | grep llama-cpp-python | cut -d= -f2 | head -n 1)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       # https://github.com/docker/build-push-action
