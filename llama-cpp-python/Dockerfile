@@ -83,7 +83,8 @@ ENV TZ="UTC" \
     VERBOSE=True \
     HOST="0.0.0.0" \
     PORT=8000 \
-    INTERRUPT_REQUESTS=True
+    INTERRUPT_REQUESTS=True \
+    QUIET="False"
 
 # Setup entrypoint
 COPY docker-entrypoint.sh /

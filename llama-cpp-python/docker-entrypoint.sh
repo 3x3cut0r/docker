@@ -24,7 +24,9 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # download model
 if [ "$MODEL_REPO" != "local" ] && { [ "$MODEL_DOWNLOAD" = "True" ] || [ "$MODEL_DOWNLOAD" = "true" ] || [ "$MODEL_DOWNLOAD" = "TRUE" ]; }; then
-    echo -e "INFO: downloading model from repository ${MODEL_REPO:-'TheBloke/Llama-2-7B-Chat-GGUF'}"
+    if [ "$QUIET" != "True" ]; then
+        echo -e "\nINFO: downloading model from repository ${MODEL_REPO:-'TheBloke/Llama-2-7B-Chat-GGUF'}\n"
+    fi
     mkdir -p "${MODEL_PATH}"
     /venv/bin/huggingface-cli download --repo-type model --local-dir="${MODEL_PATH}" --local-dir-use-symlinks=False --resume-download --token="${HF_TOKEN:-''}" "${MODEL_REPO}" "${MODEL}"
 fi
@@ -66,7 +68,9 @@ if [ "$#" = "0" ]; then
     # print llama-cpp-python version
     pip freeze | grep llama_cpp_python
 
-    echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
+    if [ "$QUIET" != "True" ]; then
+      echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server ${param}\n"
+    fi
     echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server ${param}" > /runit-services/llama-cpp-python/run
 
 # if started with args, run args instead
@@ -78,13 +82,17 @@ else
 
     # if first arg looks like a flag, assume we want to run python3 -B -m llama_cpp.server
     elif [ "$( echo "$1" | cut -c1 )" = "-" ]; then
-        echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server --host ${HOST:-'0.0.0.0'} $@\n\n"
+        if [ "$QUIET" != "True" ]; then
+            echo -e "\nINFO: /venv/bin/python3 -B -m llama_cpp.server --host ${HOST:-'0.0.0.0'} $@\n\n"
+        fi
         echo -e "#!/bin/sh\n/venv/bin/python3 -B -m llama_cpp.server $@" > /runit-services/llama-cpp-python/run
 
     # if the first arg is "python" or "python3" ...
     elif [ "$1" = "python" ] || [ "$1" = "python3" ]; then
         shift # remove first argument (python or python3)
-        echo -e "\nINFO: /venv/bin/python3 $@\n\n"
+        if [ "$QUIET" != "True" ]; then
+            echo -e "\nINFO: /venv/bin/python3 $@\n\n"
+        fi
         echo -e "#!/bin/sh\n/venv/bin/python3 ${@}" > /runit-services/llama-cpp-python/run
 
     # if first arg doesn't looks like a flag or python, we just run the command
