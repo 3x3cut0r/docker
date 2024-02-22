@@ -64,7 +64,9 @@ jobs:
         id: tag
         run: |
           docker build -t 3x3cut0r/privategpt:latest ./privategpt
-          VERSION=$(docker run --rm -e QUIET="true" 3x3cut0r/privategpt:latest sh -c "cat /VERSION | grep privategpt | cut -d= -f2")
+          CONTAINER_ID=$(docker create 3x3cut0r/privategpt:latest)
+          docker cp "${CONTAINER_ID}:/VERSION" VERSION
+          VERSION=$(cat VERSION | grep privategpt | cut -d= -f2 | head -n 1)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       # https://github.com/marketplace/actions/free-disk-space-ubuntu
