@@ -24,7 +24,7 @@ ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # download model
 if [ "$MODEL_REPO" != "local" ] && { [ "$MODEL_DOWNLOAD" = "True" ] || [ "$MODEL_DOWNLOAD" = "true" ] || [ "$MODEL_DOWNLOAD" = "TRUE" ]; }; then
-    echo -e "\nINFO: downloading model from repository ${MODEL_REPO}:\n"
+    echo "\nINFO: downloading model from repository ${MODEL_REPO:-'TheBloke/Llama-2-7B-Chat-GGUF'}:\n"
     mkdir -p "${MODEL_PATH}"
     /venv/bin/huggingface-cli download --repo-type model --local-dir="${MODEL_PATH}" --local-dir-use-symlinks=False --resume-download --token="${HF_TOKEN:-''}" "${MODEL_REPO}" "${MODEL}"
 fi
