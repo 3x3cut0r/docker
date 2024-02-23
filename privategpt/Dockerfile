@@ -13,6 +13,7 @@ RUN apt update && apt install -y \
         libopenblas-dev \
         ninja-build \
         build-essential \
+        graphicsmagick \
         pkg-config \
         wget \
         curl \
