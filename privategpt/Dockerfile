@@ -68,7 +68,7 @@ WORKDIR /home/worker/app
 COPY --chown=worker --from=dependencies /home/worker/app/ ./
 RUN chown -R worker:nogroup /home/worker/app && \
     mkdir -p local_data models/cache .config/matplotlib && \
-    pip install doc2text docx2txt EbookLib html2text && \
+    pip install doc2text docx2txt EbookLib html2text python-pptx Pillow && \
     FORCE_CMAKE=1 CMAKE_ARGS="${CMAKE_ARGS}" \
     /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python
 
