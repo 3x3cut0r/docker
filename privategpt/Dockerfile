@@ -52,13 +52,8 @@ FROM base as app
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for privateGPT - a production-ready AI project that allows you to ask questions about your documents using the power of Large Language Models (LLMs)."
 
-ARG LLAMA_BLAS=ON \
-    LLAMA_BLAS_VENDOR="OpenBLAS" \
-    LLAMA_AVX=OFF \
-    LLAMA_AVX2=OFF \
-    LLAMA_F16C=OFF \
-    LLAMA_FMA=OFF \
-    LLAMA_METAL=OFF
+ARG CMAKE_ARGS='-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR="OpenBLAS" -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF' \
+    LLAMA_OPENBLAS='ON'
     
 ENV MPLCONFIGDIR="/home/worker/app/models/.config/matplotlib" \
     HF_HOME="/home/worker/app/models/cache" \
@@ -75,7 +70,7 @@ COPY --chown=worker --from=dependencies /home/worker/app/ ./
 RUN chown -R worker:nogroup /home/worker/app && \
     mkdir -p local_data models/cache .config/matplotlib && \
     pip install doc2text docx2txt EbookLib html2text && \
-    LLAMA_OPENBLAS=${LLAMA_BLAS} FORCE_CMAKE=1 CMAKE_ARGS="-DLLAMA_BLAS=${LLAMA_BLAS} -DLLAMA_BLAS_VENDOR=${LLAMA_BLAS_VENDOR} -DLLAMA_AVX=${LLAMA_AVX} -DLLAMA_AVX2=${LLAMA_AVX2} -DLLAMA_F16C=${LLAMA_F16C} -DLLAMA_FMA=${LLAMA_FMA}" \
+    FORCE_CMAKE=1 LLAMA_OPENBLAS="${LLAMA_OPENBLAS}" CMAKE_ARGS="${CMAKE_ARGS}" \
     /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python
 
 # Store versions in /VERSION
