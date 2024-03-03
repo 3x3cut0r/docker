@@ -81,7 +81,7 @@ docker run -d \
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
-    -e MODEL_DOWNLOAD="False \
+    -e MODEL_DOWNLOAD="False" \
     -v /path/to/your/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf:/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest \
