@@ -81,7 +81,7 @@ docker run -d \
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
-    -e MODEL_DOWNLOAD="False \
+    -e MODEL_DOWNLOAD="False" \
     -v /path/to/your/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf:/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest \
@@ -101,7 +101,7 @@ docker run --rm \
 
 ### 1.2 docker-compose.yml <a name="docker-compose"></a>
 
-```shell
+```yaml
 version: '3.9'
 
 services:
@@ -111,11 +111,11 @@ services:
     cap_add:
       - SYS_RESOURCE
     environment:
-        MODEL_DOWNLOAD="True" \
-        MODEL_REPO="TheBloke/Mistral-7B-Instruct-v0.2-GGUF" \
-        MODEL="mistral-7b-instruct-v0.2.Q4_K_M.gguf" \
-        MODEL_ALIAS="mistral-7b-instruct" \
-        CHAT_FORMAT="mistral" \
+        MODEL_DOWNLOAD: "True"
+        MODEL_REPO: "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
+        MODEL: "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+        MODEL_ALIAS: "mistral-7b-instruct"
+        CHAT_FORMAT: "mistral"
     ports:
       - 8000:8000/tcp
 ```
