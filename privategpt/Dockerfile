@@ -30,7 +30,7 @@ ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 FROM base as dependencies
 
 WORKDIR /home/worker/app
-RUN git clone https://github.com/imartinez/privateGPT.git .
+RUN git clone https://github.com/zylon-ai/private-gpt .
 COPY settings.yaml .
 RUN cp settings.yaml settings_template.yaml && \
     poetry install --with local && \
