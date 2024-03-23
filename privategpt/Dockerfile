@@ -32,7 +32,7 @@ FROM base as dependencies
 WORKDIR /home/worker/app
 RUN git clone https://github.com/zylon-ai/private-gpt .
 COPY settings_template.yaml .
-RUN poetry install --extras "ui embeddings-huggingface llms-llama-cpp vector-stores-qdrant" && \
+RUN poetry install --extras "ui llms-llama-cpp llms-openai llms-openai-like llms-ollama llms-sagemaker llms-azopenai embeddings-ollama embeddings-huggingface embeddings-openai embeddings-sagemaker embeddings-azopenai vector-stores-qdrant vector-stores-chroma vector-stores-postgres storage-nodestore-postgres" && \
     poetry run python scripts/setup && \
     rm -rf \
         .git* \
