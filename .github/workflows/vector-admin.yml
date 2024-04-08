@@ -44,7 +44,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./vector-admin/docker
+          context: ./vector-admin
           file: ./vector-admin/docker/Dockerfile
           platforms: linux/amd64
           push: true
