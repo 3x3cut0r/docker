@@ -23,7 +23,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           repository: 'Mintplex-Labs/vector-admin'
-          path: 'vector-admin'
+          path: './vector-admin'
 
       # https://github.com/docker/setup-qemu-action
       - name: Set up QEMU
@@ -44,8 +44,8 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
-          context: ./docker
-          file: ./docker/Dockerfile
+          context: ./vector-admin/docker
+          file: ./vector-admin/docker/Dockerfile
           platforms: linux/amd64
           push: true
           tags: |
