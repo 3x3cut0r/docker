@@ -21,7 +21,7 @@ on:
 
 jobs:
   multi:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       # https://github.com/actions/checkout
@@ -64,7 +64,9 @@ jobs:
         id: tag
         run: |
           docker build -t 3x3cut0r/privategpt:latest ./privategpt
-          VERSION=$(docker run --rm 3x3cut0r/privategpt:latest sh -c "cat /VERSION | grep privategpt | cut -d= -f2")
+          CONTAINER_ID=$(docker create 3x3cut0r/privategpt:latest)
+          docker cp "${CONTAINER_ID}:/VERSION" VERSION
+          VERSION=$(cat VERSION | grep privategpt | cut -d= -f2 | head -n 1)
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       # https://github.com/marketplace/actions/free-disk-space-ubuntu
@@ -90,7 +92,7 @@ jobs:
         with:
           context: ./privategpt
           file: ./privategpt/Dockerfile
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: |
             3x3cut0r/privategpt:latest

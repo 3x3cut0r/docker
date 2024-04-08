@@ -1,4 +1,5 @@
 ARG IMAGE=python:3.12-alpine
+ARG CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF"
 
 # App-Stage
 FROM ${IMAGE}
@@ -14,7 +15,7 @@ EXPOSE 8000/tcp
 
 # Setup llama-cpp-python
 RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
-    apk add --no-cache curl openblas-dev runit tzdata && \
+    apk add --no-cache curl gfortran openblas-dev runit tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip \
@@ -26,9 +27,11 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         uvicorn \
         sse-starlette \
         pydantic-settings \
-        starlette-context && \
-    LLAMA_OPENBLAS=1 && \
-    CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF" && \
+        starlette-context \
+        huggingface-hub \
+        huggingface_hub[cli] && \
+    LLAMA_OPENBLAS=ON \
+    CMAKE_ARGS=$CMAKE_ARGS \
     /venv/bin/pip install --no-cache-dir llama-cpp-python && \
     apk del --no-network .build-deps && \
     mkdir -p \
@@ -50,9 +53,10 @@ RUN touch /VERSION && \
 
 # Setup environment
 ENV TZ="UTC" \
-    MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
-    DEFAULT_MODEL="llama-2-7b-chat.Q2_K.gguf" \
-    DOWNLOAD_DEFAULT_MODEL=False \
+    MODEL_DOWNLOAD="True" \
+    MODEL_REPO="TheBloke/Llama-2-7B-Chat-GGUF" \
+    MODEL="llama-2-7b-chat.Q4_K_M.gguf" \
+    MODEL_PATH="/model" \
     MODEL_ALIAS="llama-2-7b-chat" \
     SEED=4294967295 \
     N_CTX=1024 \
@@ -62,7 +66,6 @@ ENV TZ="UTC" \
     ROPE_FREQ_BASE=0.0 \
     ROPE_FREQ_SCALE=0.0 \
     MUL_MAT_Q=True \
-    F16_KV=True \
     LOGITS_ALL=True \
     VOCAB_ONLY=False \
     USE_MMAP=True \
@@ -80,7 +83,8 @@ ENV TZ="UTC" \
     VERBOSE=True \
     HOST="0.0.0.0" \
     PORT=8000 \
-    INTERRUPT_REQUESTS=True
+    INTERRUPT_REQUESTS=True \
+    QUIET="False"
 
 # Setup entrypoint
 COPY docker-entrypoint.sh /

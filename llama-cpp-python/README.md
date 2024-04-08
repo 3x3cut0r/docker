@@ -32,37 +32,43 @@ docker run -d --cap-add SYS_RESOURCE ...
 
 # for docker compose:
 version: '3.9'
-services:
   llama-cpp-python:
+    image: 3x3cut0r/llama-cpp-python:latest
     container_name: llama-cpp-python
     cap_add:
       - SYS_RESOURCE
-    ...
 ```
 
 ### 1.1 docker run <a name="docker-run"></a>
 
-**Example 1 - run without arguments and use own model:**  
+**Example 1 - run model from huggingface:**  
 **This is the recommended way to use this container !!!**
 
 ```shell
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
-    -e MODEL="/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf" \
-    -v /path/to/your/llama/model:/model \
+    -e MODEL_DOWNLOAD="True" \
+    -e MODEL_REPO="TheBloke/Mistral-7B-Instruct-v0.2-GGUF" \
+    -e MODEL="mistral-7b-instruct-v0.2.Q4_K_M.gguf" \
+    -e MODEL_ALIAS="mistral-7b-instruct" \
+    -e CHAT_FORMAT="mistral" \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest
 ```
 
-**Example 2 - run without arguments and use default model:**
-**this method downloads a default model from huggingface.co**
+**Example 2 - run own model from local file:**
 
 ```shell
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
-    -e DOWNLOAD_DEFAULT_MODEL="True" \
+    -e MODEL_DOWNLOAD="False" \
+    -e MODEL_REPO="local" \
+    -e MODEL="mistral-7b-instruct-v0.2.Q4_K_M.gguf" \
+    -e MODEL_ALIAS="mistral-7b-instruct" \
+    -e CHAT_FORMAT="mistral" \
+    -v /path/to/your/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf:/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest
 ```
@@ -75,10 +81,11 @@ docker run -d \
 docker run -d \
     --name llama-cpp-python \
     --cap-add SYS_RESOURCE \
-    -v /path/to/your/llama/model:/model \
+    -e MODEL_DOWNLOAD="False" \
+    -v /path/to/your/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf:/model/mistral-7b-instruct-v0.2.Q4_K_M.gguf \
     -p 8000:8000/tcp \
     3x3cut0r/llama-cpp-python:latest \
-    --model model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf \
+    --model /model/mistral-7b-instruct-v0.2.Q4_K_M.gguf \
     --n_ctx 1024 \
     ...
 ```
@@ -94,7 +101,7 @@ docker run --rm \
 
 ### 1.2 docker-compose.yml <a name="docker-compose"></a>
 
-```shell
+```yaml
 version: '3.9'
 
 services:
@@ -104,9 +111,11 @@ services:
     cap_add:
       - SYS_RESOURCE
     environment:
-        MODEL: "/model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf"
-    volumes:
-      - /path/to/your/llama/model:/model
+        MODEL_DOWNLOAD: "True"
+        MODEL_REPO: "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
+        MODEL: "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
+        MODEL_ALIAS: "mistral-7b-instruct"
+        CHAT_FORMAT: "mistral"
     ports:
       - 8000:8000/tcp
 ```
@@ -114,10 +123,10 @@ services:
 ### 2 Environment Variables <a name="environment-variables"></a>
 
 - `TZ` - Specifies the server timezone - **default: UTC**
-- `MODEL` - **MANDATORY**: The path to the model to use for generating completions - **default: /model/Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf**
-- `DEFAULT_MODEL` - the default model, which will be downloaded, if DOWNLOAD_DEFAULT_MODEL is set to true. you can choose a model from [here](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main)- **default: llama-2-7b-chat.Q2_K.gguf**
-- `DOWNLOAD_DEFAULT_MODEL` - if True, downloads [Llama-2-7b-Chat-GGUF/llama-2-7b-chat.Q2_K.gguf](https://huggingface.co/TheBloke/Llama-2-7b-Chat-GGUF/tree/main) from Huggingface - **default: False**
-- `MODEL_ALIAS` - The alias of the model to use for generating completions.
+- `MODEL_DOWNLOAD` - If True, downloads MODEL file from Huggingface MODEL_REPO- **default: true**
+- `MODEL_REPO` - The huggingface repo name. Set to `local` if MODEL was mounted locally - **default: TheBloke/Llama-2-7B-Chat-GGUF**
+- `MODEL` - **MANDATORY**: The model filename - **default: llama-2-7b-chat.Q4_K_M.gguf**
+- `MODEL_ALIAS` - The alias of the model to use for generating completions - **default: llama-2-7b-chat**
 - `SEED` - Random seed. -1 for random - **default: 4294967295**
 - `N_CTX` - The context size - **default: 2048**
 - `N_BATCH` - The batch size to use per eval - **default: 512**
@@ -127,13 +136,12 @@ services:
 - `ROPE_FREQ_BASE` - RoPE base frequency - **default: 0.0**
 - `ROPE_FREQ_SCALE` - RoPE frequency scaling factor - **default: 0.0**
 - `MUL_MAT_Q` - if true, use experimental mul_mat_q kernels - **default: True**
-- `F16_KV` - Whether to use f16 key/value - **default: True**
 - `LOGITS_ALL` - Whether to return logits - **default: True**
 - `VOCAB_ONLY` - Whether to only return the vocabulary - **default: False**
 - `USE_MMAP` - Use mmap - **default: True**
 - `USE_MLOCK` - Use mlock - **default: True**
 - `EMBEDDING` - Whether to use embeddings - **default: True**
-- `N_THREADS` - The number of threads to use - **default: 6**
+- `N_THREADS` - The number of threads to use - **default: 4**
 - `LAST_N_TOKENS_SIZE` - Last n tokens to keep for repeat penalty calculation - **default: 64**
 - `LORA_BASE` - Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model.
 - `LORA_PATH` - Path to a LoRA file to apply to the model.
@@ -146,6 +154,7 @@ services:
 - `HOST` - Listen address - **default: 0.0.0.0**
 - `PORT` - Listen port - **default: 8000**
 - `INTERRUPT_REQUESTS` - Whether to interrupt requests when a new request is received - **default: True**
+- `HF_TOKEN` - Huggingface Token for private repos - **default: None**
 
 ### 3 Volumes <a name="volumes"></a>
 
