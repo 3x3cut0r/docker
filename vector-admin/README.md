@@ -7,9 +7,6 @@
 ![Docker Pulls](https://img.shields.io/docker/pulls/3x3cut0r/vector-admin)
 ![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/3x3cut0r/docker/vector-admin.yml?branch=main)
 
-`GitHub` - 3x3cut0r/vector-admin - https://github.com/3x3cut0r/docker/tree/main/vector-admin  
-`DockerHub` - 3x3cut0r/vector-admin - https://hub.docker.com/r/3x3cut0r/vector-admin
-
 ![vector-admin](https://github.com/3x3cut0r/docker/assets/1408580/4a71e799-82f8-4802-8a1f-d9361adb1bfd)
 
 ## Documentation
