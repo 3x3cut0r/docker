@@ -146,6 +146,9 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 - `RAG_SIMILARITY_TOP_K` - This value controls the number of documents returned by the RAG pipeline - **Default: 2**
 - `RAG_SIMILARITY_VALUE` - If set, any documents retrieved from the RAG must meet a certain match score. Acceptable values are between 0 and 1. - **Default: 0.45**
+- `RAG_RERANK_ENABLED` - This value controls whether a reranker should be included in the RAG pipeline. - **Default: false**
+- `RAG_RERANK_MODEL` - Rerank model to use. Limited to SentenceTransformer cross-encoder models. - **Default: cross-encoder/ms-marco-MiniLM-L-2-v2**
+- `RAG_RERANK_TOP_N` - This value controls the number of documents returned by the RAG pipeline. - **Default: 1**
 
 ###### llamacpp
 

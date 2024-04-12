@@ -39,6 +39,10 @@ llm:
 rag:
   similarity_top_k: 2
   similarity_value: 0.45
+  rerank:
+    enabled: false
+    model: cross-encoder/ms-marco-MiniLM-L-2-v2
+    top_n: 1
 
 llamacpp:
   prompt_style: mistral

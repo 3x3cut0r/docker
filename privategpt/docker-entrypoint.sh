@@ -90,131 +90,152 @@ sed -i "36s|^.*$|  tokenizer: \"${LLM_TOKENIZER:-"mistralai/Mistral-7B-Instruct-
 # LLM_TEMPERATURE
 sed -i "37s|^.*$|  temperature: ${LLM_TEMPERATURE:-"0.1"}|" /home/worker/app/settings.yaml
 
+# RAG_SIMILARITY_TOP_K
+sed -i "40s|^.*$|  similarity_top_k: ${RAG_SIMILARITY_TOP_K:-"2"}|" /home/worker/app/settings.yaml
+
+# RAG_SIMILARITY_VALUE
+sed -i "41s|^.*$|  similarity_value: ${RAG_SIMILARITY_VALUE:-"0.45"}|" /home/worker/app/settings.yaml
+
+# RAG_RERANK_ENABLED
+sed -i "43s|^.*$|    enabled: ${RAG_RERANK_ENABLED:-"false"}|" /home/worker/app/settings.yaml
+
+# RAG_RERANK_MODEL
+sed -i "44s|^.*$|    model: ${RAG_RERANK_MODEL:-"cross-encoder/ms-marco-MiniLM-L-2-v2"}|" /home/worker/app/settings.yaml
+
+# RAG_RERANK_TOP_N
+sed -i "45s|^.*$|    top_n: ${RAG_RERANK_TOP_N:-"1"}|" /home/worker/app/settings.yaml
+
 # LLAMACPP_PROMPT_STYLE
-sed -i "44s|^.*$|  prompt_style: ${LLAMACPP_PROMPT_STYLE:-"mistral"}|" /home/worker/app/settings.yaml
+sed -i "48s|^.*$|  prompt_style: ${LLAMACPP_PROMPT_STYLE:-"mistral"}|" /home/worker/app/settings.yaml
 
 # LLAMACPP_LLM_HF_REPO_ID
-sed -i "45s|^.*$|  llm_hf_repo_id: \"${LLAMACPP_LLM_HF_REPO_ID:-"TheBloke/Mistral-7B-Instruct-v0.2-GGUF"}\"|" /home/worker/app/settings.yaml
+sed -i "49s|^.*$|  llm_hf_repo_id: \"${LLAMACPP_LLM_HF_REPO_ID:-"TheBloke/Mistral-7B-Instruct-v0.2-GGUF"}\"|" /home/worker/app/settings.yaml
 
 # LLAMACPP_LLM_HF_MODEL_FILE
-sed -i "46s|^.*$|  llm_hf_model_file: \"${LLAMACPP_LLM_HF_MODEL_FILE:-"mistral-7b-instruct-v0.2.Q4_K_M.gguf"}\"|" /home/worker/app/settings.yaml
+sed -i "50s|^.*$|  llm_hf_model_file: \"${LLAMACPP_LLM_HF_MODEL_FILE:-"mistral-7b-instruct-v0.2.Q4_K_M.gguf"}\"|" /home/worker/app/settings.yaml
 
 # LLAMACPP_TFS_Z
-sed -i "47s|^.*$|  tfs_z: ${LLAMACPP_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
+sed -i "51s|^.*$|  tfs_z: ${LLAMACPP_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
 
 # LLAMACPP_TOP_K
-sed -i "48s|^.*$|  top_k: ${LLAMACPP_TOP_K:-"40"}|" /home/worker/app/settings.yaml
+sed -i "52s|^.*$|  top_k: ${LLAMACPP_TOP_K:-"40"}|" /home/worker/app/settings.yaml
 
 # LLAMACPP_TOP_P
-sed -i "49s|^.*$|  top_p: ${LLAMACPP_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
+sed -i "53s|^.*$|  top_p: ${LLAMACPP_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
 
 # LLAMACPP_REPEAT_PENALTY
-sed -i "50s|^.*$|  repeat_penalty: ${LLAMACPP_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
+sed -i "54s|^.*$|  repeat_penalty: ${LLAMACPP_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
 
 # EMBEDDING_MODE
-sed -i "53s|^.*$|  mode: ${EMBEDDING_MODE:-"huggingface"}|" /home/worker/app/settings.yaml
+sed -i "57s|^.*$|  mode: ${EMBEDDING_MODE:-"huggingface"}|" /home/worker/app/settings.yaml
 
 # EMBEDDING_INGEST_MODE
-sed -i "54s|^.*$|  ingest_mode: ${EMBEDDING_INGEST_MODE:-"simple"}|" /home/worker/app/settings.yaml
+sed -i "58s|^.*$|  ingest_mode: ${EMBEDDING_INGEST_MODE:-"simple"}|" /home/worker/app/settings.yaml
 
 # EMBEDDING_COUNT_WORKERS
-sed -i "55s|^.*$|  count_workers: ${EMBEDDING_COUNT_WORKERS:-"2"}|" /home/worker/app/settings.yaml
+sed -i "59s|^.*$|  count_workers: ${EMBEDDING_COUNT_WORKERS:-"2"}|" /home/worker/app/settings.yaml
 
 # EMBEDDING_EMBED_DIM
-sed -i "56s|^.*$|  embed_dim: ${EMBEDDING_EMBED_DIM:-"384"}|" /home/worker/app/settings.yaml
+sed -i "60s|^.*$|  embed_dim: ${EMBEDDING_EMBED_DIM:-"384"}|" /home/worker/app/settings.yaml
 
 # HUGGINGFACE_EMBEDDING_HF_MODEL_NAME
-sed -i "59s|^.*$|  embedding_hf_model_name: \"${HUGGINGFACE_EMBEDDING_HF_MODEL_NAME:-"BAAI/bge-small-en-v1.5"}\"|" /home/worker/app/settings.yaml
+sed -i "63s|^.*$|  embedding_hf_model_name: \"${HUGGINGFACE_EMBEDDING_HF_MODEL_NAME:-"BAAI/bge-small-en-v1.5"}\"|" /home/worker/app/settings.yaml
 
 # VECTORSTORE_DATABASE
-sed -i "62s|^.*$|  database: ${VECTORSTORE_DATABASE:-"qdrant"}|" /home/worker/app/settings.yaml
+sed -i "66s|^.*$|  database: ${VECTORSTORE_DATABASE:-"qdrant"}|" /home/worker/app/settings.yaml
+
+# NODESTORE_DATABASE
+sed -i "69s|^.*$|  database: ${NODESTORE_DATABASE:-"simple"}|" /home/worker/app/settings.yaml
 
 # QDRANT_PATH
-sed -i "68s|^.*$|  path: ${QDRANT_PATH:-"local_data/private_gpt/qdrant"}|" /home/worker/app/settings.yaml
+sed -i "72s|^.*$|  path: ${QDRANT_PATH:-"local_data/private_gpt/qdrant"}|" /home/worker/app/settings.yaml
+
+# QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD
+sed -i "73s|^.*$|  force_disable_check_same_thread: ${QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD:-"true"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_HOST
-sed -i "82s|^.*$|  host: ${POSTGRES_HOST:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "86s|^.*$|  host: ${POSTGRES_HOST:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_PORT
-sed -i "83s|^.*$|  port: ${POSTGRES_PORT:-"5432"}|" /home/worker/app/settings.yaml
+sed -i "87s|^.*$|  port: ${POSTGRES_PORT:-"5432"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_DATABASE
-sed -i "84s|^.*$|  database: ${POSTGRES_DATABASE:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "88s|^.*$|  database: ${POSTGRES_DATABASE:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_USER
-sed -i "85s|^.*$|  user: ${POSTGRES_USER:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "89s|^.*$|  user: ${POSTGRES_USER:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_PASSWORD
-sed -i "86s|^.*$|  password: \"${POSTGRES_PASSWORD:-"admin"}\"|" /home/worker/app/settings.yaml
+sed -i "90s|^.*$|  password: \"${POSTGRES_PASSWORD:-"admin"}\"|" /home/worker/app/settings.yaml
 
 # POSTGRES_SCHEMA_NAME
-sed -i "87s|^.*$|  schema_name: ${POSTGRES_SCHEMA_NAME:-"private_gpt"}|" /home/worker/app/settings.yaml
+sed -i "91s|^.*$|  schema_name: ${POSTGRES_SCHEMA_NAME:-"private_gpt"}|" /home/worker/app/settings.yaml
 
 # SAGEMAKER_LLM_ENDPOINT_NAME
-sed -i "90s|^.*$|  llm_endpoint_name: \"${SAGEMAKER_LLM_ENDPOINT_NAME:-"huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140"}\"|" /home/worker/app/settings.yaml
+sed -i "94s|^.*$|  llm_endpoint_name: \"${SAGEMAKER_LLM_ENDPOINT_NAME:-"huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140"}\"|" /home/worker/app/settings.yaml
 
 # SAGEMAKER_EMBEDDING_ENDPOINT_NAME
-sed -i "91s|^.*$|  embedding_endpoint_name: \"${SAGEMAKER_EMBEDDING_ENDPOINT_NAME:-"huggingface-pytorch-inference-2023-11-03-07-41-36-479"}\"|" /home/worker/app/settings.yaml
+sed -i "95s|^.*$|  embedding_endpoint_name: \"${SAGEMAKER_EMBEDDING_ENDPOINT_NAME:-"huggingface-pytorch-inference-2023-11-03-07-41-36-479"}\"|" /home/worker/app/settings.yaml
 
 # OPENAI_API_BASE
-sed -i "94s|^.*$|  api_base: \"${OPENAI_API_BASE:-"https://api.openai.com/v1"}\"|" /home/worker/app/settings.yaml
+sed -i "98s|^.*$|  api_base: \"${OPENAI_API_BASE:-"https://api.openai.com/v1"}\"|" /home/worker/app/settings.yaml
 
 # OPENAI_API_KEY
-sed -i "95s|^.*$|  api_key: ${OPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
+sed -i "99s|^.*$|  api_key: ${OPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
 
 # OPENAI_MODEL
-sed -i "96s|^.*$|  model: \"${OPENAI_MODEL:-"gpt-3.5-turbo"}\"|" /home/worker/app/settings.yaml
+sed -i "100s|^.*$|  model: \"${OPENAI_MODEL:-"gpt-3.5-turbo"}\"|" /home/worker/app/settings.yaml
 
 # OLLAMA_API_BASE
-sed -i "99s|^.*$|  api_base: \"${OLLAMA_API_BASE:-"http://localhost:11434"}\"|" /home/worker/app/settings.yaml
+sed -i "103s|^.*$|  api_base: \"${OLLAMA_API_BASE:-"http://localhost:11434"}\"|" /home/worker/app/settings.yaml
 
 # OLLAMA_LLM_MODEL
-sed -i "100s|^.*$|  llm_model: \"${OLLAMA_LLM_MODEL:-"mistral:latest"}\"|" /home/worker/app/settings.yaml
+sed -i "104s|^.*$|  llm_model: \"${OLLAMA_LLM_MODEL:-"mistral:latest"}\"|" /home/worker/app/settings.yaml
 
 # OLLAMA_EMBEDDING_MODEL
-sed -i "101s|^.*$|  embedding_model: \"${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}\"|" /home/worker/app/settings.yaml
+sed -i "105s|^.*$|  embedding_model: \"${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}\"|" /home/worker/app/settings.yaml
 
 # OLLAMA_TFS_Z
-sed -i "102s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
+sed -i "106s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_NUM_PREDICT
-sed -i "103s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
+sed -i "107s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_K
-sed -i "104s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
+sed -i "108s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_P
-sed -i "105s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
+sed -i "109s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_LAST_N
-sed -i "106s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
+sed -i "110s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_PENALTY
-sed -i "107s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
+sed -i "111s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REQUEST_TIMEOUT
-sed -i "108s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
+sed -i "112s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_KEY
-sed -i "111s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
+sed -i "115s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_AZURE_ENDPOINT
-sed -i "112s|^.*$|  azure_endpoint: \"${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}\"|" /home/worker/app/settings.yaml
+sed -i "116s|^.*$|  azure_endpoint: \"${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_VERSION
-sed -i "113s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
+sed -i "117s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_DEPLOYMENT_NAME
-sed -i "114s|^.*$|  embedding_deployment_name: \"${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-""}\"|" /home/worker/app/settings.yaml
+sed -i "118s|^.*$|  embedding_deployment_name: \"${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-""}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_MODEL
-sed -i "115s|^.*$|  embedding_model: \"${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}\"|" /home/worker/app/settings.yaml
+sed -i "119s|^.*$|  embedding_model: \"${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_DEPLOYMENT_NAME
-sed -i "116s|^.*$|  llm_deployment_name: \"${AZOPENAI_LLM_DEPLOYMENT_NAME:-""}\"|" /home/worker/app/settings.yaml
+sed -i "120s|^.*$|  llm_deployment_name: \"${AZOPENAI_LLM_DEPLOYMENT_NAME:-""}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_MODEL
-sed -i "117s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
+sed -i "121s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
 
 ############################
 # run app                  #
