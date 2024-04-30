@@ -45,7 +45,7 @@ jobs:
 
       # https://github.com/osbm/huggingface-login
       - name: Login to HuggingFace Hub
-        uses: osbm/huggingface_login@v0.0.2
+        uses: osbm/huggingface-login@v0.0.2
         with:
           username: ${{ secrets.HF_USERNAME }}
           password: ${{ secrets.HF_PASSWORD }}
