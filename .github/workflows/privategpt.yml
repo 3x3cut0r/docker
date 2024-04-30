@@ -43,6 +43,14 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
+      # https://github.com/osbm/huggingface-login
+      - name: Login to HuggingFace Hub
+        uses: osbm/huggingface-login@v0.0.2
+        with:
+          username: ${{ secrets.HF_USERNAME }}
+          password: ${{ secrets.HF_PASSWORD }}
+          add_to_git_credentials: true
+
       # https://github.com/marketplace/actions/free-disk-space-ubuntu
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
