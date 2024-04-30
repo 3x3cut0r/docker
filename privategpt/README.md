@@ -181,11 +181,12 @@ secret: "Basic c2VjcmV0OmtleQ=="
   **- for pipeline mode:** this is the number of workers that can perform embeddings.
 - `EMBEDDING_EMBED_DIM` - The dimension of the embeddings stored in the Postgres database. - **Default: 384**
 
-- **Specify the model used for embedding with `HF_EMBEDDING_HF_MODEL_NAME`**
+- **Specify the model used for embedding with `HUGGINGFACE_EMBEDDING_HF_MODEL_NAME`**
 
 ###### HuggingFace
 
-- `HF_EMBEDDING_HF_MODEL_NAME` - Name of the HuggingFace model to use for embeddings - **Default: BAAI/bge-small-en-v1.5**
+- `HUGGINGFACE_EMBEDDING_HF_MODEL_NAME` - Name of the HuggingFace model to use for embeddings - **Default: BAAI/bge-small-en-v1.5**
+- `HUGGINGFACE_TOKEN` - Your HuggingFace token - **Default: None**
 
 ###### Vectorstore
 
