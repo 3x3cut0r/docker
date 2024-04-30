@@ -95,7 +95,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
-            HUGGINGFACE_TOKEN: ${{ secrets.HUGGINGFACE_TOKEN }}
+            HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}
           tags: |
             3x3cut0r/privategpt:latest
             3x3cut0r/privategpt:${{ steps.tag.outputs.VERSION }}
