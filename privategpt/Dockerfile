@@ -25,7 +25,7 @@ RUN apt update && apt install -y \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
     python -m pip install --upgrade pip huggingface_hub && \
-    huggingface-cli login --token "$HUGGINGFACE_TOKEN"
+    huggingface-cli login --token $HUGGINGFACE_TOKEN
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
