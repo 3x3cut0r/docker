@@ -241,6 +241,11 @@ sed -i "121s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app
 # run app                  #
 ############################
 
+# login to huggingface, if HUGGINGFACE_TOKEN is set
+if [ -n "$HUGGINGFACE_TOKEN" ]; then
+  huggingface-cli login --token "$HUGGINGFACE_TOKEN" > /dev/null 2>&1
+fi
+
 # run privategpt setup to download models
 if [ "$QUIET" = "true" ]; then
   /home/worker/app/.venv/bin/python scripts/setup > /dev/null 2>&1

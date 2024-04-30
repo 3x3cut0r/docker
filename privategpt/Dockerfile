@@ -67,7 +67,7 @@ WORKDIR /home/worker/app
 COPY --chown=worker --from=dependencies /home/worker/app/ ./
 RUN mkdir -p local_data models/cache .config/matplotlib && \
     chown -R worker:nogroup /home/worker/app && \
-    pip install doc2text docx2txt EbookLib html2text python-pptx Pillow && \
+    pip install doc2text docx2txt EbookLib html2text huggingface_hub python-pptx Pillow && \
     FORCE_CMAKE=1 CMAKE_ARGS="${CMAKE_ARGS}" \
     /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python
 
@@ -126,6 +126,7 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     EMBEDDING_COUNT_WORKERS="2" \
     EMBEDDING_EMBED_DIM="384" \
     HUGGINGFACE_EMBEDDING_HF_MODEL_NAME="BAAI/bge-small-en-v1.5" \
+    HUGGINGFACE_TOKEN="" \
     VECTORSTORE_DATABASE="qdrant" \
     QDRANT_PATH="local_data/private_gpt/qdrant" \
     QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD="true" \
