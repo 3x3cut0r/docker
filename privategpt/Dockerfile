@@ -1,6 +1,9 @@
 # Base-Stage
 FROM python:3.11.8-slim-bookworm as base
 
+# ADD HUGGINGFACE_TOKEN
+ARG HUGGINGFACE_TOKEN
+
 # Install poetry
 RUN pip install pipx
 RUN python3 -m pipx ensurepath
@@ -21,7 +24,8 @@ RUN apt update && apt install -y \
         jq && \
     apt clean && \
     rm -rf /var/lib/apt/lists/* && \
-    python -m pip install --upgrade pip
+    python -m pip install --upgrade pip huggingface_hub && \
+    huggingface-cli login "$HUGGINGFACE_TOKEN"
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
@@ -67,9 +71,10 @@ WORKDIR /home/worker/app
 COPY --chown=worker --from=dependencies /home/worker/app/ ./
 RUN mkdir -p local_data models/cache .config/matplotlib && \
     chown -R worker:nogroup /home/worker/app && \
-    pip install doc2text docx2txt EbookLib html2text huggingface_hub python-pptx Pillow && \
+    pip install doc2text docx2txt EbookLib html2text python-pptx Pillow && \
     FORCE_CMAKE=1 CMAKE_ARGS="${CMAKE_ARGS}" \
-    /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python
+    /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python && \
+    huggingface-cli logout
 
 # Store versions in /VERSION
 RUN touch /VERSION && \
