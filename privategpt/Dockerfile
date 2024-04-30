@@ -22,10 +22,10 @@ RUN apt update && apt install -y \
         curl \
         git \
         jq && \
-    apt clean && \
-    rm -rf /var/lib/apt/lists/* && \
     python -m pip install --upgrade pip huggingface_hub && \
-    huggingface-cli login --token $HUGGINGFACE_TOKEN
+    huggingface-cli login --token $HUGGINGFACE_TOKEN && \
+    apt clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # https://python-poetry.org/docs/configuration/#virtualenvsin-project
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
