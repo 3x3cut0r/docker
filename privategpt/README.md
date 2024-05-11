@@ -136,7 +136,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
   **- azopenai:** provide `AZ_OPENAI_API_BASE`, `AZ_OPENAI_API_KEY ` and `AZ_OPENAI_MODEL`  
   **- sagemaker:** provide `SAGEMAKER_LLM_ENDPOINT_NAME` and `SAGEMAKER_EMBEDDING_ENDPOINT_NAME`  
   **- mock:** (not supported by this container)  
-  **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_MODEL`
+  **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_LLM_MODEL`
 - `LLM_MAX_NEW_TOKENS` - The maximum number of token that the LLM is authorized to generate in one completion - **Default: 265**
 - `LLM_CONTEXT_WINDOW` - The maximum number of context tokens for the model - **Default: 3900**
 - `LLM_TOKENIZER` - Specifies the model from Huggingface.co which is used as tokenizer - **Default: mistralai/Mistral-7B-Instruct-v0.2**
@@ -223,7 +223,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### Ollama
 
 - `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
-- `OLLAMA_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: mistral:latest**
+- `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: mistral:latest**
 - `OLLAMA_EMBEDDING_MODEL` - Model to use. Example: 'nomic-embed-text'. - **Default: nomic-embed-text**
 - `OLLAMA_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
 - `OLLAMA_NUM_PREDICT` - Maximum number of tokens to predict when generating text. (Default: 128, -1 = infinite generation, -2 = fill context) - **Default: 128**
