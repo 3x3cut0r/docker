@@ -133,7 +133,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
   **- llamacpp:** provide `LLAMACPP_PROMPT_STYLE`, `LLAMACPP_PGPT_HF_MODEL_FILE` and `HF_EMBEDDING_HF_MODEL_NAME`  
   **- openai:** provide `OPENAI_API_KEY` and `OPENAI_MODEL`  
   **- openailike:** provide `OPENAI_API_BASE`, `OPENAI_API_KEY ` and `OPENAI_MODEL`  
-  **- azopenai:** provide `AZ_OPENAI_API_BASE`, `AZ_OPENAI_API_KEY ` and `AZ_OPENAI_MODEL`  
+  **- azopenai:** provide `AZOPENAI_API_BASE`, `AZOPENAI_API_KEY ` and `AZOPENAI_MODEL`  
   **- sagemaker:** provide `SAGEMAKER_LLM_ENDPOINT_NAME` and `SAGEMAKER_EMBEDDING_ENDPOINT_NAME`  
   **- mock:** (not supported by this container)  
   **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_LLM_MODEL`
@@ -235,13 +235,13 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 ###### Azure OpenAI
 
-- `AZ_OPENAI_API_KEY` - Your API Key for the OpenAI API. Example: sk-1234 - **Default: sk-1234**
-- `AZ_OPENAI_ENDPOINT` - Base URL of Azure OpenAI Endpoint. Example: https://api.myazure.com/v1 - **Default: https://api.myazure.com/v1**
-- `AZ_OPENAI_API_VERSION` - The API version to use for this operation. This follows the YYYY-MM-DD format. - **Default: 2023_05_15**
-- `AZ_OPENAI_EMBEDDING_DEPLOYMENT_NAME` - embedding deployment name in str format - **Default: None**
-- `AZ_OPENAI_EMBEDDING_MODEL` - OpenAI Model to use. Example: 'text-embedding-ada-002'. - **Default: text-embedding-3-small**
-- `AZ_OPENAI_LLM_DEPLOYMENT_NAME` - llm deployment name in str format - **Default: None**
-- `AZ_OPENAI_LLM_MODEL` - OpenAI Model to use. (see [OpenAI Models Overview](https://platform.openai.com/docs/models/overview)). Example: gpt-4 - **Default: gpt-4**
+- `AZOPENAI_API_KEY` - Your API Key for the OpenAI API. Example: sk-1234 - **Default: sk-1234**
+- `AZOPENAI_ENDPOINT` - Base URL of Azure OpenAI Endpoint. Example: https://api.myazure.com/v1 - **Default: https://api.myazure.com/v1**
+- `AZOPENAI_API_VERSION` - The API version to use for this operation. This follows the YYYY-MM-DD format. - **Default: 2023_05_15**
+- `AZOPENAI_EMBEDDING_DEPLOYMENT_NAME` - embedding deployment name in str format - **Default: None**
+- `AZOPENAI_EMBEDDING_MODEL` - OpenAI Model to use. Example: 'text-embedding-ada-002'. - **Default: text-embedding-3-small**
+- `AZOPENAI_LLM_DEPLOYMENT_NAME` - llm deployment name in str format - **Default: None**
+- `AZOPENAI_LLM_MODEL` - OpenAI Model to use. (see [OpenAI Models Overview](https://platform.openai.com/docs/models/overview)). Example: gpt-4 - **Default: gpt-4**
 
 ### 3 Volumes <a name="volumes"></a>
 
