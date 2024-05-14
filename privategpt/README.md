@@ -85,6 +85,7 @@ services:
 - `ENV_NAME` - Name of the environment (prod, staging, local...) - **Default: prod**
 - `PORT` - Port of PrivateGPT FastAPI server - **Default: 8080**
 - `KEEP_FILES` - Specifies if the server should keep uploaded files after restarting the container (lowercase true or false)- **Default: true**
+- `RUN_SETUP` - Set to true, to run poetry setup again. Do it only once to download models and set it to false afterwards - **Default: false**
 
 ###### Cors
 
@@ -222,9 +223,10 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 ###### Ollama
 
-- `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
 - `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: mistral:latest**
 - `OLLAMA_EMBEDDING_MODEL` - Model to use. Example: 'nomic-embed-text'. - **Default: nomic-embed-text**
+- `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
+- `OLLAMA_EMBEDDING_API_BASE` - Base URL of Ollama Embedding API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
 - `OLLAMA_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
 - `OLLAMA_NUM_PREDICT` - Maximum number of tokens to predict when generating text. (Default: 128, -1 = infinite generation, -2 = fill context) - **Default: 128**
 - `OLLAMA_TOP_K` - Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative. - **Default: 40**
