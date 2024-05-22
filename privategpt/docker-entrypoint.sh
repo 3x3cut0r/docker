@@ -186,59 +186,74 @@ sed -i "99s|^.*$|  api_key: ${OPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/sett
 # OPENAI_MODEL
 sed -i "100s|^.*$|  model: ${OPENAI_MODEL:-"gpt-3.5-turbo"}|" /home/worker/app/settings.yaml
 
-# OLLAMA_LLM_MODEL
-sed -i "103s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"mistral:latest"}|" /home/worker/app/settings.yaml
+# OPENAI_REQUEST_TIMEOUT
+sed -i "101s|^.*$|  request_timeout: ${OPENAI_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
 
-# OLLAMA_EMBEDDING_MODEL
-sed -i "104s|^.*$|  embedding_model: ${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}|" /home/worker/app/settings.yaml
+# OPENAI_EMBEDDING_API_BASE
+sed -i "102s|^.*$|  embedding_api_base: ${OPENAI_EMBEDDING_API_BASE:-$OPENAI_API_BASE}|" /home/worker/app/settings.yaml
+
+# OPENAI_EMBEDDING_API_KEY
+sed -i "103s|^.*$|  embedding_api_key: ${OPENAI_EMBEDDING_API_KEY:-$OPENAI_API_KEY}|" /home/worker/app/settings.yaml
+
+# OPENAI_EMBEDDING_MODEL
+sed -i "104s|^.*$|  embedding_model: ${OPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_API_BASE
-sed -i "105s|^.*$|  api_base: ${OLLAMA_API_BASE:-"http://localhost:11434"}|" /home/worker/app/settings.yaml
+sed -i "107s|^.*$|  api_base: ${OLLAMA_API_BASE:-"http://localhost:11434"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_EMBEDDING_API_BASE
-sed -i "106s|^.*$|  embedding_api_base: ${OLLAMA_EMBEDDING_API_BASE:-"http://localhost:11434"}|" /home/worker/app/settings.yaml
+sed -i "108s|^.*$|  embedding_api_base: ${OLLAMA_EMBEDDING_API_BASE:-$OLLAMA_API_BASE}|" /home/worker/app/settings.yaml
+
+# OLLAMA_LLM_MODEL
+sed -i "109s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"mistral:latest"}|" /home/worker/app/settings.yaml
+
+# OLLAMA_EMBEDDING_MODEL
+sed -i "110s|^.*$|  embedding_model: ${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}|" /home/worker/app/settings.yaml
+
+# OLLAMA_KEEP_ALIVE
+sed -i "111s|^.*$|  embedding_model: ${OLLAMA_KEEP_ALIVE:-"5m"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TFS_Z
-sed -i "107s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
+sed -i "112s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_NUM_PREDICT
-sed -i "108s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
+sed -i "113s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_K
-sed -i "109s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
+sed -i "114s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_P
-sed -i "110s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
+sed -i "115s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_LAST_N
-sed -i "111s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
+sed -i "116s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_PENALTY
-sed -i "112s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
+sed -i "117s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REQUEST_TIMEOUT
-sed -i "113s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
+sed -i "118s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_KEY
-sed -i "116s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
+sed -i "121s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_AZURE_ENDPOINT
-sed -i "117s|^.*$|  azure_endpoint: ${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}|" /home/worker/app/settings.yaml
+sed -i "122s|^.*$|  azure_endpoint: ${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_VERSION
-sed -i "118s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
+sed -i "123s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_DEPLOYMENT_NAME
-sed -i "119s|^.*$|  embedding_deployment_name: ${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-"my-azure-embedding-deployment-name"}|" /home/worker/app/settings.yaml
+sed -i "124s|^.*$|  embedding_deployment_name: ${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-"my-azure-embedding-deployment-name"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_MODEL
-sed -i "120s|^.*$|  embedding_model: ${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
+sed -i "125s|^.*$|  embedding_model: ${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_DEPLOYMENT_NAME
-sed -i "121s|^.*$|  llm_deployment_name: ${AZOPENAI_LLM_DEPLOYMENT_NAME:-"my-azure-llm-deployment-name"}|" /home/worker/app/settings.yaml
+sed -i "126s|^.*$|  llm_deployment_name: ${AZOPENAI_LLM_DEPLOYMENT_NAME:-"my-azure-llm-deployment-name"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_MODEL
-sed -i "122s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
+sed -i "127s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
 
 ############################
 # run app                  #

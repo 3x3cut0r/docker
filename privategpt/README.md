@@ -220,13 +220,18 @@ secret: "Basic c2VjcmV0OmtleQ=="
 - `OPENAI_API_BASE` - Base URL of OpenAI API. Example: https://api.openai.com/v1 - **Default: https://api.openai.com/v1**
 - `OPENAI_API_KEY` - Your API Key for the OpenAI API. Example: sk-1234 - **Default: sk-1234**
 - `OPENAI_MODEL` - OpenAI Model to use. (see [OpenAI Models Overview](https://platform.openai.com/docs/models/overview)). Example: gpt-4 - **Default: gpt-3.5-turbo**
+- `OPENAI_REQUEST_TIMEOUT` - Time elapsed until openailike server times out the request. Default is 120s. Format is float. - **Default: 120.0**
+- `OPENAI_EMBEDDING_API_BASE` - Base URL of OpenAI API. Example: https://api.openai.com/v1 - **Default: same as OPENAI_API_BASE**
+- `OPENAI_EMBEDDING_API_KEY` - Your API Key for the OpenAI Embedding API. Example: sk-1234. - **Default: same as OPENAI_API_KEY**
+- `OPENAI_EMBEDDING_MODEL` - OpenAI embedding Model to use. Example: text-embedding-3-large - **Default: text-embedding-3-small**
 
 ###### Ollama
 
+- `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
+- `OLLAMA_EMBEDDING_API_BASE` - Base URL of Ollama Embedding API. Example: http://192.168.1.100:11434 - **Default: same as OLLAMA_API_BASE**
 - `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: mistral:latest**
 - `OLLAMA_EMBEDDING_MODEL` - Model to use. Example: 'nomic-embed-text'. - **Default: nomic-embed-text**
-- `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
-- `OLLAMA_EMBEDDING_API_BASE` - Base URL of Ollama Embedding API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
+- `OLLAMA_KEEP_ALIVE` - Time the model will stay loaded in memory after a request. examples: 5m, 5h, '-1' - **Default: 5m**
 - `OLLAMA_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
 - `OLLAMA_NUM_PREDICT` - Maximum number of tokens to predict when generating text. (Default: 128, -1 = infinite generation, -2 = fill context) - **Default: 128**
 - `OLLAMA_TOP_K` - Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative. - **Default: 40**
