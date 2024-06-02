@@ -211,7 +211,7 @@ sed -i "109s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"mistral:latest"}|" /home/wor
 sed -i "110s|^.*$|  embedding_model: ${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_KEEP_ALIVE
-sed -i "111s|^.*$|  embedding_model: ${OLLAMA_KEEP_ALIVE:-"5m"}|" /home/worker/app/settings.yaml
+sed -i "111s|^.*$|  keep_alive: ${OLLAMA_KEEP_ALIVE:-"5m"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TFS_Z
 sed -i "112s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
