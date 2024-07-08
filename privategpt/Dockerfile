@@ -69,7 +69,7 @@ RUN mkdir -p local_data models/cache .config/matplotlib && \
     chown -R worker:nogroup /home/worker/app && \
     pip install doc2text docx2txt EbookLib html2text python-pptx Pillow torch sentence-transformers && \
     FORCE_CMAKE=1 CMAKE_ARGS="${CMAKE_ARGS}" \
-    /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python && \
+    /home/worker/app/.venv/bin/pip install --force-reinstall --no-cache-dir llama-cpp-python numpy==1.26.0 && \
     huggingface-cli logout
 
 # Store versions in /VERSION
