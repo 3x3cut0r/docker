@@ -133,8 +133,9 @@ secret: "Basic c2VjcmV0OmtleQ=="
 - `LLM_MODE` - The mode to use for the chat engine. - **Default: llamacpp**  
   **- llamacpp:** provide `LLAMACPP_PROMPT_STYLE`, `LLAMACPP_PGPT_HF_MODEL_FILE` and `HF_EMBEDDING_HF_MODEL_NAME`  
   **- openai:** provide `OPENAI_API_KEY` and `OPENAI_MODEL`  
-  **- openailike:** provide `OPENAI_API_BASE`, `OPENAI_API_KEY ` and `OPENAI_MODEL`  
-  **- azopenai:** provide `AZOPENAI_API_BASE`, `AZOPENAI_API_KEY ` and `AZOPENAI_MODEL`  
+  **- openailike:** provide `OPENAI_API_BASE`, `OPENAI_API_KEY` and `OPENAI_MODEL`  
+  **- azopenai:** provide `AZOPENAI_API_BASE`, `AZOPENAI_API_KEY` and `AZOPENAI_MODEL`  
+  **- gemini:** provide `GEMINI_API_KEY`, `GEMINI_MODEL` and `GEMINI_EMBEDDING_MODEL`  
   **- sagemaker:** provide `SAGEMAKER_LLM_ENDPOINT_NAME` and `SAGEMAKER_EMBEDDING_ENDPOINT_NAME`  
   **- mock:** (not supported by this container)  
   **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_LLM_MODEL`
@@ -201,6 +202,26 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 - `QDRANT_PATH` - Persistence path for QdrantLocal - **Default: local_data/private_gpt/qdrant**
 
+###### Clickhouse
+
+- `CLICKHOUSE_HOST` - The server hosting the ClickHouse database - **Default: localhost**
+- `CLICKHOUSE_PORT` - The port on which the ClickHouse database is accessible - **Default: 8443**
+- `CLICKHOUSE_USERNAME` - The username to use to connect to the ClickHouse database - **Default: admin**
+- `CLICKHOUSE_PASSWORD` - The password to use to connect to the ClickHouse database - **Default: clickhouse**
+- `CLICKHOUSE_DATABASE` - The default database to use for connections - **Default: embeddings**
+- `CLICKHOUSE_SECURE` - Use https/TLS for secure connection to the server - **Default: False**
+- `CLICKHOUSE_INTERFACE` - Must be either 'http' or 'https'. Determines the protocol to use for the connection - **Default:**
+- `CLICKHOUSE_SETTINGS` - Specific ClickHouse server settings to be used with the session - **Default:**
+- `CLICKHOUSE_CONNECT_TIMEOUT` - Timeout in seconds for establishing a connection - **Default:**
+- `CLICKHOUSE_SEND_RECEIVE_TIMEOUT` - Read timeout in seconds for http connection - **Default:**
+- `CLICKHOUSE_VERIFY` - Verify the server certificate in secure/https mode - **Default:**
+- `CLICKHOUSE_CA_CERT` - Path to Certificate Authority root certificate (.pem format) - **Default:**
+- `CLICKHOUSE_CLIENT_CERT` - Path to TLS Client certificate (.pem format) - **Default:**
+- `CLICKHOUSE_CLIENT_CERT_KEY` - Path to the private key for the TLS Client certificate - **Default:**
+- `CLICKHOUSE_HTTP_PROXY` - HTTP proxy address - **Default:**
+- `CLICKHOUSE_HTTPS_PROXY` - HTTPS proxy address - **Default:**
+- `CLICKHOUSE_SERVER_HOST_NAME` - Server host name to be checked against the TLS certificate - **Default:**
+
 ###### Postgres
 
 - `POSTGRES_HOST` - the postgres host address - **Default: postgres**
@@ -224,6 +245,12 @@ secret: "Basic c2VjcmV0OmtleQ=="
 - `OPENAI_EMBEDDING_API_BASE` - Base URL of OpenAI API. Example: https://api.openai.com/v1 - **Default: same as OPENAI_API_BASE**
 - `OPENAI_EMBEDDING_API_KEY` - Your API Key for the OpenAI Embedding API. Example: sk-1234. - **Default: same as OPENAI_API_KEY**
 - `OPENAI_EMBEDDING_MODEL` - OpenAI embedding Model to use. Example: text-embedding-3-large - **Default: text-embedding-3-small**
+
+###### Gemini
+
+- `GEMINI_API_KEY` - Your Google API Key for the Gemini API. Example: AI1234 - **Default: AI1234**
+- `GEMINI_MODEL` - Google Model to use. Example: models/gemini-pro - **Default: models/gemini-pro**
+- `GEMINI_EMBEDDING_MODEL` - Google Embedding Model to use. Example: models/embedding-001 - **Default: models/embedding-001**
 
 ###### Ollama
 

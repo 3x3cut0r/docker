@@ -153,107 +153,167 @@ sed -i "72s|^.*$|  path: ${QDRANT_PATH:-"local_data/private_gpt/qdrant"}|" /home
 # QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD
 sed -i "73s|^.*$|  force_disable_check_same_thread: ${QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD:-"true"}|" /home/worker/app/settings.yaml
 
+# CLICKHOUSE_HOST
+sed -i "86s|^.*$|  host: ${CLICKHOUSE_HOST:-"localhost"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_PORT
+sed -i "87s|^.*$|  port: ${CLICKHOUSE_PORT:-"8443"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_USERNAME
+sed -i "88s|^.*$|  username: ${CLICKHOUSE_USERNAME:-"admin"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_PASSWORD
+sed -i "89s|^.*$|  password: ${CLICKHOUSE_PASSWORD:-"clickhouse"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_DATABASE
+sed -i "90s|^.*$|  database: ${CLICKHOUSE_DATABASE:-"embeddings"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_SECURE
+sed -i "91s|^.*$|  secure: ${CLICKHOUSE_SECURE:-"False"}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_INTERFACE
+sed -i "92s|^.*$|  interface: ${CLICKHOUSE_INTERFACE:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_SETTINGS
+sed -i "93s|^.*$|  settings: ${CLICKHOUSE_SETTINGS:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_CONNECT_TIMEOUT
+sed -i "94s|^.*$|  connect_timeout: ${CLICKHOUSE_CONNECT_TIMEOUT:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_SEND_RECEIVE_TIMEOUT
+sed -i "95s|^.*$|  send_receive_timeout: ${CLICKHOUSE_SEND_RECEIVE_TIMEOUT:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_VERIFY
+sed -i "96s|^.*$|  verify: ${CLICKHOUSE_VERIFY:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_CA_CERT
+sed -i "97s|^.*$|  ca_cert: ${CLICKHOUSE_CA_CERT:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_CLIENT_CERT
+sed -i "98s|^.*$|  client_cert: ${CLICKHOUSE_CLIENT_CERT:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_CLIENT_CERT_KEY
+sed -i "99s|^.*$|  client_cert_key: ${CLICKHOUSE_CLIENT_CERT_KEY:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_HTTP_PROXY
+sed -i "100s|^.*$|  http_proxy: ${CLICKHOUSE_HTTP_PROXY:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_HTTPS_PROXY
+sed -i "101s|^.*$|  https_proxy: ${CLICKHOUSE_HTTPS_PROXY:-""}|" /home/worker/app/settings.yaml
+
+# CLICKHOUSE_SERVER_HOST_NAME
+sed -i "102s|^.*$|  server_host_name: ${CLICKHOUSE_SERVER_HOST_NAME:-""}|" /home/worker/app/settings.yaml
+
 # POSTGRES_HOST
-sed -i "86s|^.*$|  host: ${POSTGRES_HOST:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "105s|^.*$|  host: ${POSTGRES_HOST:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_PORT
-sed -i "87s|^.*$|  port: ${POSTGRES_PORT:-"5432"}|" /home/worker/app/settings.yaml
+sed -i "106s|^.*$|  port: ${POSTGRES_PORT:-"5432"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_DATABASE
-sed -i "88s|^.*$|  database: ${POSTGRES_DATABASE:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "107s|^.*$|  database: ${POSTGRES_DATABASE:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_USER
-sed -i "89s|^.*$|  user: ${POSTGRES_USER:-"postgres"}|" /home/worker/app/settings.yaml
+sed -i "108s|^.*$|  user: ${POSTGRES_USER:-"postgres"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_PASSWORD
-sed -i "90s|^.*$|  password: ${POSTGRES_PASSWORD:-"admin"}|" /home/worker/app/settings.yaml
+sed -i "109s|^.*$|  password: ${POSTGRES_PASSWORD:-"admin"}|" /home/worker/app/settings.yaml
 
 # POSTGRES_SCHEMA_NAME
-sed -i "91s|^.*$|  schema_name: ${POSTGRES_SCHEMA_NAME:-"private_gpt"}|" /home/worker/app/settings.yaml
+sed -i "110s|^.*$|  schema_name: ${POSTGRES_SCHEMA_NAME:-"private_gpt"}|" /home/worker/app/settings.yaml
 
 # SAGEMAKER_LLM_ENDPOINT_NAME
-sed -i "94s|^.*$|  llm_endpoint_name: ${SAGEMAKER_LLM_ENDPOINT_NAME:-"huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140"}|" /home/worker/app/settings.yaml
+sed -i "113s|^.*$|  llm_endpoint_name: ${SAGEMAKER_LLM_ENDPOINT_NAME:-"huggingface-pytorch-tgi-inference-2023-09-25-19-53-32-140"}|" /home/worker/app/settings.yaml
 
 # SAGEMAKER_EMBEDDING_ENDPOINT_NAME
-sed -i "95s|^.*$|  embedding_endpoint_name: ${SAGEMAKER_EMBEDDING_ENDPOINT_NAME:-"huggingface-pytorch-inference-2023-11-03-07-41-36-479"}|" /home/worker/app/settings.yaml
+sed -i "114s|^.*$|  embedding_endpoint_name: ${SAGEMAKER_EMBEDDING_ENDPOINT_NAME:-"huggingface-pytorch-inference-2023-11-03-07-41-36-479"}|" /home/worker/app/settings.yaml
 
 # OPENAI_API_BASE
-sed -i "98s|^.*$|  api_base: ${OPENAI_API_BASE:-"https://api.openai.com/v1"}|" /home/worker/app/settings.yaml
+sed -i "117s|^.*$|  api_base: ${OPENAI_API_BASE:-"https://api.openai.com/v1"}|" /home/worker/app/settings.yaml
 
 # OPENAI_API_KEY
-sed -i "99s|^.*$|  api_key: ${OPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
+sed -i "118s|^.*$|  api_key: ${OPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
 
 # OPENAI_MODEL
-sed -i "100s|^.*$|  model: ${OPENAI_MODEL:-"gpt-3.5-turbo"}|" /home/worker/app/settings.yaml
+sed -i "119s|^.*$|  model: ${OPENAI_MODEL:-"gpt-3.5-turbo"}|" /home/worker/app/settings.yaml
 
 # OPENAI_REQUEST_TIMEOUT
-sed -i "101s|^.*$|  request_timeout: ${OPENAI_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
+sed -i "120s|^.*$|  request_timeout: ${OPENAI_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
 
 # OPENAI_EMBEDDING_API_BASE
-sed -i "102s|^.*$|  embedding_api_base: ${OPENAI_EMBEDDING_API_BASE:-$OPENAI_API_BASE}|" /home/worker/app/settings.yaml
+sed -i "121s|^.*$|  embedding_api_base: ${OPENAI_EMBEDDING_API_BASE:-$OPENAI_API_BASE}|" /home/worker/app/settings.yaml
 
 # OPENAI_EMBEDDING_API_KEY
-sed -i "103s|^.*$|  embedding_api_key: ${OPENAI_EMBEDDING_API_KEY:-$OPENAI_API_KEY}|" /home/worker/app/settings.yaml
+sed -i "122s|^.*$|  embedding_api_key: ${OPENAI_EMBEDDING_API_KEY:-$OPENAI_API_KEY}|" /home/worker/app/settings.yaml
 
 # OPENAI_EMBEDDING_MODEL
-sed -i "104s|^.*$|  embedding_model: ${OPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
+sed -i "123s|^.*$|  embedding_model: ${OPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
+
+# GEMINI_API_KEY
+sed -i "126s|^.*$|  api_key: ${GEMINI_API_KEY:-"AI1234"}|" /home/worker/app/settings.yaml
+
+# GEMINI_MODEL
+sed -i "127s|^.*$|  model: ${GEMINI_MODEL:-"models/gemini-pro"}|" /home/worker/app/settings.yaml
+
+# GEMINI_EMBEDDING_MODEL
+sed -i "128s|^.*$|  embedding_model: ${GEMINI_EMBEDDING_MODEL:-"models/embedding-001"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_API_BASE
-sed -i "107s|^.*$|  api_base: ${OLLAMA_API_BASE:-"http://localhost:11434"}|" /home/worker/app/settings.yaml
+sed -i "131s|^.*$|  api_base: ${OLLAMA_API_BASE:-"http://localhost:11434"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_EMBEDDING_API_BASE
-sed -i "108s|^.*$|  embedding_api_base: ${OLLAMA_EMBEDDING_API_BASE:-$OLLAMA_API_BASE}|" /home/worker/app/settings.yaml
+sed -i "132s|^.*$|  embedding_api_base: ${OLLAMA_EMBEDDING_API_BASE:-$OLLAMA_API_BASE}|" /home/worker/app/settings.yaml
 
 # OLLAMA_LLM_MODEL
-sed -i "109s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"mistral:latest"}|" /home/worker/app/settings.yaml
+sed -i "133s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"mistral:latest"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_EMBEDDING_MODEL
-sed -i "110s|^.*$|  embedding_model: ${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}|" /home/worker/app/settings.yaml
+sed -i "134s|^.*$|  embedding_model: ${OLLAMA_EMBEDDING_MODEL:-"nomic-embed-text"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_KEEP_ALIVE
-sed -i "111s|^.*$|  keep_alive: ${OLLAMA_KEEP_ALIVE:-"5m"}|" /home/worker/app/settings.yaml
+sed -i "135s|^.*$|  keep_alive: ${OLLAMA_KEEP_ALIVE:-"5m"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TFS_Z
-sed -i "112s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
+sed -i "136s|^.*$|  tfs_z: ${OLLAMA_TFS_Z:-"1.0"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_NUM_PREDICT
-sed -i "113s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
+sed -i "137s|^.*$|  num_predict: ${OLLAMA_NUM_PREDICT:-"128"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_K
-sed -i "114s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
+sed -i "138s|^.*$|  top_k: ${OLLAMA_TOP_K:-"40"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_TOP_P
-sed -i "115s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
+sed -i "139s|^.*$|  top_p: ${OLLAMA_TOP_P:-"0.9"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_LAST_N
-sed -i "116s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
+sed -i "140s|^.*$|  repeat_last_n: ${OLLAMA_REPEAT_LAST_N:-"64"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REPEAT_PENALTY
-sed -i "117s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
+sed -i "141s|^.*$|  repeat_penalty: ${OLLAMA_REPEAT_PENALTY:-"1.1"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_REQUEST_TIMEOUT
-sed -i "118s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
+sed -i "142s|^.*$|  request_timeout: ${OLLAMA_REQUEST_TIMEOUT:-"120.0"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_KEY
-sed -i "121s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
+sed -i "145s|^.*$|  api_key: ${AZOPENAI_API_KEY:-"sk-1234"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_AZURE_ENDPOINT
-sed -i "122s|^.*$|  azure_endpoint: ${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}|" /home/worker/app/settings.yaml
+sed -i "146s|^.*$|  azure_endpoint: ${AZOPENAI_AZURE_ENDPOINT:-"https://api.myazure.com/v1"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_API_VERSION
-sed -i "123s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
+sed -i "147s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_DEPLOYMENT_NAME
-sed -i "124s|^.*$|  embedding_deployment_name: ${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-"my-azure-embedding-deployment-name"}|" /home/worker/app/settings.yaml
+sed -i "148s|^.*$|  embedding_deployment_name: ${AZOPENAI_EMBEDDING_DEPLOYMENT_NAME:-"my-azure-embedding-deployment-name"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_MODEL
-sed -i "125s|^.*$|  embedding_model: ${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
+sed -i "149s|^.*$|  embedding_model: ${AZOPENAI_EMBEDDING_MODEL:-"text-embedding-3-small"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_DEPLOYMENT_NAME
-sed -i "126s|^.*$|  llm_deployment_name: ${AZOPENAI_LLM_DEPLOYMENT_NAME:-"my-azure-llm-deployment-name"}|" /home/worker/app/settings.yaml
+sed -i "150s|^.*$|  llm_deployment_name: ${AZOPENAI_LLM_DEPLOYMENT_NAME:-"my-azure-llm-deployment-name"}|" /home/worker/app/settings.yaml
 
 # AZOPENAI_LLM_MODEL
-sed -i "127s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
+sed -i "151s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker/app/settings.yaml
 
 ############################
 # run app                  #

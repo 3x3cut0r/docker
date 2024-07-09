@@ -82,6 +82,25 @@ qdrant:
   # timeout:
   # host:
 
+clickhouse:
+  host: localhost
+  port: 8443
+  username: admin
+  password: clickhouse
+  database: embeddings
+  secure: False
+  interface:
+  settings:
+  connect_timeout:
+  send_receive_timeout:
+  verify:
+  ca_cert:
+  client_cert:
+  client_cert_key:
+  http_proxy:
+  https_proxy:
+  server_host_name:
+
 postgres:
   host: postgres
   port: 5432
@@ -102,6 +121,11 @@ openai:
   embedding_api_base: https://api.openai.com/v1
   embedding_api_key: sk-1234
   embedding_model: text-embedding-3-small
+
+gemini:
+  api_key: AI1234
+  model: models/gemini-pro
+  embedding_model: models/embedding-001
 
 ollama:
   api_base: http://localhost:11434
