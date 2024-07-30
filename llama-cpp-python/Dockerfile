@@ -70,7 +70,6 @@ ENV TZ="UTC" \
     VOCAB_ONLY=False \
     USE_MMAP=True \
     USE_MLOCK=True \
-    EMBEDDING=True \
     N_THREADS=4 \
     LAST_N_TOKENS_SIZE=64 \
     LORA_BASE="" \

@@ -52,7 +52,6 @@ if [ "$#" = "0" ]; then
     param="${param} --vocab_only ${VOCAB_ONLY:-False}"
     param="${param} --use_mmap ${USE_MMAP:-True}"
     param="${param} --use_mlock ${USE_MLOCK:-True}"
-    param="${param} --embedding ${EMBEDDING:-True}"
     param="${param} --n_threads ${N_THREADS:-6}"
     param="${param} --last_n_tokens_size ${LAST_N_TOKENS_SIZE:-64}"
     param="${param} --lora_base ${LORA_BASE:-''}"

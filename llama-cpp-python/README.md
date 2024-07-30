@@ -111,11 +111,11 @@ services:
     cap_add:
       - SYS_RESOURCE
     environment:
-        MODEL_DOWNLOAD: "True"
-        MODEL_REPO: "TheBloke/Mistral-7B-Instruct-v0.2-GGUF"
-        MODEL: "mistral-7b-instruct-v0.2.Q4_K_M.gguf"
-        MODEL_ALIAS: "mistral-7b-instruct"
-        CHAT_FORMAT: "mistral"
+      MODEL_DOWNLOAD: 'True'
+      MODEL_REPO: 'TheBloke/Mistral-7B-Instruct-v0.2-GGUF'
+      MODEL: 'mistral-7b-instruct-v0.2.Q4_K_M.gguf'
+      MODEL_ALIAS: 'mistral-7b-instruct'
+      CHAT_FORMAT: 'mistral'
     ports:
       - 8000:8000/tcp
 ```
@@ -140,7 +140,6 @@ services:
 - `VOCAB_ONLY` - Whether to only return the vocabulary - **default: False**
 - `USE_MMAP` - Use mmap - **default: True**
 - `USE_MLOCK` - Use mlock - **default: True**
-- `EMBEDDING` - Whether to use embeddings - **default: True**
 - `N_THREADS` - The number of threads to use - **default: 4**
 - `LAST_N_TOKENS_SIZE` - Last n tokens to keep for repeat penalty calculation - **default: 64**
 - `LORA_BASE` - Optional path to base model, useful if using a quantized base model and you want to apply LoRA to an f16 model.
