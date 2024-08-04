@@ -63,7 +63,7 @@ jobs:
       - name: Build and Tag
         id: tag
         run: |
-          docker build -t 3x3cut0r/privategpt:latest --build-arg HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }} ./privategpt
+          docker build -t 3x3cut0r/privategpt:latest --build-arg HUGGINGFACE_ACCESS_TOKEN=${{ secrets.HUGGINGFACE_ACCESS_TOKEN }} ./privategpt
           CONTAINER_ID=$(docker create 3x3cut0r/privategpt:latest)
           docker cp "${CONTAINER_ID}:/VERSION" VERSION
           VERSION=$(cat VERSION | grep privategpt | cut -d= -f2 | head -n 1)
@@ -95,7 +95,7 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           build-args: |
-            HUGGINGFACE_TOKEN=${{ secrets.HUGGINGFACE_TOKEN }}
+            HUGGINGFACE_ACCESS_TOKEN=${{ secrets.HUGGINGFACE_ACCESS_TOKEN }}
           tags: |
             3x3cut0r/privategpt:latest
             3x3cut0r/privategpt:${{ steps.tag.outputs.VERSION }}

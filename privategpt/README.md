@@ -65,13 +65,13 @@ services:
     image: 3x3cut0r/privategpt:latest
     container_name: privategpt
     environment:
-      LLAMACPP_LLM_HF_REPO_ID: "TheBloke/dolphin-2.6-mistral-7B-GGUF"
-      LLAMACPP_LLM_HF_MODEL_FILE: "dolphin-2.6-mistral-7b.Q4_K_M.gguf"
-      LLAMACPP_EMBEDDING_HF_MODEL_NAME: "BAAI/bge-large-en-v1.5"
+      LLAMACPP_LLM_HF_REPO_ID: "lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+      LLAMACPP_LLM_HF_MODEL_FILE: "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
+      HUGGINGFACE_EMBEDDING_HF_MODEL_NAME: "nomic-ai/nomic-embed-text-v1.5"
       EMBEDDING_INGEST_MODE: "parallel"
       EMBEDDING_COUNT_WORKERS: "4"
     volumes:
-      - /path/to/your/model/dolphin-2.6-mistral-7b.Q4_K_M.gguf:/home/worker/app/models/dolphin-2.6-mistral-7b.Q4_K_M.gguf
+      - /path/to/your/model/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf:/home/worker/app/models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
     ports:
       - 8080:8080/tcp
 ```
@@ -141,7 +141,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
   **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_LLM_MODEL`
 - `LLM_MAX_NEW_TOKENS` - The maximum number of token that the LLM is authorized to generate in one completion - **Default: 265**
 - `LLM_CONTEXT_WINDOW` - The maximum number of context tokens for the model - **Default: 3900**
-- `LLM_TOKENIZER` - Specifies the model from Huggingface.co which is used as tokenizer - **Default: mistralai/Mistral-7B-Instruct-v0.2**
+- `LLM_TOKENIZER` - Specifies the model from Huggingface.co which is used as tokenizer - **Default: meta-llama/Meta-Llama-3.1-8B-Instruct**
 - `LLM_TEMPERATURE` - The temperature of the model. Increasing the temperature will make the model answer more creatively. A value of 0.1 would be more factual - **Default: 0.1**
 
 ###### Rag Settings
@@ -152,16 +152,21 @@ secret: "Basic c2VjcmV0OmtleQ=="
 - `RAG_RERANK_MODEL` - Rerank model to use. Limited to SentenceTransformer cross-encoder models. - **Default: cross-encoder/ms-marco-MiniLM-L-2-v2**
 - `RAG_RERANK_TOP_N` - This value controls the number of documents returned by the RAG pipeline. - **Default: 1**
 
+###### Summarize Settings
+
+- `SUMMARIZE_USE_ASYNC` - If set to True, the summarization will be done asynchronously. - **Default: true**
+
 ###### llamacpp
 
-- `LLAMACPP_PROMPT_STYLE` - The prompt style to use for the chat engine. - **Default: mistral**  
+- `LLAMACPP_PROMPT_STYLE` - The prompt style to use for the chat engine. - **Default: llama3**  
   **- default:** use the default prompt style from the llama_index. It should look like `role: message`  
   **- llama2:** use the llama2 prompt style from the llama_index. Based on `<s>`, `[INST]` and `<<SYS>>`  
+  **- llama3:** use the llama3 prompt style from the llama_index.  
   **- tag:** use the tag prompt style. It should look like `<|role|>: message`  
   **- mistral:** use the mistral prompt style. It should look like `<s>[INST] {System Prompt} [/INST]</s>[INST] { UserInstructions } [/INST]`
   **- chatml**
-- `LLAMACPP_LLM_HF_REPO_ID` - Name of the HuggingFace model to use for chat - **Default: TheBloke/Mistral-7B-Instruct-v0.2-GGUF**
-- `LLAMACPP_LLM_HF_MODEL_FILE` - Specifies the llm model file. Can be a llm model name from the HuggingFace repo or a local file that you mounted via volume to /home/worker/app/models - **Default: mistral-7b-instruct-v0.2.Q4_K_M.gguf**
+- `LLAMACPP_LLM_HF_REPO_ID` - Name of the HuggingFace model to use for chat - **Default: lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf**
+- `LLAMACPP_LLM_HF_MODEL_FILE` - Specifies the llm model file. Can be a llm model name from the HuggingFace repo or a local file that you mounted via volume to /home/worker/app/models - **Default: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf**
 - `LLAMACPP_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
 - `LLAMACPP_TOP_K` - Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative. - **Default: 40**
 - `LLAMACPP_TOP_P` - Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text. (Default: 0.9) - **Default: 0.9**
@@ -188,7 +193,8 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### HuggingFace
 
 - `HUGGINGFACE_EMBEDDING_HF_MODEL_NAME` - Name of the HuggingFace model to use for embeddings - **Default: BAAI/bge-small-en-v1.5**
-- `HUGGINGFACE_TOKEN` - Your HuggingFace token - **Default: None**
+- `HUGGINGFACE_TOKEN` - Huggingface access token, required to download some models - **Default: None**
+- `HUGGINGFACE_TRUST_REMOTE_CODE` - If set to True, the code from the remote model will be trusted and executed. - **Default: true**
 
 ###### Vectorstore
 
@@ -201,6 +207,13 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### qdrant
 
 - `QDRANT_PATH` - Persistence path for QdrantLocal - **Default: local_data/private_gpt/qdrant**
+
+###### milvus
+
+- `MILVUS_URI` - The URI of the Milvus instance. For example: 'local_data/private_gpt/milvus/milvus_local.db' for Milvus Lite. - **Default: local_data/private_gpt/milvus/milvus_local.db**
+- `MILVUS_TOKEN` - A valid access token to access the specified Milvus instance. This can be used as a recommended alternative to setting user and password separately. - **Default: milvus-1234**
+- `MILVUS_COLLECTION_NAME` - The name of the collection in Milvus. Default is 'make_this_parameterizable_per_api_call'. - **Default: milvus_db**
+- `MILVUS_OVERWRITE` - Overwrite the previous collection schema if it exists. - **Default: false**
 
 ###### Clickhouse
 
@@ -256,7 +269,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 - `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
 - `OLLAMA_EMBEDDING_API_BASE` - Base URL of Ollama Embedding API. Example: http://192.168.1.100:11434 - **Default: same as OLLAMA_API_BASE**
-- `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: mistral:latest**
+- `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: llama3.1:latest**
 - `OLLAMA_EMBEDDING_MODEL` - Model to use. Example: 'nomic-embed-text'. - **Default: nomic-embed-text**
 - `OLLAMA_KEEP_ALIVE` - Time the model will stay loaded in memory after a request. examples: 5m, 5h, '-1' - **Default: 5m**
 - `OLLAMA_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**

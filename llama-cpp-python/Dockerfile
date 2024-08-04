@@ -1,4 +1,4 @@
-ARG IMAGE=python:3.12-alpine
+ARG IMAGE=python:3.12-alpine3.19
 ARG CMAKE_ARGS="-DLLAMA_BLAS=ON -DLLAMA_BLAS_VENDOR=OpenBLAS -DLLAMA_AVX=OFF -DLLAMA_AVX2=OFF -DLLAMA_F16C=OFF -DLLAMA_FMA=OFF"
 
 # App-Stage
@@ -14,8 +14,8 @@ VOLUME /model
 EXPOSE 8000/tcp
 
 # Setup llama-cpp-python
-RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
-    apk add --no-cache curl gfortran openblas-dev runit tzdata && \
+RUN apk add --no-cache --virtual .build-deps build-base ccache cmake ninja-build && \
+    apk add --no-cache curl git gfortran openblas-dev runit tzdata && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip \
@@ -32,7 +32,7 @@ RUN apk add --no-cache --virtual .build-deps build-base cmake ninja-build && \
         huggingface_hub[cli] && \
     LLAMA_OPENBLAS=ON \
     CMAKE_ARGS=$CMAKE_ARGS \
-    /venv/bin/pip install --no-cache-dir llama-cpp-python && \
+    /venv/bin/pip install --no-cache-dir llama-cpp-python --verbose && \
     apk del --no-network .build-deps && \
     mkdir -p \
         /runit-services/llama-cpp-python \

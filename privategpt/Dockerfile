@@ -1,8 +1,8 @@
 # Base-Stage
-FROM python:3.11-slim as base
+FROM python:3.11-slim AS base
 
-# ADD HUGGINGFACE_TOKEN
-ARG HUGGINGFACE_TOKEN
+# ADD HUGGINGFACE_ACCESS_TOKEN
+ARG HUGGINGFACE_ACCESS_TOKEN
 
 # Install poetry
 RUN pip install pipx
@@ -23,7 +23,7 @@ RUN apt update && apt install -y \
         git \
         jq && \
     python -m pip install --upgrade pip huggingface_hub && \
-    huggingface-cli login --token $HUGGINGFACE_TOKEN && \
+    huggingface-cli login --token $HUGGINGFACE_ACCESS_TOKEN && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -31,7 +31,7 @@ RUN apt update && apt install -y \
 ENV POETRY_VIRTUALENVS_IN_PROJECT=true
 
 # Dependencies-Stage
-FROM base as dependencies
+FROM base AS dependencies
 
 WORKDIR /home/worker/app
 RUN git clone https://github.com/zylon-ai/private-gpt .
@@ -47,7 +47,7 @@ RUN poetry install --extras "ui llms-llama-cpp llms-openai llms-openai-like llms
         tests*
 
 # App-Stage
-FROM base as app
+FROM base AS app
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="Docker container for privateGPT - a production-ready AI project that allows you to ask questions about your documents using the power of Large Language Models (LLMs)."
 
@@ -108,16 +108,17 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     LLM_MODE="llamacpp" \
     LLM_MAX_NEW_TOKENS="256" \
     LLM_CONTEXT_WINDOW="3900" \
-    LLM_TOKENIZER="mistralai/Mistral-7B-Instruct-v0.2" \
+    LLM_TOKENIZER="meta-llama/Meta-Llama-3.1-8B-Instruct" \
     LLM_TEMPERATURE="0.1" \
     RAG_SIMILARITY_TOP_K="2" \
     RAG_SIMILARITY_VALUE="0.45" \
     RAG_RERANK_ENABLED="false" \
     RAG_RERANK_MODEL="cross-encoder/ms-marco-MiniLM-L-2-v2" \
     RAG_RERANK_TOP_N="1" \
-    LLAMACPP_PROMPT_STYLE="mistral" \
-    LLAMACPP_LLM_HF_REPO_ID="TheBloke/Mistral-7B-Instruct-v0.2-GGUF" \
-    LLAMACPP_LLM_HF_MODEL_FILE="mistral-7b-instruct-v0.2.Q4_K_M.gguf" \
+    SUMMARIZE_USE_ASYNC="true" \
+    LLAMACPP_PROMPT_STYLE="llama3" \
+    LLAMACPP_LLM_HF_REPO_ID="lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf" \
+    LLAMACPP_LLM_HF_MODEL_FILE="Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf" \
     LLAMACPP_TFS_Z="1.0" \
     LLAMACPP_TOP_K="40" \
     LLAMACPP_TOP_P="0.9" \
@@ -126,9 +127,13 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     EMBEDDING_INGEST_MODE="simple" \
     EMBEDDING_COUNT_WORKERS="2" \
     EMBEDDING_EMBED_DIM="384" \
-    HUGGINGFACE_EMBEDDING_HF_MODEL_NAME="BAAI/bge-small-en-v1.5" \
-    HUGGINGFACE_TOKEN="" \
+    HUGGINGFACE_EMBEDDING_HF_MODEL_NAME="nomic-ai/nomic-embed-text-v1.5" \
     VECTORSTORE_DATABASE="qdrant" \
+    NODESTORE_DATABASE="simple" \
+    MILVUS_URI="local_data/private_gpt/milvus/milvus_local.db" \
+    MILVUS_TOKEN="milvus-1234" \
+    MILVUS_COLLECTION_NAME="milvus_db" \
+    MILVUS_OVERWRITE="false" \
     QDRANT_PATH="local_data/private_gpt/qdrant" \
     QDRANT_FORCE_DISABLE_CHECK_SAME_THREAD="true" \
     CLICKHOUSE_HOST="localhost" \
@@ -158,7 +163,7 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     SAGEMAKER_EMBEDDING_ENDPOINT_NAME="huggingface-pytorch-inference-2023-11-03-07-41-36-479" \
     OPENAI_API_BASE="https://api.openai.com/v1" \
     OPENAI_API_KEY="sk-1234" \
-    OPENAI_MODEL="gpt-3.5-turbo" \
+    OPENAI_MODEL="gpt-4o-mini" \
     OPENAI_REQUEST_TIMEOUT="120.0" \
     OPENAI_EMBEDDING_API_BASE="" \
     OPENAI_EMBEDDING_API_KEY="" \ 
@@ -168,7 +173,7 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     GEMINI_EMBEDDING_MODEL="models/embedding-001" \
     OLLAMA_API_BASE="http://localhost:11434" \
     OLLAMA_EMBEDDING_API_BASE="" \
-    OLLAMA_LLM_MODEL="mistral:latest" \
+    OLLAMA_LLM_MODEL="llama3.1:latest" \
     OLLAMA_EMBEDDING_MODEL="nomic-embed-text" \
     OLLAMA_KEEP_ALIVE="5m" \
     OLLAMA_TFS_Z="1.0" \
@@ -184,7 +189,7 @@ ENV PYTHONPATH="$PYTHONPATH:/private_gpt/" \
     AZOPENAI_EMBEDDING_DEPLOYMENT_NAME="my-azure-embedding-deployment-name" \
     AZOPENAI_EMBEDDING_MODEL="text-embedding-3-small" \
     AZOPENAI_LLM_DEPLOYMENT_NAME="my-azure-llm-deployment-name" \
-    AZOPENAI_LLM_MODEL="gpt-4"
+    AZOPENAI_LLM_MODEL="gpt-4o-mini"
 
 VOLUME /home/worker/app/local_data
 VOLUME /home/worker/app/models
