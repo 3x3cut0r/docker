@@ -28,7 +28,7 @@ services:
     image: 3x3cut0r/whisper-gui:latest
     restart: unless-stopped
     ports:
-      - '8080:8080'
+      - '7860:7860'
     volumes:
       - whisper-gui-data:/whisper-gui/outputs
 
