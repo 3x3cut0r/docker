@@ -13,7 +13,6 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
     apt update && apt install -y \
         curl \
         ffmpeg \
-        gcc \
         git \
         vim \
         wget && \
