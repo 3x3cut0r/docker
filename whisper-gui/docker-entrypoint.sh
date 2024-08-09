@@ -1,5 +1,6 @@
-#!/bin/sh
-set -e
+#!/bin/bash
 
 # run app
-python main.py --autolaunch
+source /opt/conda/etc/profile.d/conda.sh && \
+conda activate whisper-gui && \
+python -u main.py --autolaunch

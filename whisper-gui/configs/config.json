@@ -1,0 +1,6 @@
+{
+  "auto_update": false,
+  "env_name": "whisper-gui",
+  "gpu_support": "false",
+  "language": "en"
+}
