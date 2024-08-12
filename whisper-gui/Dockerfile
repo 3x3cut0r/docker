@@ -33,7 +33,10 @@ RUN conda create --name whisper-gui python=3.10 -y && \
 # prepare whisper-gui
 WORKDIR /whisper-gui
 COPY configs/config.json configs/config.json
-RUN mkdir -p outputs && \
+RUN touch /VERSION && \
+    latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1)) && \
+    echo "whisper-gui=$latest_tag" > /VERSION && \    
+    mkdir -p outputs && \
     sed -i 's/demo\.launch(inbrowser=args\.autolaunch, share=args\.share)/demo.launch(server_name="0.0.0.0", server_port=7860)/' main.py && \
     chmod +x *.py scripts/*.py && \
     chmod +x *.sh scripts/*.sh
