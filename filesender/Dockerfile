@@ -3,9 +3,9 @@ LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="FileSender: send large files securely and encrypted (on alpine)"
 
 # build args
-ARG REF=2.40
+ARG REF=2.51
 ARG REF_SUM=""
-ARG SSP_REF=1.19.7
+ARG SSP_REF=1.19.8
 ARG SSP_SUM="ca06d22d265fb75ee0f91d1e013db167dcc33ee449d03a81bd20160f899273cf"
 
 ENV FILESENDER_VERSION=$REF \
@@ -30,7 +30,7 @@ RUN apk -U upgrade && \
 
 # download filesender
 RUN cd /opt && \
-    curl -kL https://github.com/filesender/filesender/archive/master-filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
+    curl -kL https://github.com/filesender/filesender/archive/refs/tags/filesender-${FILESENDER_VERSION}.tar.gz | tar xz && \
     mv filesender-* filesender && \
     cd filesender && \
     mkdir -p files tmp log && \
