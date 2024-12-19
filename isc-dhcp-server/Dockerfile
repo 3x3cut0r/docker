@@ -1,4 +1,4 @@
-FROM alpine:latest
+FROM alpine:3.20
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="isc-dhcp-server on alpine linux (ipv4 only)"
 
