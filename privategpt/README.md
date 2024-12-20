@@ -42,19 +42,7 @@ docker run -d \
 
 ### 1.2 docker-compose.yml <a name="docker-compose"></a>
 
-```shell
-version: '3.9'
-
-services:
-  # https://hub.docker.com/r/3x3cut0r/privategpt
-  privategpt:
-    image: 3x3cut0r/privategpt:latest
-    container_name: privategpt
-    ports:
-      - 8080:8080/tcp
-```
-
-### 1.3 docker-compose.yml with custom model <a name="docker-compose-custom"></a>
+**if you run privategpt with default settings (llama3 model) you need to privide a huggingface access token**
 
 ```shell
 version: '3.9'
@@ -65,13 +53,26 @@ services:
     image: 3x3cut0r/privategpt:latest
     container_name: privategpt
     environment:
-      LLAMACPP_LLM_HF_REPO_ID: "lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
-      LLAMACPP_LLM_HF_MODEL_FILE: "Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"
-      HUGGINGFACE_EMBEDDING_HF_MODEL_NAME: "nomic-ai/nomic-embed-text-v1.5"
+      HUGGINGFACE_TOKEN: "hf_1234"
+    ports:
+      - 8080:8080/tcp
+```
+
+### 1.3 docker-compose.yml with another huggingface model <a name="docker-compose-custom"></a>
+
+```shell
+version: '3.9'
+
+services:
+  # https://hub.docker.com/r/3x3cut0r/privategpt
+  privategpt:
+    image: 3x3cut0r/privategpt:latest
+    container_name: privategpt
+    environment:
+      LLAMACPP_LLM_HF_REPO_ID: "lmstudio-community/Mistral-7B-Instruct-v0.3-GGUF"
+      LLAMACPP_LLM_HF_MODEL_FILE: "Mistral-7B-Instruct-v0.3-Q4_K_M.gguf"
       EMBEDDING_INGEST_MODE: "parallel"
       EMBEDDING_COUNT_WORKERS: "4"
-    volumes:
-      - /path/to/your/model/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf:/home/worker/app/models/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf
     ports:
       - 8080:8080/tcp
 ```
@@ -84,8 +85,6 @@ services:
 
 - `ENV_NAME` - Name of the environment (prod, staging, local...) - **Default: prod**
 - `PORT` - Port of PrivateGPT FastAPI server - **Default: 8080**
-- `KEEP_FILES` - Specifies if the server should keep uploaded files after restarting the container (lowercase true or false)- **Default: true**
-- `RUN_SETUP` - Set to true, to run poetry setup again. Do it only once to download models and set it to false afterwards - **Default: false**
 
 ###### Cors
 
@@ -131,7 +130,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### LLM
 
 - `LLM_MODE` - The mode to use for the chat engine. - **Default: llamacpp**  
-  **- llamacpp:** provide `LLAMACPP_PROMPT_STYLE`, `LLAMACPP_PGPT_HF_MODEL_FILE` and `HF_EMBEDDING_HF_MODEL_NAME`  
+  **- llamacpp:** provide `LLAMACPP_PGPT_HF_MODEL_FILE` and `HF_EMBEDDING_HF_MODEL_NAME`  
   **- openai:** provide `OPENAI_API_KEY` and `OPENAI_MODEL`  
   **- openailike:** provide `OPENAI_API_BASE`, `OPENAI_API_KEY` and `OPENAI_MODEL`  
   **- azopenai:** provide `AZOPENAI_API_BASE`, `AZOPENAI_API_KEY` and `AZOPENAI_MODEL`  
@@ -139,6 +138,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
   **- sagemaker:** provide `SAGEMAKER_LLM_ENDPOINT_NAME` and `SAGEMAKER_EMBEDDING_ENDPOINT_NAME`  
   **- mock:** (not supported by this container)  
   **- ollama:** provide `OLLAMA_API_BASE` and `OLLAMA_LLM_MODEL`
+- `LLM_PROMPT_STYLE` - The prompt style to use for the chat engine. - **Default: llama3**
 - `LLM_MAX_NEW_TOKENS` - The maximum number of token that the LLM is authorized to generate in one completion - **Default: 265**
 - `LLM_CONTEXT_WINDOW` - The maximum number of context tokens for the model - **Default: 3900**
 - `LLM_TOKENIZER` - Specifies the model from Huggingface.co which is used as tokenizer - **Default: meta-llama/Meta-Llama-3.1-8B-Instruct**
@@ -147,7 +147,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### Rag Settings
 
 - `RAG_SIMILARITY_TOP_K` - This value controls the number of documents returned by the RAG pipeline - **Default: 2**
-- `RAG_SIMILARITY_VALUE` - If set, any documents retrieved from the RAG must meet a certain match score. Acceptable values are between 0 and 1. - **Default: 0.45**
+- `RAG_SIMILARITY_VALUE` - If set, any documents retrieved from the RAG must meet a certain match score. Acceptable values are between 0 and 1. - **Default: 0.25**
 - `RAG_RERANK_ENABLED` - This value controls whether a reranker should be included in the RAG pipeline. - **Default: false**
 - `RAG_RERANK_MODEL` - Rerank model to use. Limited to SentenceTransformer cross-encoder models. - **Default: cross-encoder/ms-marco-MiniLM-L-2-v2**
 - `RAG_RERANK_TOP_N` - This value controls the number of documents returned by the RAG pipeline. - **Default: 1**
@@ -158,13 +158,13 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 ###### llamacpp
 
-- `LLAMACPP_PROMPT_STYLE` - The prompt style to use for the chat engine. - **Default: llama3**  
-  **- default:** use the default prompt style from the llama_index. It should look like `role: message`  
-  **- llama2:** use the llama2 prompt style from the llama_index. Based on `<s>`, `[INST]` and `<<SYS>>`  
-  **- llama3:** use the llama3 prompt style from the llama_index.  
-  **- tag:** use the tag prompt style. It should look like `<|role|>: message`  
-  **- mistral:** use the mistral prompt style. It should look like `<s>[INST] {System Prompt} [/INST]</s>[INST] { UserInstructions } [/INST]`
-  **- chatml**
+**- default:** use the default prompt style from the llama_index. It should look like `role: message`  
+ **- llama2:** use the llama2 prompt style from the llama_index. Based on `<s>`, `[INST]` and `<<SYS>>`  
+ **- llama3:** use the llama3 prompt style from the llama_index.  
+ **- tag:** use the tag prompt style. It should look like `<|role|>: message`  
+ **- mistral:** use the mistral prompt style. It should look like `<s>[INST] {System Prompt} [/INST]</s>[INST] { UserInstructions } [/INST]`
+**- chatml**
+
 - `LLAMACPP_LLM_HF_REPO_ID` - Name of the HuggingFace model to use for chat - **Default: lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf**
 - `LLAMACPP_LLM_HF_MODEL_FILE` - Specifies the llm model file. Can be a llm model name from the HuggingFace repo or a local file that you mounted via volume to /home/worker/app/models - **Default: Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf**
 - `LLAMACPP_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
@@ -193,7 +193,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 ###### HuggingFace
 
 - `HUGGINGFACE_EMBEDDING_HF_MODEL_NAME` - Name of the HuggingFace model to use for embeddings - **Default: BAAI/bge-small-en-v1.5**
-- `HUGGINGFACE_TOKEN` - Huggingface access token, required to download some models - **Default: None**
+- `HF_TOKEN`, `HUGGINGFACE_TOKEN`, `HUGGINGFACE_ACCESS_TOKEN` - Huggingface access token, required to download some models from huggingface - **Default: None**
 - `HUGGINGFACE_TRUST_REMOTE_CODE` - If set to True, the code from the remote model will be trusted and executed. - **Default: true**
 
 ###### Vectorstore
@@ -269,7 +269,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 - `OLLAMA_API_BASE` - Base URL of Ollama API. Example: http://192.168.1.100:11434 - **Default: http://localhost:11434**
 - `OLLAMA_EMBEDDING_API_BASE` - Base URL of Ollama Embedding API. Example: http://192.168.1.100:11434 - **Default: same as OLLAMA_API_BASE**
-- `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: llama3.1:latest**
+- `OLLAMA_LLM_MODEL` - Ollama model to use. (see [Ollama Library](https://ollama.com/library)). Example: 'llama2-uncensored' - **Default: llama3.1**
 - `OLLAMA_EMBEDDING_MODEL` - Model to use. Example: 'nomic-embed-text'. - **Default: nomic-embed-text**
 - `OLLAMA_KEEP_ALIVE` - Time the model will stay loaded in memory after a request. examples: 5m, 5h, '-1' - **Default: 5m**
 - `OLLAMA_TFS_Z` - Tail free sampling is used to reduce the impact of less probable tokens from the output. A higher value (e.g., 2.0) will reduce the impact more, while a value of 1.0 disables this setting. - **Default: 1.0**
@@ -284,7 +284,7 @@ secret: "Basic c2VjcmV0OmtleQ=="
 
 - `AZOPENAI_API_KEY` - Your API Key for the OpenAI API. Example: sk-1234 - **Default: sk-1234**
 - `AZOPENAI_ENDPOINT` - Base URL of Azure OpenAI Endpoint. Example: https://api.myazure.com/v1 - **Default: https://api.myazure.com/v1**
-- `AZOPENAI_API_VERSION` - The API version to use for this operation. This follows the YYYY-MM-DD format. - **Default: 2023_05_15**
+- `AZOPENAI_API_VERSION` - The API version to use for this operation. This follows the YYYY-MM-DD format. - **Default: 2023-05-15**
 - `AZOPENAI_EMBEDDING_DEPLOYMENT_NAME` - embedding deployment name in str format - **Default: None**
 - `AZOPENAI_EMBEDDING_MODEL` - OpenAI Model to use. Example: 'text-embedding-ada-002'. - **Default: text-embedding-3-small**
 - `AZOPENAI_LLM_DEPLOYMENT_NAME` - llm deployment name in str format - **Default: None**

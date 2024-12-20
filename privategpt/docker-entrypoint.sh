@@ -4,11 +4,19 @@ set -e
 ############################
 # setup user environment   #
 ############################
+# print privategpt version
+echo "$(date +"%H:%M:%S.%3N") [INFO    ] privategpt version: $(cat /home/worker/app/version.txt)"
+
+# clean settings.yaml
 cp settings_template.yaml settings.yaml
 
-# KEEP_FILES
-if [ "${KEEP_FILES:-"true"}" != "true" ]; then
-    rm -rf /home/worker/app/local_data/*
+# login to huggingface, if HUGGINGFACE_ACCESS_TOKEN is set
+if [ -n "$HF_TOKEN" ]; then HUGGINGFACE_TOKEN=$HF_TOKEN; fi # support env HF_TOKEN
+if [ -n "$HUGGINGFACE_TOKEN" ]; then HUGGINGFACE_ACCESS_TOKEN=$HUGGINGFACE_TOKEN; fi # support env HUGGINGFACE_TOKEN
+if [ -n "$HUGGINGFACE_ACCESS_TOKEN" ]; then
+    echo "$(date +"%H:%M:%S.%3N") [INFO    ] huggingface-cli login"
+    which huggingface-cli
+    echo "$(date +"%H:%M:%S.%3N") [INFO    ] $(huggingface-cli login --token $HUGGINGFACE_ACCESS_TOKEN)"
 fi
 
 # LOGO_BG_COLOR
@@ -64,13 +72,21 @@ sed -i "${line}s|^.*$|    enabled: ${AUTH_ENABLED:-"false"}|" /home/worker/app/s
 line=$((line + 4))
 sed -i "${line}s|^.*$|    secret: \"${AUTH_SECRET:-"Basic c2VjcmV0OmtleQ=="}\"|" /home/worker/app/settings.yaml
 
+# DATA_LOCAL_INGESTION_ENABLED
+line=$((line + 4))
+sed -i "${line}s|^.*$|    enabled: ${DATA_LOCAL_INGESTION_ENABLED:-"false"}|" /home/worker/app/settings.yaml
+
+# DATA_LOCAL_INGESTION_ALLOW_INGEST_FROM
+line=$((line + 1))
+sed -i "${line}s|^.*$|    allow_ingest_from: ['${DATA_LOCAL_INGESTION_ALLOW_INGEST_FROM:-"*"}']|" /home/worker/app/settings.yaml
+
 # DATA_LOCAL_DATA_FOLDER
-line=$((line + 3))
+line=$((line + 1))
 sed -i "${line}s|^.*$|  local_data_folder: \"${DATA_LOCAL_DATA_FOLDER:-"local_data/private_gpt"}\"|" /home/worker/app/settings.yaml
 
 # UI_ENABLED
 line=$((line + 3))
-sed -i "25s|^.*$|  enabled: ${UI_ENABLED:-"true"}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  enabled: ${UI_ENABLED:-"true"}|" /home/worker/app/settings.yaml
 
 # UI_PATH
 line=$((line + 1))
@@ -84,6 +100,10 @@ sed -i "${line}s|^.*$|  default_chat_system_prompt: \"${UI_DEFAULT_CHAT_SYSTEM_P
 line=$((line + 1))
 sed -i "${line}s|^.*$|  default_query_system_prompt: \"${UI_DEFAULT_QUERY_SYSTEM_PROMPT:-"You can only answer questions about the provided context. If you know the answer but it is not based in the provided context, don't provide the answer, just state the answer is not in the context provided."}\"|" /home/worker/app/settings.yaml
 
+# UI_DEFAULT_SUMMARIZATION_SYSTEM_PROMPT
+line=$((line + 1))
+sed -i "${line}s|^.*$|  default_summarization_system_prompt: \"${UI_DEFAULT_SUMMARIZATION_SYSTEM_PROMPT:-"Provide a comprehensive summary of the provided context information. The summary should cover all the key points and main ideas presented in the original text, while also condensing the information into a concise and easy-to-understand format. Please ensure that the summary includes relevant details and examples that support the main ideas, while avoiding any unnecessary information or repetition."}\"|" /home/worker/app/settings.yaml
+
 # UI_DELETE_FILE_BUTTON_ENABLED
 line=$((line + 1))
 sed -i "${line}s|^.*$|  delete_file_button_enabled: ${UI_DELETE_FILE_BUTTON_ENABLED:-"true"}|" /home/worker/app/settings.yaml
@@ -95,6 +115,10 @@ sed -i "${line}s|^.*$|  delete_all_files_button_enabled: ${UI_DELETE_ALL_FILES_B
 # LLM_MODE
 line=$((line + 3))
 sed -i "${line}s|^.*$|  mode: ${LLM_MODE:-"llamacpp"}|" /home/worker/app/settings.yaml
+
+# LLM_PROMPT_STYLE
+line=$((line + 1))
+sed -i "${line}s|^.*$|  prompt_style: ${LLM_PROMPT_STYLE:-"llama3"}|" /home/worker/app/settings.yaml
 
 # LLM_MAX_NEW_TOKENS
 line=$((line + 1))
@@ -118,7 +142,7 @@ sed -i "${line}s|^.*$|  similarity_top_k: ${RAG_SIMILARITY_TOP_K:-"2"}|" /home/w
 
 # RAG_SIMILARITY_VALUE
 line=$((line + 1))
-sed -i "${line}s|^.*$|  similarity_value: ${RAG_SIMILARITY_VALUE:-"0.45"}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  similarity_value: ${RAG_SIMILARITY_VALUE:-"0.25"}|" /home/worker/app/settings.yaml
 
 # RAG_RERANK_ENABLED
 line=$((line + 2))
@@ -136,13 +160,9 @@ sed -i "${line}s|^.*$|    top_n: ${RAG_RERANK_TOP_N:-"1"}|" /home/worker/app/set
 line=$((line + 3))
 sed -i "${line}s|^.*$|  use_async: ${SUMMARIZE_USE_ASYNC:-"true"}|" /home/worker/app/settings.yaml
 
-# LLAMACPP_PROMPT_STYLE
-line=$((line + 3))
-sed -i "${line}s|^.*$|  prompt_style: ${LLAMACPP_PROMPT_STYLE:-"llama3"}|" /home/worker/app/settings.yaml
-
 # LLAMACPP_LLM_HF_REPO_ID
-line=$((line + 1))
-sed -i "${line}s|^.*$|  llm_hf_repo_id: ${LLAMACPP_LLM_HF_REPO_ID:-"lmstudio-community/Meta-Llama-3.1-8B-Instruct-Q4_K_M.gguf"}|" /home/worker/app/settings.yaml
+line=$((line + 3))
+sed -i "${line}s|^.*$|  llm_hf_repo_id: ${LLAMACPP_LLM_HF_REPO_ID:-"lmstudio-community/Meta-Llama-3.1-8B-Instruct-GGUF"}|" /home/worker/app/settings.yaml
 
 # LLAMACPP_LLM_HF_MODEL_FILE
 line=$((line + 1))
@@ -178,7 +198,7 @@ sed -i "${line}s|^.*$|  count_workers: ${EMBEDDING_COUNT_WORKERS:-"2"}|" /home/w
 
 # EMBEDDING_EMBED_DIM
 line=$((line + 1))
-sed -i "${line}s|^.*$|  embed_dim: ${EMBEDDING_EMBED_DIM:-"384"}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  embed_dim: ${EMBEDDING_EMBED_DIM:-"768"}|" /home/worker/app/settings.yaml
 
 # HUGGINGFACE_EMBEDDING_HF_MODEL_NAME
 line=$((line + 3))
@@ -186,7 +206,7 @@ sed -i "${line}s|^.*$|  embedding_hf_model_name: ${HUGGINGFACE_EMBEDDING_HF_MODE
 
 # HUGGINGFACE_ACCESS_TOKEN
 line=$((line + 1))
-sed -i "${line}s|^.*$|  access_token: ${HUGGINGFACE_ACCESS_TOKEN:-"hf_1234"}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  access_token: ${HUGGINGFACE_ACCESS_TOKEN}|" /home/worker/app/settings.yaml
 
 # HUGGINGFACE_TRUST_REMOTE_CODE
 line=$((line + 1))
@@ -374,7 +394,7 @@ sed -i "${line}s|^.*$|  embedding_api_base: ${OLLAMA_EMBEDDING_API_BASE:-$OLLAMA
 
 # OLLAMA_LLM_MODEL
 line=$((line + 1))
-sed -i "${line}s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"llama3.1:latest"}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  llm_model: ${OLLAMA_LLM_MODEL:-"llama3.1"}|" /home/worker/app/settings.yaml
 
 # OLLAMA_EMBEDDING_MODEL
 line=$((line + 1))
@@ -422,7 +442,7 @@ sed -i "${line}s|^.*$|  azure_endpoint: ${AZOPENAI_AZURE_ENDPOINT:-"https://api.
 
 # AZOPENAI_API_VERSION
 line=$((line + 1))
-sed -i "${line}s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023_05_15"}\"|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  api_version: \"${AZOPENAI_API_VERSION:-"2023-05-15"}\"|" /home/worker/app/settings.yaml
 
 # AZOPENAI_EMBEDDING_DEPLOYMENT_NAME
 line=$((line + 1))
@@ -444,21 +464,12 @@ sed -i "${line}s|^.*$|  llm_model: ${AZOPENAI_LLM_MODEL:-"gpt-4"}|" /home/worker
 # run app                  #
 ############################
 
-# login to huggingface, if HUGGINGFACE_TOKEN is set
-if [ -n "$HUGGINGFACE_TOKEN" ]; then
-  huggingface-cli login --token $HUGGINGFACE_TOKEN > /dev/null 2>&1
-fi
-
-# run privategpt setup again to download new models
-if [ "$RUN_SETUP" = "true" ]; then
-  /home/worker/app/.venv/bin/python scripts/setup
-fi
+# run privategpt setup to download models
+echo "$(date +"%H:%M:%S.%3N") [INFO    ] running scripts/setup"
+/home/worker/app/.venv/bin/python scripts/setup
 
 # if started without args, run privategpt
 if [ "$#" = "0" ]; then
-    # print privategpt version
-    echo "privategpt version: $(cat /home/worker/app/version.txt)"
-
     # run privategpt
     /home/worker/app/.venv/bin/python -m private_gpt
 
