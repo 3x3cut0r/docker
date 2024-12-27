@@ -31,18 +31,19 @@
 
 ## 1 Usage <a name="usage"></a>
 
+**Important note: if you are trying to run a `gated model` from huggingface, like with default settings, you need to provide your HUGGINGFACE_TOKEN and you must first accept the terms and conditions or license on huggingface!!!**
+
 ### 1.1 docker run <a name="dockerrun"></a>
 
 ```shell
 docker run -d \
     --name privategpt \
     -p 8080:8080/tcp \
+    -e HUGGINGFACE_TOKEN="hf_1234" \
     3x3cut0r/privategpt:latest
 ```
 
 ### 1.2 docker-compose.yml <a name="docker-compose"></a>
-
-**if you run privategpt with default settings (llama3 model) you need to privide a huggingface access token**
 
 ```shell
 version: '3.9'
@@ -69,6 +70,7 @@ services:
     image: 3x3cut0r/privategpt:latest
     container_name: privategpt
     environment:
+      HUGGINGFACE_TOKEN: "hf_1234"
       LLAMACPP_LLM_HF_REPO_ID: "lmstudio-community/Mistral-7B-Instruct-v0.3-GGUF"
       LLAMACPP_LLM_HF_MODEL_FILE: "Mistral-7B-Instruct-v0.3-Q4_K_M.gguf"
       EMBEDDING_INGEST_MODE: "parallel"

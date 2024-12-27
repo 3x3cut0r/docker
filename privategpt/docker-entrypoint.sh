@@ -206,7 +206,7 @@ sed -i "${line}s|^.*$|  embedding_hf_model_name: ${HUGGINGFACE_EMBEDDING_HF_MODE
 
 # HUGGINGFACE_ACCESS_TOKEN
 line=$((line + 1))
-sed -i "${line}s|^.*$|  access_token: ${HUGGINGFACE_ACCESS_TOKEN}|" /home/worker/app/settings.yaml
+sed -i "${line}s|^.*$|  access_token: \"${HUGGINGFACE_ACCESS_TOKEN:-""}\"|" /home/worker/app/settings.yaml
 
 # HUGGINGFACE_TRUST_REMOTE_CODE
 line=$((line + 1))
