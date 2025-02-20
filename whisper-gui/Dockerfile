@@ -23,23 +23,42 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 SHELL ["bash", "-c"]
 RUN conda create --name whisper-gui python=3.10 -y && \
     conda clean -a -y && \
+    conda update -n base -c conda-forge -c pytorch conda && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
-    source /opt/conda/etc/profile.d/conda.sh && \
+    source /opt/conda/etc/profile.d/conda.sh -y && \
     conda activate whisper-gui && \
-    pip install gradio torch==2.0.0 torchaudio==2.0.1 && \
-    pip install git+https://github.com/m-bain/whisperx.git && \
+    conda install -c conda-forge -c pytorch \
+        "numpy<2" \
+        pytorch==2.0.1 \
+        torchaudio==2.0.2 \
+        cpuonly && \
+    pip install \
+        ctranslate2==4.0.0 \
+        faster-whisper==1.0.0 \
+        gradio==4.44.1 \
+        gradio-client==1.3.0 \
+        git+https://github.com/m-bain/whisperx.git@v3.1.1 && \
     git clone https://github.com/Pikurrot/whisper-gui
 
 # prepare whisper-gui
 WORKDIR /whisper-gui
 COPY configs/config.json configs/config.json
-RUN touch /VERSION && \
-    latest_tag=$(git describe --tags $(git rev-list --tags --max-count=1)) && \
-    echo "whisper-gui=$latest_tag" > /VERSION && \    
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate whisper-gui && \
     mkdir -p outputs && \
     sed -i 's/demo\.launch(inbrowser=args\.autolaunch, share=args\.share)/demo.launch(server_name="0.0.0.0", server_port=7860)/' main.py && \
+    sed -i 's/\(^[^d]*\)blockPrint()/# \1blockPrint()/' main.py && \
     chmod +x *.py scripts/*.py && \
     chmod +x *.sh scripts/*.sh
+
+# store versions in /VERSION
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate whisper-gui && \
+    touch /VERSION && \
+    whisper_gui_version=$(git describe --tags $(git rev-list --tags --max-count=1)) && \
+    echo "whisper-gui=$whisper_gui_version" > /VERSION && \
+    whisperx_version=$(pip show whisperx | grep Version | cut -d' ' -f2) && \
+    echo "whisperx=v$whisperx_version" >> /VERSION 
 
 # setup entrypoint
 COPY docker-entrypoint.sh /
