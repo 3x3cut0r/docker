@@ -7,7 +7,7 @@ ARG IMAGE
 # Setup and build streamlit
 WORKDIR /build
 RUN apt update && \
-    apt install -y build-essential cmake curl software-properties-common && \
+    apt install -y build-essential cmake curl && \
     rm -rf /var/lib/apt/lists/* && \
     python -m venv /venv && \
     /venv/bin/pip install --upgrade pip && \
