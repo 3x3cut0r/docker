@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 # set timezone
-ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+ln -snf "/usr/share/zoneinfo/$TZ" /etc/localtime && echo "$TZ" > /etc/timezone
 # show available interfaces:
 printf "\nINFO: available interfaces:\n\n"
 ls /sys/class/net/
@@ -18,7 +18,7 @@ if [ "$MAX_LEASE_TIME" -gt "0" ]; then echo "max-lease-time $MAX_LEASE_TIME;" >>
 if [ "$AUTHORITATIVE" = "1" ]; then echo "authoritative;" >> $FILE; fi
 if [ "$LOGFACILITY" != "" ]; then echo "log-facility $LOGFACILITY;" >> $FILE; fi
 echo "" >> $FILE
-if [ $PROTOCOL = "4" ]; then
+if [ "$PROTOCOL" = "4" ]; then
     # subnet declaration ipv4 (envirionment variables)
     echo "subnet $SUBNET netmask $NETMASK {" >> $FILE
     echo "  range $RANGE_BEGIN $RANGE_END;" >> $FILE
@@ -40,7 +40,7 @@ if [ $PROTOCOL = "4" ]; then
     echo "# docker subnet to prevent \"No subnet declaration for eth0 (172.x.x.x) error\"" >> $FILE
     echo "subnet 172.0.0.0 netmask 255.0.0.0 {" >> $FILE
     echo "}" >> $FILE
-elif [ $PROTOCOL = "6" ]; then
+elif [ "$PROTOCOL" = "6" ]; then
     # subnet declaration ipv6 (envirionment variables)
     echo "subnet6 $SUBNET6 {" >> $FILE
     echo "  range6 $RANGE6_BEGIN $RANGE6_END;" >> $FILE
@@ -58,9 +58,11 @@ if [ "$#" = "0" ]; then
     if [ -f "$CONFIG_FILE" ]; then param="${param} -cf /etc/dhcp/dhcpd.conf"; else param="${param} -cf /var/lib/dhcp/dhcpd.conf"; fi
     if [ -f "$LEASE_FILE" ]; then param="${param} -lf /etc/dhcp/dhcpd.leases"; else param="${param} -lf /var/lib/dhcp/dhcpd.leases"; fi
     param="${param} -${PROTOCOL} --no-pid -user dhcp -group dhcp ${IFACE}"
-    printf "\nINFO: dhcpd ${param}\n\n"
-    exec dhcpd ${param}
+    # shellcheck disable=SC2086
+    set -- dhcpd ${param}
+    printf "\nINFO: %s\n\n" "$*"
+    exec "$@"
 else
-    printf "\nINFO: $@\n\n"
-    exec $@
+    printf "\nINFO: %s\n\n" "$*"
+    exec "$@"
 fi
