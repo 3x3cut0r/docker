@@ -1,8 +1,6 @@
-ARG IMAGE=alpine:latest
-
 # App-Stage
+ARG IMAGE=alpine:latest
 FROM ${IMAGE}
-ARG IMAGE
 
 LABEL maintainer="Julian Reith <julianreith@gmx.de>"
 LABEL description="official alpine linux with gosu, libcap installed"
