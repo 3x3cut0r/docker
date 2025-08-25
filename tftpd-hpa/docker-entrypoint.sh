@@ -8,6 +8,9 @@ set -e
 # set timezone
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# print version
+cat /VERSION
+
 ############################
 # run app                  #
 ############################
