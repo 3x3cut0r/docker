@@ -12,6 +12,9 @@ cp /usr/share/nginx/template/js/script.js /usr/share/nginx/html/js/script.js
 # TIMEZONE
 ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
+# print version
+cat /VERSION
+
 # TITLE
 sed -i "9s/.*/\ \ \ \ <title>${TITLE}<\/title>/" /usr/share/nginx/html/index.html
 

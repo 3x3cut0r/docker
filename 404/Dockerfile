@@ -73,7 +73,12 @@ ENV TZ="UTC" \
     WOMAN_SHOE_RIGHT_TOP="white" \
     WOMAN_FLASHLIGHT="#2F1829" \
     WOMAN_FLASHLIGHT_NEAR="white" \
-    WOMAN_FLASHLIGHT_FAR="white" 
+    WOMAN_FLASHLIGHT_FAR="white"
+
+# Store versions in /VERSION
+RUN touch /VERSION && \
+    echo "alpine=$(cat /etc/alpine-release)" > /VERSION && \
+    echo "nginx=$(nginx -v 2>&1 | cut -d/ -f2)" >> /VERSION
 
 VOLUME /usr/share/nginx/html
 WORKDIR /usr/share/nginx/html
