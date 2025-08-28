@@ -47,7 +47,7 @@ jobs:
         id: tag
         run: |
           docker build -t 3x3cut0r/tftpd-hpa:latest ./tftpd-hpa
-          VERSION=$(docker run --rm 3x3cut0r/tftpd-hpa:latest \
+          VERSION=$(docker run --rm --entrypoint '' 3x3cut0r/tftpd-hpa:latest \
             sh -c "grep tftpd-hpa /VERSION | cut -d= -f2 | tr -d '\\r\\n'")
           echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
 
