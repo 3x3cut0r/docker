@@ -1,3 +1,4 @@
+# yamllint disable rule:truthy rule:document-start
 name: build tftpd-hpa
 
 on:
@@ -9,7 +10,7 @@ on:
       - '!tftpd-hpa/README.md'
   schedule:
     # cron: 'min hour day month weekday'
-    - cron: '0 4 * * 3' # every wednesday on 04:00
+    - cron: '0 4 * * 3'  # every wednesday on 04:00
   workflow_dispatch:
     inputs:
       logLevel:
@@ -47,9 +48,9 @@ jobs:
         id: tag
         run: |
           docker build -t 3x3cut0r/tftpd-hpa:latest ./tftpd-hpa
-          VERSION=$(docker run --rm 3x3cut0r/tftpd-hpa:latest \
-            sh -c 'grep tftpd-hpa /VERSION | cut -d= -f2')
-          echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
+          VERSION=$(docker run --rm --entrypoint '' 3x3cut0r/tftpd-hpa:latest \
+            sh -c "grep tftpd-hpa /VERSION | cut -d= -f2 | tr -d '\\r\\n'")
+          printf 'VERSION=%s\n' "$VERSION" >> "$GITHUB_OUTPUT"
 
       # https://github.com/docker/build-push-action
       - name: Build and push
