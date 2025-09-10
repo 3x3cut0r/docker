@@ -1,6 +1,7 @@
+---
 name: build tftpd-hpa
 
-on:
+'on':
   push:
     branches:
       - 'main'
@@ -9,7 +10,7 @@ on:
       - '!tftpd-hpa/README.md'
   schedule:
     # cron: 'min hour day month weekday'
-    - cron: '0 4 * * 3' # every wednesday on 04:00
+    - cron: '0 4 * * 3'  # every wednesday on 04:00
   workflow_dispatch:
     inputs:
       logLevel:
@@ -47,8 +48,8 @@ jobs:
         id: tag
         run: |
           docker build -t 3x3cut0r/tftpd-hpa:latest ./tftpd-hpa
-          VERSION=$(docker run --rm --entrypoint '' 3x3cut0r/tftpd-hpa:latest \
-            sh -c "grep tftpd-hpa /VERSION | cut -d= -f2 | head -n 1)
+          VERSION=$(docker run --rm --entrypoint sh 3x3cut0r/tftpd-hpa:latest \
+            -c 'grep tftpd-hpa /VERSION | cut -d= -f2 | head -n 1')
           echo "VERSION=${VERSION}" >> "$GITHUB_OUTPUT"
 
       # https://github.com/docker/build-push-action
