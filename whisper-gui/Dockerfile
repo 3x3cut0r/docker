@@ -32,12 +32,14 @@ RUN conda create --name whisper-gui python=3.10 -y && \
         pytorch==2.0.1 \
         torchaudio==2.0.2 \
         cpuonly && \
-    pip install \
+    printf "numpy<2\n" > /tmp/pip_constraints.txt && \
+    PIP_CONSTRAINT=/tmp/pip_constraints.txt pip install \
         ctranslate2==4.0.0 \
         faster-whisper==1.0.0 \
         gradio==4.44.1 \
         gradio-client==1.3.0 \
         git+https://github.com/m-bain/whisperx.git@v3.1.1 && \
+    rm /tmp/pip_constraints.txt && \
     git clone https://github.com/Pikurrot/whisper-gui
 
 # prepare whisper-gui
