@@ -40,7 +40,7 @@ RUN conda create --name whisper-gui python=3.10 -y && \
         gradio-client==1.3.0 \
         git+https://github.com/m-bain/whisperx.git@v3.1.1 && \
     rm /tmp/pip_constraints.txt && \
-    python - <<'PY' && \
+    python - <<'PY'
 from pathlib import Path
 from gradio_client import utils
 
@@ -86,7 +86,8 @@ if 'additional_props = schema["additionalProperties"]' not in text:
 
 path.write_text(text)
 PY
-    git clone https://github.com/Pikurrot/whisper-gui
+
+RUN git clone https://github.com/Pikurrot/whisper-gui
 
 # prepare whisper-gui
 WORKDIR /whisper-gui
