@@ -76,4 +76,16 @@ volumes:
 ### 6 License <a name="license"></a>
 
 [![MIT License](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/license/mit) - This project is licensed under the MIT License - see the [MIT License](https://opensource.org/license/mit) for details.
+
+## Notes for maintainers
+
+- The upstream project (https://github.com/Pikurrot/whisper-gui) currently
+  targets Gradio `4.44.1`/`gradio-client 1.3.0`. These versions ship with a bug
+  that raises a `TypeError` when boolean values appear in a component schema's
+  `additionalProperties`. The Docker image now patches the installed
+  `gradio_client` module during build time to gracefully handle boolean schemas
+  and keep the API endpoint working.
+- SpeechBrain warns about the bundled `torchaudio==2.0.2`. Updating PyTorch and
+  Torchaudio would require retesting WhisperX and the upstream project only
+  specifies `torch>=2.0.0`, so the existing pins stay unchanged for now.
 ``
