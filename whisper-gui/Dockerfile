@@ -23,8 +23,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 SHELL ["bash", "-c"]
 RUN conda create --name whisper-gui python=3.10 -y && \
     conda clean -a -y && \
-    conda update -n base -c conda-forge -c pytorch conda && \
     conda config --set solver classic && \
+    conda update -n base -c conda-forge -c pytorch \
+        conda \
+        conda-libmamba-solver && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
     source /opt/conda/etc/profile.d/conda.sh && \
     conda activate whisper-gui && \
