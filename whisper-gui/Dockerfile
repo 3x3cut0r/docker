@@ -88,7 +88,7 @@ if 'additional_props = schema["additionalProperties"]' not in text:
 
 path.write_text(text)
 PY
-    python - <<'PY'
+    && python - <<'PY'
 from pathlib import Path
 from textwrap import dedent
 
