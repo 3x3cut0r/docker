@@ -25,7 +25,6 @@ RUN conda create --name whisper-gui python=3.10 -y && \
     conda clean -a -y && \
     conda update -n base -c conda-forge -c pytorch conda && \
     conda config --set solver classic && \
-    conda remove -n base conda-libmamba-solver -y && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
     source /opt/conda/etc/profile.d/conda.sh && \
     conda activate whisper-gui && \
