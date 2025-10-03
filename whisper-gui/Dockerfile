@@ -27,7 +27,7 @@ RUN conda create --name whisper-gui python=3.10 -y && \
     conda config --set solver classic && \
     conda remove -n base conda-libmamba-solver -y && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
-    source /opt/conda/etc/profile.d/conda.sh -y && \
+    source /opt/conda/etc/profile.d/conda.sh && \
     conda activate whisper-gui && \
     conda install -c conda-forge -c pytorch \
         "numpy<2" \
@@ -41,7 +41,10 @@ RUN conda create --name whisper-gui python=3.10 -y && \
         gradio==4.44.1 \
         gradio-client==1.3.0 \
         git+https://github.com/m-bain/whisperx.git@v3.1.1 && \
-    rm /tmp/pip_constraints.txt && \
+    rm /tmp/pip_constraints.txt
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate whisper-gui && \
     python - <<'PY'
 from pathlib import Path
 from textwrap import dedent
@@ -131,32 +134,6 @@ def patch_pyannote() -> None:
 if __name__ == "__main__":
     patch_gradio()
     patch_pyannote()
-PY
-    && python - <<'PY'
-from pathlib import Path
-from textwrap import dedent
-
-path = Path("/opt/conda/envs/whisper-gui/lib/python3.10/site-packages/pyannote/audio/pipelines/speaker_verification.py")
-if path.exists():
-    text = path.read_text()
-    needle = "from speechbrain.pretrained import (\n    SpeakerRecognition,\n    EncoderClassifier,\n)"
-    if needle in text and "speechbrain.inference" not in text:
-        replacement = dedent(
-            """\
-            try:
-                from speechbrain.inference import (
-                    SpeakerRecognition,
-                    EncoderClassifier,
-                )
-            except ImportError:
-                from speechbrain.pretrained import (
-                    SpeakerRecognition,
-                    EncoderClassifier,
-                )
-            """
-        ).rstrip() + "\n"
-        text = text.replace(needle, replacement)
-        path.write_text(text)
 PY
 
 RUN git clone https://github.com/Pikurrot/whisper-gui
