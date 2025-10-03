@@ -25,13 +25,14 @@ RUN conda create --name whisper-gui python=3.10 -y && \
     conda clean -a -y && \
     conda update -n base -c conda-forge -c pytorch conda && \
     conda config --set solver classic && \
+    conda remove -n base conda-libmamba-solver -y && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
-    source /opt/conda/etc/profile.d/conda.sh -y && \
+    source /opt/conda/etc/profile.d/conda.sh && \
     conda activate whisper-gui && \
     conda install -c conda-forge -c pytorch \
         "numpy<2" \
-        pytorch==2.0.1 \
-        torchaudio==2.0.2 \
+        pytorch==2.1.2 \
+        torchaudio==2.1.2 \
         cpuonly && \
     printf "numpy<2\n" > /tmp/pip_constraints.txt && \
     PIP_CONSTRAINT=/tmp/pip_constraints.txt pip install \
@@ -40,52 +41,99 @@ RUN conda create --name whisper-gui python=3.10 -y && \
         gradio==4.44.1 \
         gradio-client==1.3.0 \
         git+https://github.com/m-bain/whisperx.git@v3.1.1 && \
-    rm /tmp/pip_constraints.txt && \
+    rm /tmp/pip_constraints.txt
+
+RUN source /opt/conda/etc/profile.d/conda.sh && \
+    conda activate whisper-gui && \
     python - <<'PY'
 from pathlib import Path
+from textwrap import dedent
 from gradio_client import utils
 
-path = Path(utils.__file__)
-text = path.read_text()
 
-guard = (
-    'def _json_schema_to_python_type(schema: Any, defs) -> str:\n'
-    '    """Convert the json schema into a python type hint"""\n'
-    '    if schema == {}:\n'
-    '        return "Any"'
-)
-replacement = (
-    'def _json_schema_to_python_type(schema: Any, defs) -> str:\n'
-    '    """Convert the json schema into a python type hint"""\n'
-    '    if isinstance(schema, bool):\n'
-    '        return "Any" if schema else "None"\n'
-    '    if schema == {}:\n'
-    '        return "Any"'
-)
-if 'if isinstance(schema, bool):' not in text:
-    text = text.replace(guard, replacement)
+def patch_gradio() -> None:
+    path = Path(utils.__file__)
+    text = path.read_text()
 
-additional_guard = (
-    '        if "additionalProperties" in schema:\n'
-    '            des += [\n'
-    '                f"str, {_json_schema_to_python_type(schema[\'additionalProperties\'], defs)}"\n'
-    '            ]'
-)
-additional_replacement = (
-    '        if "additionalProperties" in schema:\n'
-    '            additional_props = schema["additionalProperties"]\n'
-    '            if isinstance(additional_props, bool):\n'
-    '                additional_type = "Any" if additional_props else "None"\n'
-    '            else:\n'
-    '                additional_type = _json_schema_to_python_type(additional_props, defs)\n'
-    '            des += [\n'
-    '                f"str, {additional_type}"\n'
-    '            ]'
-)
-if 'additional_props = schema["additionalProperties"]' not in text:
-    text = text.replace(additional_guard, additional_replacement)
+    guard = (
+        'def _json_schema_to_python_type(schema: Any, defs) -> str:\n'
+        '    """Convert the json schema into a python type hint"""\n'
+        '    if schema == {}:\n'
+        '        return "Any"'
+    )
+    replacement = (
+        'def _json_schema_to_python_type(schema: Any, defs) -> str:\n'
+        '    """Convert the json schema into a python type hint"""\n'
+        '    if isinstance(schema, bool):\n'
+        '        return "Any" if schema else "None"\n'
+        '    if schema == {}:\n'
+        '        return "Any"'
+    )
+    if 'if isinstance(schema, bool):' not in text:
+        text = text.replace(guard, replacement)
 
-path.write_text(text)
+    additional_guard = (
+        '        if "additionalProperties" in schema:\n'
+        '            des += [\n'
+        '                f"str, {_json_schema_to_python_type(schema[\'additionalProperties\'], defs)}"\n'
+        '            ]'
+    )
+    additional_replacement = (
+        '        if "additionalProperties" in schema:\n'
+        '            additional_props = schema["additionalProperties"]\n'
+        '            if isinstance(additional_props, bool):\n'
+        '                additional_type = "Any" if additional_props else "None"\n'
+        '            else:\n'
+        '                additional_type = _json_schema_to_python_type(additional_props, defs)\n'
+        '            des += [\n'
+        '                f"str, {additional_type}"\n'
+        '            ]'
+    )
+    if 'additional_props = schema["additionalProperties"]' not in text:
+        text = text.replace(additional_guard, additional_replacement)
+
+    path.write_text(text)
+
+
+def patch_pyannote() -> None:
+    path = Path(
+        "/opt/conda/envs/whisper-gui/lib/python3.10/site-packages/pyannote/audio/pipelines/"
+        "speaker_verification.py"
+    )
+    if not path.exists():
+        return
+
+    text = path.read_text()
+    needle = (
+        "from speechbrain.pretrained import (\n"
+        "    SpeakerRecognition,\n"
+        "    EncoderClassifier,\n"
+        ")"
+    )
+    if needle not in text or "speechbrain.inference" in text:
+        return
+
+    replacement = dedent(
+        """\
+        try:
+            from speechbrain.inference import (
+                SpeakerRecognition,
+                EncoderClassifier,
+            )
+        except ImportError:
+            from speechbrain.pretrained import (
+                SpeakerRecognition,
+                EncoderClassifier,
+            )
+        """
+    ).rstrip() + "\n"
+    text = text.replace(needle, replacement)
+    path.write_text(text)
+
+
+if __name__ == "__main__":
+    patch_gradio()
+    patch_pyannote()
 PY
 
 RUN git clone https://github.com/Pikurrot/whisper-gui
