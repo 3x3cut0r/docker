@@ -23,20 +23,23 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && \
 SHELL ["bash", "-c"]
 RUN conda create --name whisper-gui python=3.10 -y && \
     conda clean -a -y && \
-    conda config --set solver classic && \
-    conda update -n base -c conda-forge -c pytorch \
+    conda config --set solver libmamba && \
+    conda update -n base -c conda-forge \
         conda \
         conda-libmamba-solver && \
     echo "conda activate whisper-gui" >> ~/.bashrc && \
     source /opt/conda/etc/profile.d/conda.sh && \
     conda activate whisper-gui && \
-    conda install -c conda-forge -c pytorch \
-        "numpy<2" \
-        pytorch==2.1.2 \
-        torchaudio==2.1.2 \
-        cpuonly && \
+    conda install -c conda-forge \
+        "numpy<2" && \
     printf "numpy<2\n" > /tmp/pip_constraints.txt && \
     PIP_CONSTRAINT=/tmp/pip_constraints.txt pip install \
+        --no-cache-dir \
+        --index-url https://download.pytorch.org/whl/cpu \
+        torch==2.1.2 \
+        torchaudio==2.1.2 && \
+    PIP_CONSTRAINT=/tmp/pip_constraints.txt pip install \
+        --no-cache-dir \
         ctranslate2==4.0.0 \
         faster-whisper==1.0.0 \
         gradio==4.44.1 \
