@@ -85,7 +85,7 @@ volumes:
   `additionalProperties`. The Docker image now patches the installed
   `gradio_client` module during build time to gracefully handle boolean schemas
   and keep the API endpoint working.
-- SpeechBrain warns about the bundled `torchaudio==2.0.2`. Updating PyTorch and
-  Torchaudio would require retesting WhisperX and the upstream project only
-  specifies `torch>=2.0.0`, so the existing pins stay unchanged for now.
-``
+- Previous builds failed on `linux/arm64` because the PyTorch conda channel
+  does not publish `pytorch`/`torchaudio` packages for that architecture. The
+  Docker image now installs the CPU wheels from `download.pytorch.org`, which
+  are available for both `linux/amd64` and `linux/arm64` targets.
